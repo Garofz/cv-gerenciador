@@ -1,0 +1,8 @@
+#Folders
+dist/
+
+#Files 
+*.css
+*.svg
+reporWebVitals.ts
+setupTests.ts

@@ -1,0 +1,38 @@
+html{
+  height: 100%;
+  width: 100%;
+}
+
+body{
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+}
+*{
+  font-family: Montserrat;
+}
+#root{
+  height: 100%;
+  width: 100%;
+}
+
+
+input.input-invalid{
+  border-bottom-color: lightcoral;
+}
+
+input.input-invalid:focus {
+  border-bottom-color: #000;
+  outline: none;
+}
+
+input.input-invalid:focus::placeholder {
+  color: #000;
+}
+
+input.input-invalid::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: lightcoral;
+  opacity: 0.8;  
+}
