@@ -32,7 +32,7 @@ export interface IDetalheClienteProps {
 }
 
 function DetalheCliente({ cliente }: IDetalheClienteProps) {
-    const { filtrarUsuarios, usuarios } = useDetalheCliente(cliente.id);
+    const { filtrarUsuarios, usuarios } = useDetalheCliente(cliente.idCliente);
     return (
         <ContainerClienteDiv>
             <FadeIn duration={400}>
@@ -45,7 +45,7 @@ function DetalheCliente({ cliente }: IDetalheClienteProps) {
                             <TitleH1 style={{ margin: 0 }}>
                                 {cliente?.nome}
                             </TitleH1>
-                            <Subtitle1>#{cliente?.id}</Subtitle1>
+                            <Subtitle1>#{cliente?.idCliente}</Subtitle1>
                         </div>
                     </ClienteAvatarWrapper>
                 </ContainerClienteTitle>
@@ -58,7 +58,7 @@ function DetalheCliente({ cliente }: IDetalheClienteProps) {
                         </ClienteDetailLI>
                         <ClienteDetailLI>
                             <ClienteDetailSpan> Tipo: </ClienteDetailSpan>
-                            {cliente?.tipoPessoa}
+                            {cliente?.tipoPessoa.descricao}
                         </ClienteDetailLI>
                         <ClienteDetailLI>
                             <ClienteDetailSpan> Ativa:</ClienteDetailSpan>
@@ -76,7 +76,7 @@ function DetalheCliente({ cliente }: IDetalheClienteProps) {
                     <ListUsuarios
                         filtrarUsuario={filtrarUsuarios}
                         usuarios={usuarios}
-                        idCliente={cliente?.id}
+                        idCliente={cliente?.idCliente}
                     />
                 </ContainerClienteBodyDiv>
             </FadeIn>

@@ -143,7 +143,8 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                                                         {cliente.nome}
                                                     </TitleH3>
                                                     <Subtitle2>
-                                                        <b>#</b> {cliente.id}
+                                                        <b>#</b>{" "}
+                                                        {cliente.idCliente}
                                                     </Subtitle2>
                                                 </ClienteTitle>
                                                 <ClienteBody>
@@ -193,7 +194,10 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                                                         <TextBold>
                                                             Pessoa:{" "}
                                                         </TextBold>
-                                                        {cliente.tipoPessoa}
+                                                        {
+                                                            cliente.tipoPessoa
+                                                                .descricao
+                                                        }
                                                     </div>
                                                 </ClienteBody>
                                             </div>

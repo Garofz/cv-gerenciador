@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ICliente } from "../../../interfaces/ICliente";
+import { ICliente, IClienteRequest } from "../../../interfaces/ICliente";
 import {
     ButtonOutlinePrimary,
     ButtonPrimary,
@@ -21,37 +21,48 @@ import { selectClientsData } from "../../../redux/features/clientsData/clientsDa
 export interface Props {
     cliente?: ICliente;
     voltar: () => void;
-    salvar: (cliente: ICliente) => void;
+    salvar: (cliente: IClienteRequest) => void;
 }
 
 const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
     const selectClientes = useSelector(selectClientsData);
-    const mockData = (): ICliente => {
+    const mockData = (): IClienteRequest => {
         let idAux = 0;
         const id = selectClientes?.map((x) => {
             if (idAux === 0) {
-                idAux = x.id;
+                idAux = x.idCliente;
             } else {
-                if (idAux < x.id) {
-                    idAux = x.id;
+                if (idAux < x.idCliente) {
+                    idAux = x.idCliente;
                 }
             }
         });
 
         return {
-            id: idAux + 1,
+            idCliente: idAux + 1,
             nome: "",
             ativo: true,
-            tipoPessoa: "PF",
+            tipoPessoa: 0,
             logo: "",
             inscricao: "",
         };
     };
 
-    const [clienteContext, setClienteContext] = useState<ICliente>(mockData);
+    const [clienteContext, setClienteContext] =
+        useState<IClienteRequest>(mockData);
 
     useEffect(() => {
-        if (cliente) setClienteContext(cliente);
+        if (cliente)
+            setClienteContext({
+                idCliente: cliente.idCliente,
+                ativo: cliente.ativo,
+                inscricao: cliente.inscricao,
+                logo: cliente.logo,
+                nome: cliente.nome,
+                tipoPessoa: cliente.tipoPessoa.idTipoPessoa,
+                usuarioAlteracao: cliente.usuarioAlteracao?.idUsuario,
+                usuarioInclusao: cliente.usuarioInclusao?.idUsuario,
+            });
     }, []);
 
     return (
@@ -94,19 +105,16 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                     <SelectWrapper className="inputWrapper">
                         <Label>Tipo de Pessoa</Label>
                         <Select
-                            value={
-                                clienteContext.tipoPessoa === "PF" ? "1" : "2"
-                            }
+                            value={clienteContext.tipoPessoa}
                             onChange={(e) =>
                                 setClienteContext((prev) => ({
                                     ...prev,
-                                    tipoPessoa:
-                                        e.target.value === "1" ? "PF" : "PJ",
+                                    tipoPessoa: parseInt(e.target.value),
                                 }))
                             }
                         >
-                            <Option value={"1"}> PF</Option>
-                            <Option value={"2"}> PJ</Option>
+                            <Option value={1}> PF</Option>
+                            <Option value={2}> PJ</Option>
                         </Select>
                     </SelectWrapper>
                 </Col>

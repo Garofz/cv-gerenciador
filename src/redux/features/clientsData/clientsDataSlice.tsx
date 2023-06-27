@@ -22,12 +22,12 @@ const clientsDataSlice = createSlice({
         },
         editClient(state: ClientsDataState, action: PayloadAction<ICliente>) {
             const clienteExists = state.clientsData?.some(
-                (cli) => cli.id === action.payload.id
+                (cli) => cli.idCliente === action.payload.idCliente
             );
 
             if (clienteExists) {
                 const clients = state.clientsData?.map((cli) => {
-                    if (cli.id === action.payload.id) {
+                    if (cli.idCliente === action.payload.idCliente) {
                         return action.payload;
                     }
 
