@@ -28,8 +28,8 @@ const App: React.FunctionComponent = (): JSX.Element => {
                     )}
                     {auth === "LoggedIn" && (
                         <Route path="/" element={<ApplicationLayout />}>
-                            <Route index element={<Navigate to="home" />} />
-                            <Route path="home" element={<Home />} />
+                            {/* <Route index element={<Navigate to="home" />} />
+                            <Route path="home" element={<Home />} /> */}
 
                             <Route path="MyAccount" element={<Defaultlayout />}>
                                 <Route index element={<Account />} />
@@ -42,7 +42,7 @@ const App: React.FunctionComponent = (): JSX.Element => {
                                 path="components"
                                 element={<TestComponents />}
                             />
-                            <Route path="*" element={<Navigate to="home" />} />
+                            <Route path="*" element={<Navigate to="/" />} />
                         </Route>
                     )}
                 </Route>
