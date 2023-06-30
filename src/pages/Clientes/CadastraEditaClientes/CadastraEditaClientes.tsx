@@ -17,11 +17,15 @@ import {
 import { FormWrapper } from "./styles";
 import { useSelector } from "react-redux";
 import { selectClientsData } from "../../../redux/features/clientsData/clientsDataSelectors";
-
+import Toast from "../../../components/Toast/Toast";
+interface IReturnEditAdd {
+    validOperation: boolean;
+    message: string;
+}
 export interface Props {
     cliente?: ICliente;
     voltar: () => void;
-    salvar: (cliente: IClienteRequest) => void;
+    salvar: (cliente: IClienteRequest) => Promise<IReturnEditAdd>;
 }
 
 const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
@@ -38,6 +42,8 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
 
     const [clienteContext, setClienteContext] =
         useState<IClienteRequest>(initialState);
+    const [toastMessage, setToastMessage] = useState<string>("");
+    const [showToast, setShowToast] = useState<boolean>(false);
 
     useEffect(() => {
         if (cliente)
@@ -55,6 +61,16 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
 
     return (
         <FormWrapper>
+            {showToast && (
+                <Toast
+                    mensagem={toastMessage}
+                    setShowToast={setShowToast}
+                    type="error"
+                    duration={7000}
+                    fixed={true}
+                    showToast={showToast}
+                />
+            )}
             <Row className="row">
                 <Col className="col">
                     <InputWrapper className="inputWrapper">
@@ -141,10 +157,16 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                 >
                     <div style={{ padding: "4px", width: "50%" }}>
                         <ButtonPrimary
-                            onClick={() => {
-                                salvar(clienteContext);
-                                setClienteContext(initialState);
-                                voltar();
+                            onClick={async () => {
+                                const saveObj = await salvar(clienteContext);
+                                if (!saveObj.validOperation) {
+                                    setToastMessage(saveObj.message);
+                                    setShowToast(true);
+                                    return;
+                                } else {
+                                    setClienteContext(initialState);
+                                    voltar();
+                                }
                             }}
                         >
                             Salvar

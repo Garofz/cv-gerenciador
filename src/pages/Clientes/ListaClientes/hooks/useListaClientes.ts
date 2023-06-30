@@ -13,11 +13,16 @@ import {
     editClient,
 } from "../../../../redux/features/clientsData/clientsDataSlice";
 import { selectUsuario } from "../../../../redux/features/generalData/generalDataSelectors";
+interface IReturnEditAdd {
+    validOperation: boolean;
+    message: string;
+}
+
 export interface IUseListaClientes {
     clientes: ICliente[];
     filtrarClientes: (nome: string) => void;
-    cadastrarCliente: (cliente: IClienteRequest) => void;
-    editarCliente: (cliente: IClienteRequest) => void;
+    cadastrarCliente: (cliente: IClienteRequest) => Promise<IReturnEditAdd>;
+    editarCliente: (cliente: IClienteRequest) => Promise<IReturnEditAdd>;
     message: string;
     setShowMessage: React.Dispatch<React.SetStateAction<boolean>>;
     showMessage: boolean;
@@ -43,13 +48,12 @@ const useListaClientes = (): IUseListaClientes => {
         )
             .unwrap()
             .then((res) => res);
-        console.log(response);
 
         if (response.clientes !== undefined)
             return setClientes(response.clientes);
 
         setMessage(
-            response?.controle?.message || "Erro ao consultar os clientes"
+            response.controle?.message || "Erro ao consultar os clientes"
         );
         setShowMessage(true);
     };
@@ -66,24 +70,106 @@ const useListaClientes = (): IUseListaClientes => {
             setClientes(filtrados);
         }
     };
-    const cadastrarCliente = async (cliente: IClienteRequest) => {
-        if (!user) return;
+
+    const cadastrarCliente = async (
+        cliente: IClienteRequest
+    ): Promise<IReturnEditAdd> => {
+        if (!user)
+            return {
+                message: "Usuário inválido",
+                validOperation: false,
+            };
 
         cliente.usuarioInclusao = user._Id;
 
-        await dispatch(addClient({ cliente: cliente }))
+        if (cliente.nome.trim() === "")
+            return {
+                message: "Nome Obrigatório",
+                validOperation: false,
+            };
+        if (cliente.inscricao.trim() === "")
+            return {
+                message: "Inscrição Obrigatória",
+                validOperation: false,
+            };
+        if (
+            (cliente.idtipoPessoa === 1 &&
+                cliente.inscricao.trim().length !== 11) ||
+            (cliente.idtipoPessoa === 2 &&
+                cliente.inscricao.trim().length !== 14)
+        )
+            return {
+                message: "Inscrição Inválida para o tipo de Pessoa",
+                validOperation: false,
+            };
+
+        const result = await dispatch(addClient({ cliente: cliente }))
             .unwrap()
-            .then(() => obterClientes());
+            .then((res) => res);
+        if (result.error !== undefined || result.data?.statusCode === 500) {
+            return {
+                message:
+                    result.controle.message || "erro ao cadastrar o cliente",
+                validOperation: false,
+            };
+        }
+
+        obterClientes();
+        return {
+            message: "",
+            validOperation: true,
+        };
     };
 
-    const editarCliente = async (cliente: IClienteRequest) => {
-        if (!user) return;
+    const editarCliente = async (
+        cliente: IClienteRequest
+    ): Promise<IReturnEditAdd> => {
+        if (!user)
+            return {
+                message: "Usuário inválido",
+                validOperation: false,
+            };
 
-        cliente.usuarioAlteracao = user._Id;
+        cliente.usuarioInclusao = user._Id;
 
-        await dispatch(editarClient({ cliente: cliente }))
+        if (cliente.nome.trim() === "")
+            return {
+                message: "Nome Obrigatório",
+                validOperation: false,
+            };
+        if (cliente.inscricao.trim() === "")
+            return {
+                message: "Inscrição Obrigatória",
+                validOperation: false,
+            };
+        if (
+            (cliente.idtipoPessoa === 1 &&
+                cliente.inscricao.trim().length !== 11) ||
+            (cliente.idtipoPessoa === 2 &&
+                cliente.inscricao.trim().length !== 14)
+        )
+            return {
+                message: "Inscrição Inválida para o tipo de Pessoa",
+                validOperation: false,
+            };
+
+        const result = await dispatch(editarClient({ cliente: cliente }))
             .unwrap()
-            .then(() => obterClientes());
+            .then((res) => res);
+        if (result.error !== undefined || result.data?.statusCode === 500) {
+            return {
+                message:
+                    result.controle.message ||
+                    `erro ao editar o cliente - Código:${cliente.idCliente}`,
+                validOperation: false,
+            };
+        }
+
+        obterClientes();
+        return {
+            message: "",
+            validOperation: true,
+        };
     };
 
     return {

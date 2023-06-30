@@ -21,7 +21,7 @@ export const getClients = createAsyncThunk(
                     },
                 }
             );
-            if (response.data.error != undefined) return response.data;
+            if (response.data.error !== undefined) return response.data;
 
             return response.data;
         } catch (err: any) {
@@ -32,42 +32,33 @@ export const getClients = createAsyncThunk(
 
 export const addClient = createAsyncThunk(
     "clientsData/addClient",
-    async (
-        args: {
-            cliente: IClienteRequest;
-        },
-        { fulfillWithValue, rejectWithValue }
-    ): Promise<ICliente | any> => {
+    async (args: { cliente: IClienteRequest }): Promise<ICliente | any> => {
         try {
-            const response = await MiddlewareAPI.post<IClienteResponse>(
+            const response = await MiddlewareAPI.post(
                 "cardapioVirtual/cliente",
                 { ...args.cliente }
             );
-
-            return fulfillWithValue(response.data.clientes);
-        } catch (err) {
-            return rejectWithValue(err);
+            if (response.data.error !== undefined) return response.data;
+            return response.data;
+        } catch (err: any) {
+            return err.response;
         }
     }
 );
 
 export const editarClient = createAsyncThunk(
     "clientsData/editarClient",
-    async (
-        args: {
-            cliente: IClienteRequest;
-        },
-        { fulfillWithValue, rejectWithValue }
-    ): Promise<ICliente | any> => {
+    async (args: { cliente: IClienteRequest }): Promise<ICliente | any> => {
         try {
-            const response = await MiddlewareAPI.put<IClienteResponse>(
+            const response = await MiddlewareAPI.put(
                 "cardapioVirtual/cliente",
                 { ...args.cliente }
             );
 
-            return fulfillWithValue(response.data.clientes);
-        } catch (err) {
-            return rejectWithValue(err);
+            if (response.data?.error !== undefined) return response.data;
+            return response.data;
+        } catch (err: any) {
+            return err.repsonse;
         }
     }
 );
