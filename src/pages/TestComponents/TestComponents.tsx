@@ -125,7 +125,7 @@ function TestComponents() {
                         <Label>Password</Label>
                         <Input
                             type="password"
-                            autoComplete=""
+                            autoComplete="senha"
                             placeholder="Com Label"
                         />
                     </InputWrapper>
@@ -133,7 +133,7 @@ function TestComponents() {
                     <InputWrapper style={{ width: "500px" }}>
                         <Input
                             type="password"
-                            autoComplete=""
+                            autoComplete="senha"
                             placeholder="Sem Label"
                         />
                     </InputWrapper>
