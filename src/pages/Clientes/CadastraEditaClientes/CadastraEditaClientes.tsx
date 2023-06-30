@@ -26,30 +26,18 @@ export interface Props {
 
 const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
     const selectClientes = useSelector(selectClientsData);
-    const mockData = (): IClienteRequest => {
-        let idAux = 0;
-        const id = selectClientes?.map((x) => {
-            if (idAux === 0) {
-                idAux = x.idCliente;
-            } else {
-                if (idAux < x.idCliente) {
-                    idAux = x.idCliente;
-                }
-            }
-        });
 
-        return {
-            idCliente: idAux + 1,
-            nome: "",
-            ativo: true,
-            tipoPessoa: 0,
-            logo: "",
-            inscricao: "",
-        };
+    const initialState = {
+        idCliente: 0,
+        nome: "",
+        ativo: true,
+        idtipoPessoa: 1,
+        logo: "",
+        inscricao: "",
     };
 
     const [clienteContext, setClienteContext] =
-        useState<IClienteRequest>(mockData);
+        useState<IClienteRequest>(initialState);
 
     useEffect(() => {
         if (cliente)
@@ -59,7 +47,7 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                 inscricao: cliente.inscricao,
                 logo: cliente.logo,
                 nome: cliente.nome,
-                tipoPessoa: cliente.tipoPessoa.idTipoPessoa,
+                idtipoPessoa: cliente.tipoPessoa.idTipoPessoa,
                 usuarioAlteracao: cliente.usuarioAlteracao?.idUsuario,
                 usuarioInclusao: cliente.usuarioInclusao?.idUsuario,
             });
@@ -105,7 +93,7 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                     <SelectWrapper className="inputWrapper">
                         <Label>Tipo de Pessoa</Label>
                         <Select
-                            value={clienteContext.tipoPessoa}
+                            value={clienteContext.idtipoPessoa}
                             onChange={(e) =>
                                 setClienteContext((prev) => ({
                                     ...prev,
@@ -155,6 +143,7 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                         <ButtonPrimary
                             onClick={() => {
                                 salvar(clienteContext);
+                                setClienteContext(initialState);
                                 voltar();
                             }}
                         >

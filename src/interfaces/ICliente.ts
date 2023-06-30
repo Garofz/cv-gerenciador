@@ -10,7 +10,7 @@ export interface IClienteRequest {
     idCliente: number;
     nome: string;
     inscricao: string;
-    tipoPessoa: number;
+    idtipoPessoa: number;
     ativo: boolean;
     logo: string;
     usuarioInclusao?: number;

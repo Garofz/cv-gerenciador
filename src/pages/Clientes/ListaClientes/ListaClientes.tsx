@@ -209,10 +209,7 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                                                 }}
                                             >
                                                 <ClienteIconWrapper>
-                                                    <FaPen
-                                                        size={20}
-                                                        color="#27374D"
-                                                    />
+                                                    <FaPen size={20} />
                                                 </ClienteIconWrapper>
                                             </IconContainer>
                                         </ClienteWrapper>

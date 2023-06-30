@@ -12,6 +12,7 @@ import {
     adicionaCliente,
     editClient,
 } from "../../../../redux/features/clientsData/clientsDataSlice";
+import { selectUsuario } from "../../../../redux/features/generalData/generalDataSelectors";
 export interface IUseListaClientes {
     clientes: ICliente[];
     filtrarClientes: (nome: string) => void;
@@ -23,17 +24,18 @@ const useListaClientes = (): IUseListaClientes => {
     const [clientes, setClientes] = useState<ICliente[]>([]);
     const dispatch = useAsyncDispatch();
     const clientesData = useSelector(selectClientsData);
+    const user = useSelector(selectUsuario);
 
     useEffect(() => {
         obterClientes();
     }, []);
 
     const obterClientes = async () => {
-        if (!clientesData)
-            await dispatch(getClients())
-                .unwrap()
-                .then((res) => setClientes(res));
-        else setClientes(clientesData);
+        if (!user) return;
+
+        await dispatch(getClients({ token: user.accessToken.token }))
+            .unwrap()
+            .then((res) => setClientes(res));
     };
 
     const filtrarClientes = (param: string) => {
@@ -49,16 +51,24 @@ const useListaClientes = (): IUseListaClientes => {
         }
     };
     const cadastrarCliente = async (cliente: IClienteRequest) => {
-        console.log("cadastra", cliente);
+        if (!user) return;
+
+        cliente.usuarioInclusao = user._Id;
+
+        await dispatch(addClient({ cliente: cliente }))
+            .unwrap()
+            .then(() => obterClientes());
     };
 
     const editarCliente = async (cliente: IClienteRequest) => {
-        console.log("edita", cliente);
-    };
+        if (!user) return;
 
-    useEffect(() => {
-        obterClientes();
-    }, [cadastrarCliente, editarCliente]);
+        cliente.usuarioAlteracao = user._Id;
+
+        await dispatch(editarClient({ cliente: cliente }))
+            .unwrap()
+            .then(() => obterClientes());
+    };
 
     return {
         clientes,
