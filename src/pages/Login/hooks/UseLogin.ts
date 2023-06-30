@@ -33,7 +33,8 @@ const UseLogin = () => {
         try {
             const response = await dispatch(postLogin({ email, senha }))
                 .unwrap()
-                .then((res) => res);
+                .then((res) => res)
+                .catch((err) => console.log(err));
 
             console.log(response);
 
@@ -42,9 +43,7 @@ const UseLogin = () => {
                 return true;
             }
 
-            setToastMessage(
-                "Não foi possível realizar o login, verifique os dados e tente novamente"
-            );
+            setToastMessage(response.controle.message);
             setToast(true);
 
             return false;

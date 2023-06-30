@@ -1,3 +1,9 @@
+import { IControleResponse } from "./IBadRequestResponse";
+
+export interface ILoginUsuarioResponse {
+    user: IUsuario;
+    controle: IControleResponse;
+}
 export interface IUsuario {
     _Id: number;
     name: string;

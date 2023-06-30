@@ -18,10 +18,15 @@ export interface IUseListaClientes {
     filtrarClientes: (nome: string) => void;
     cadastrarCliente: (cliente: IClienteRequest) => void;
     editarCliente: (cliente: IClienteRequest) => void;
+    message: string;
+    setShowMessage: React.Dispatch<React.SetStateAction<boolean>>;
+    showMessage: boolean;
 }
 
 const useListaClientes = (): IUseListaClientes => {
     const [clientes, setClientes] = useState<ICliente[]>([]);
+    const [message, setMessage] = useState<string>("");
+    const [showMessage, setShowMessage] = useState<boolean>(false);
     const dispatch = useAsyncDispatch();
     const clientesData = useSelector(selectClientsData);
     const user = useSelector(selectUsuario);
@@ -33,9 +38,20 @@ const useListaClientes = (): IUseListaClientes => {
     const obterClientes = async () => {
         if (!user) return;
 
-        await dispatch(getClients({ token: user.accessToken.token }))
+        const response = await dispatch(
+            getClients({ token: user.accessToken.token })
+        )
             .unwrap()
-            .then((res) => setClientes(res));
+            .then((res) => res);
+        console.log(response);
+
+        if (response.clientes !== undefined)
+            return setClientes(response.clientes);
+
+        setMessage(
+            response?.controle?.message || "Erro ao consultar os clientes"
+        );
+        setShowMessage(true);
     };
 
     const filtrarClientes = (param: string) => {
@@ -75,6 +91,9 @@ const useListaClientes = (): IUseListaClientes => {
         filtrarClientes,
         cadastrarCliente,
         editarCliente,
+        message,
+        setShowMessage,
+        showMessage,
     };
 };
 

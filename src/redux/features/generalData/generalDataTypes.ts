@@ -1,3 +1,4 @@
+import { IBadRequestResponse } from "../../../interfaces/IBadRequestResponse";
 import { IUsuario } from "../../../interfaces/IUsuario";
 
 export type GeneralDataState = {
@@ -12,7 +13,9 @@ export type GeneralDataState = {
     auth: "LoggedIn" | "LoggedOut";
 
     //UsuarioLogin
-    usuario: IUsuario | undefined
-}
+    usuario: IUsuario | undefined;
 
-export type GeneralDataStateResponseType = string
+    errorMessage: string | undefined;
+};
+
+export type GeneralDataStateResponseType = string;

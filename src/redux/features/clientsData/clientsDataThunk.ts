@@ -11,14 +11,9 @@ import { IBadRequestResponse } from "../../../interfaces/IBadRequestResponse";
 
 export const getClients = createAsyncThunk(
     "clientsData/getClients",
-    async (
-        args: {
-            token: string;
-        },
-        { fulfillWithValue, rejectWithValue }
-    ): Promise<ICliente | any> => {
+    async (args: { token: string }): Promise<ICliente | any> => {
         try {
-            const response = await MiddlewareAPI.get<IClienteResponse>(
+            const response = await MiddlewareAPI.get(
                 "cardapioVirtual/clientes",
                 {
                     headers: {
@@ -26,10 +21,11 @@ export const getClients = createAsyncThunk(
                     },
                 }
             );
+            if (response.data.error != undefined) return response.data;
 
-            return fulfillWithValue(response.data.clientes);
-        } catch (err) {
-            return rejectWithValue(err);
+            return response.data;
+        } catch (err: any) {
+            return err.response;
         }
     }
 );

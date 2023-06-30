@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IUsuario } from "../../../interfaces/IUsuario";
+import { ILoginUsuarioResponse, IUsuario } from "../../../interfaces/IUsuario";
 import { MiddlewareAPI } from "../../../config/api";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { IBadRequestResponse } from "../../../interfaces/IBadRequestResponse";
 
 export const getGeneralData = createAsyncThunk(
@@ -10,25 +10,20 @@ export const getGeneralData = createAsyncThunk(
         return "";
     }
 );
-
-const mock: IUsuario[] = [];
-
 export const postLogin = createAsyncThunk(
     "generalData/postLogin",
-    async (
-        args: { email: string; senha: string },
-        { rejectWithValue, fulfillWithValue }
-    ): Promise<IUsuario | any> => {
+    async (args: { email: string; senha: string }): Promise<IUsuario | any> => {
         try {
-            const { data } = await MiddlewareAPI.post<
-                AxiosResponse<IUsuario | IBadRequestResponse>
-            >("authSchema/login", {
+            const response = await MiddlewareAPI.post("authSchema/login", {
                 email: args.email,
                 password: args.senha,
             });
-            return fulfillWithValue(data);
-        } catch (err) {
-            return rejectWithValue(err);
+
+            if (response.data.error != undefined) return response.data;
+
+            return response.data.user;
+        } catch (err: any) {
+            return err.response;
         }
     }
 );

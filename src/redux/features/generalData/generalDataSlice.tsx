@@ -1,3 +1,4 @@
+import { IBadRequestResponse } from "../../../interfaces/IBadRequestResponse";
 import { IUsuario } from "../../../interfaces/IUsuario";
 import { getGeneralData, postLogin } from "./generalDataThunk";
 import { GeneralDataState } from "./generalDataTypes";
@@ -9,6 +10,7 @@ const initialState: GeneralDataState = {
     loading: false,
     auth: "LoggedOut",
     usuario: undefined,
+    errorMessage: undefined,
 };
 
 const generalDataSlice = createSlice({
@@ -50,8 +52,9 @@ const generalDataSlice = createSlice({
                 state.usuario = action.payload;
             }
         );
-        buider.addCase(postLogin.rejected, (state: GeneralDataState) => {
+        buider.addCase(postLogin.rejected, (state: GeneralDataState, e) => {
             state.loading = false;
+            state.errorMessage = e.error.message;
         });
         buider.addCase(postLogin.pending, (state: GeneralDataState) => {
             state.loading = true;

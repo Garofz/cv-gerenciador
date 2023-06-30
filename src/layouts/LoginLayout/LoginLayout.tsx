@@ -15,7 +15,13 @@ function LoginLayout() {
             <ContainerContent>
                 <ContainerLogoDiv>
                     <ContainerLogo>
-                        <TitleH1>Cardapio Virtual</TitleH1>
+                        <TitleH1
+                            style={{
+                                textAlign: "center",
+                            }}
+                        >
+                            Cardapio Virtual
+                        </TitleH1>
                     </ContainerLogo>
                     <ContainerLogo>Gerenciador</ContainerLogo>
                 </ContainerLogoDiv>

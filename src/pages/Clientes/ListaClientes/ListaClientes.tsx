@@ -41,6 +41,7 @@ import { useSelector } from "react-redux";
 import { selectClientsDataStatus } from "../../../redux/features/clientsData/clientsDataSelectors";
 import Spinner from "../../../components/Spinner/Spinner";
 import { Navigate } from "react-router-dom";
+import Toast from "../../../components/Toast/Toast";
 
 export interface Props {
     selectCliente: (cliente?: ICliente) => void;
@@ -49,12 +50,29 @@ export interface Props {
 }
 
 function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
-    const { clientes, filtrarClientes, cadastrarCliente, editarCliente } =
-        useListaClientes();
+    const {
+        clientes,
+        filtrarClientes,
+        cadastrarCliente,
+        editarCliente,
+        message,
+        setShowMessage,
+        showMessage,
+    } = useListaClientes();
     const clientesStatus = useSelector(selectClientsDataStatus);
     const { openModal, closeModal, modalOpen } = useModal();
     return (
         <div>
+            {showMessage && (
+                <Toast
+                    mensagem={message}
+                    type="error"
+                    setShowToast={setShowMessage}
+                    showToast={showMessage}
+                    duration={10000}
+                    fixed={true}
+                />
+            )}
             {modalOpen && (
                 <FadeIn duration={200}>
                     <Modal
@@ -126,98 +144,108 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                             </div>
                         </SubHeaderHandler>
                         <Divider size={24} />
-                        {clientes.map((cliente, index) => {
-                            return (
-                                <div key={index}>
-                                    <FadeIn duration={200}>
-                                        <ClienteWrapper>
-                                            <div
-                                                style={{ width: "95%" }}
-                                                onClick={() => {
-                                                    selectCliente(cliente);
-                                                    nextLayout("detail");
-                                                }}
-                                            >
-                                                <ClienteTitle>
-                                                    <TitleH3>
-                                                        {cliente.nome}
-                                                    </TitleH3>
-                                                    <Subtitle2>
-                                                        <b>#</b>{" "}
-                                                        {cliente.idCliente}
-                                                    </Subtitle2>
-                                                </ClienteTitle>
-                                                <ClienteBody>
-                                                    <div
-                                                        style={{
-                                                            padding: 8,
-                                                            width: "250px",
-                                                        }}
-                                                    >
-                                                        <TextBold>
-                                                            Inscrição:{" "}
-                                                        </TextBold>
-                                                        {cliente.inscricao}
-                                                    </div>
-                                                    <div
-                                                        style={{
-                                                            padding: 8,
-                                                            display: "flex",
-                                                            flexDirection:
-                                                                "row",
-                                                            alignItems:
-                                                                "center",
-                                                        }}
-                                                    >
-                                                        <TextBold>
-                                                            Ativo:{" "}
-                                                        </TextBold>
+                        {clientes &&
+                            clientes.map((cliente, index) => {
+                                return (
+                                    <div key={index}>
+                                        <FadeIn duration={200}>
+                                            <ClienteWrapper>
+                                                <div
+                                                    style={{ width: "95%" }}
+                                                    onClick={() => {
+                                                        selectCliente(cliente);
+                                                        nextLayout("detail");
+                                                    }}
+                                                >
+                                                    <ClienteTitle>
+                                                        <TitleH3>
+                                                            {cliente.nome}
+                                                        </TitleH3>
+                                                        <Subtitle2>
+                                                            <b>#</b>{" "}
+                                                            {cliente.idCliente}
+                                                        </Subtitle2>
+                                                    </ClienteTitle>
+                                                    <ClienteBody>
                                                         <div
                                                             style={{
-                                                                marginLeft: 4,
+                                                                padding: 8,
+                                                                width: "250px",
                                                             }}
                                                         >
-                                                            {cliente.ativo ? (
-                                                                <FaCheck
-                                                                    size={18}
-                                                                    color="#27ca21"
-                                                                />
-                                                            ) : (
-                                                                <FaTimes
-                                                                    size={18}
-                                                                    color="#f21515"
-                                                                />
-                                                            )}
+                                                            <TextBold>
+                                                                Inscrição:{" "}
+                                                            </TextBold>
+                                                            {cliente.inscricao}
                                                         </div>
-                                                    </div>
-                                                    <div style={{ padding: 8 }}>
-                                                        <TextBold>
-                                                            Pessoa:{" "}
-                                                        </TextBold>
-                                                        {
-                                                            cliente.tipoPessoa
-                                                                .descricao
-                                                        }
-                                                    </div>
-                                                </ClienteBody>
-                                            </div>
-                                            <IconContainer
-                                                style={{ width: "5%" }}
-                                                onClick={() => {
-                                                    selectCliente(cliente);
-                                                    openModal();
-                                                }}
-                                            >
-                                                <ClienteIconWrapper>
-                                                    <FaPen size={20} />
-                                                </ClienteIconWrapper>
-                                            </IconContainer>
-                                        </ClienteWrapper>
-                                        <Divider size={4} />
-                                    </FadeIn>
-                                </div>
-                            );
-                        })}
+                                                        <div
+                                                            style={{
+                                                                padding: 8,
+                                                                display: "flex",
+                                                                flexDirection:
+                                                                    "row",
+                                                                alignItems:
+                                                                    "center",
+                                                            }}
+                                                        >
+                                                            <TextBold>
+                                                                Ativo:{" "}
+                                                            </TextBold>
+                                                            <div
+                                                                style={{
+                                                                    marginLeft: 4,
+                                                                }}
+                                                            >
+                                                                {cliente.ativo ? (
+                                                                    <FaCheck
+                                                                        size={
+                                                                            18
+                                                                        }
+                                                                        color="#27ca21"
+                                                                    />
+                                                                ) : (
+                                                                    <FaTimes
+                                                                        size={
+                                                                            18
+                                                                        }
+                                                                        color="#f21515"
+                                                                    />
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            style={{
+                                                                padding: 8,
+                                                            }}
+                                                        >
+                                                            <TextBold>
+                                                                Pessoa:{" "}
+                                                            </TextBold>
+                                                            {
+                                                                cliente
+                                                                    .tipoPessoa
+                                                                    .descricao
+                                                            }
+                                                        </div>
+                                                    </ClienteBody>
+                                                </div>
+                                                <IconContainer
+                                                    style={{ width: "5%" }}
+                                                    onClick={() => {
+                                                        selectCliente(cliente);
+                                                        openModal();
+                                                    }}
+                                                >
+                                                    <ClienteIconWrapper>
+                                                        <FaPen size={20} />
+                                                    </ClienteIconWrapper>
+                                                </IconContainer>
+                                            </ClienteWrapper>
+                                            <Divider size={4} />
+                                        </FadeIn>
+                                    </div>
+                                );
+                            })}
                     </div>
                 )}
             </div>
