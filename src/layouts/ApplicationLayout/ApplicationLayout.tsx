@@ -42,8 +42,8 @@ function ApplicationLayout() {
     ];
 
     useEffect(() => {
-        // const path = `/${location.pathname.split("/")[1]}`;
-        // if (menuRef.current) menuRef.current.setMenuButton(path);
+        const path = `/${location.pathname.split("/")[1]}`;
+        if (menuRef.current) menuRef.current.setMenuButton(path);
     }, [location.pathname]);
 
     return (
@@ -78,7 +78,7 @@ function ApplicationLayout() {
             <SubContentDiv>
                 <SideMenuDiv>
                     <Menu
-                        ref={menuRef}
+                        references={menuRef}
                         menus={menus}
                         colapsed={menuColapsed}
                         redirectTo={(path) => navigation(path)}

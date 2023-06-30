@@ -1,5 +1,5 @@
 import React from "react";
-import { useSpring, animated, config, easings } from "react-spring";
+import { useSpring, animated, easings } from "react-spring";
 import { IAnimationProps } from "../IAnimationProps";
 
 const FadeIn: React.FC<IAnimationProps> = ({ children, duration }) => {
@@ -18,15 +18,18 @@ const FadeIn: React.FC<IAnimationProps> = ({ children, duration }) => {
         },
         delay: 10,
     });
+
+    const Animated = animated.div;
+
     return (
-        <animated.div
+        <Animated
             style={{
                 opacity,
                 transform: transform.to((x) => `scale(${x})`),
             }}
         >
             {children}
-        </animated.div>
+        </Animated>
     );
 };
 

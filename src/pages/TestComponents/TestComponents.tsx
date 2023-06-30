@@ -102,7 +102,7 @@ function TestComponents() {
                 </div>
             </Accordion>
             <Accordion title="Input">
-                <div style={{ padding: "12px 0px" }}>
+                <form style={{ padding: "12px 0px" }}>
                     <InputWrapper style={{ width: "500px" }}>
                         <Label>Teste</Label>
                         <Input type="text" placeholder="Com Label" />
@@ -123,11 +123,19 @@ function TestComponents() {
                     <Divider size={12} />
                     <InputWrapper style={{ width: "500px" }}>
                         <Label>Password</Label>
-                        <Input type="password" placeholder="Com Label" />
+                        <Input
+                            type="password"
+                            autoComplete=""
+                            placeholder="Com Label"
+                        />
                     </InputWrapper>
                     <Divider size={12} />
                     <InputWrapper style={{ width: "500px" }}>
-                        <Input type="password" placeholder="Sem Label" />
+                        <Input
+                            type="password"
+                            autoComplete=""
+                            placeholder="Sem Label"
+                        />
                     </InputWrapper>
                     <Divider size={12} />
                     <InputWrapper style={{ width: "500px" }}>
@@ -138,7 +146,7 @@ function TestComponents() {
                     <SelectWrapper style={{ width: "500px" }}>
                         <Label>Select</Label>
                         <Select>
-                            <Option value={0} selected>
+                            <Option value={0} defaultChecked>
                                 --- Select ---
                             </Option>
                             <Option value={0}> Teste</Option>
@@ -147,7 +155,7 @@ function TestComponents() {
                             <Option value={3}> Teste 4</Option>
                         </Select>
                     </SelectWrapper>
-                </div>
+                </form>
             </Accordion>
             <Accordion title="Animations">
                 <Divider size={32} />

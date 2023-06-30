@@ -1,33 +1,25 @@
 import styled, { css, keyframes } from "styled-components";
 
-export const TitleH1 = styled.h1`
-
-`;
-export const TitleH2 = styled.h2`
-
-`;
+export const TitleH1 = styled.h1``;
+export const TitleH2 = styled.h2``;
 export const TitleH3 = styled.h3`
     margin: 5px 0px !important;
 `;
-export const TitleH4 = styled.h4`
-
-`;
-export const TitleH5 = styled.h5`
-
-`;
-export const TextBold = styled.text`
+export const TitleH4 = styled.h4``;
+export const TitleH5 = styled.h5``;
+export const TextBold = styled.span`
     font-weight: 600;
 `;
 export const TextBody = styled.div`
     width: 200px;
 `;
-export const Subtitle1 = styled.text`
+export const Subtitle1 = styled.span`
     font-size: 24px;
-    color: ${({color}) => color};
+    color: ${({ color }) => color};
 `;
-export const Subtitle2 = styled.text`
+export const Subtitle2 = styled.span`
     font-size: 18px;
-    color: ${({color}) => color};
+    color: ${({ color }) => color};
 `;
 
 export const ButtonPrimary = styled.button`
@@ -35,12 +27,12 @@ export const ButtonPrimary = styled.button`
     border-radius: 50px;
     width: 100%;
     height: 50px;
-    background: #27374D;
+    background: #27374d;
     color: #fff;
     padding: 16px 32px;
     cursor: pointer;
-    &:hover{
-        background: #526D82;
+    &:hover {
+        background: #526d82;
         transition: 0.2s ease-out;
     }
 `;
@@ -48,14 +40,14 @@ export const ButtonOutlinePrimary = styled.button`
     border: none;
     border-radius: 50px;
     height: 50px;
-    border:2px solid #27374D;
+    border: 2px solid #27374d;
     background: #fff;
-    color:#27374D;
+    color: #27374d;
     padding: 16px 32px;
     width: 100%;
     cursor: pointer;
-    &:hover{
-        background: #27374D;
+    &:hover {
+        background: #27374d;
         color: #fff;
         transition: 0.2s ease-out;
     }
@@ -64,12 +56,12 @@ export const ButtonSecondary = styled.button`
     border: none;
     border-radius: 50px;
     height: 50px;
-    background: #526D82;
+    background: #526d82;
     color: #fff;
     padding: 16px 32px;
     cursor: pointer;
-    &:hover{
-        background: #27374D;
+    &:hover {
+        background: #27374d;
         color: #fff;
         transition: 0.2s ease-out;
     }
@@ -78,13 +70,13 @@ export const ButtonOutlineSecondary = styled.button`
     border: none;
     border-radius: 50px;
     height: 50px;
-    border:2px solid #526D82;
+    border: 2px solid #526d82;
     background: #fff;
-    color:#526D82;
+    color: #526d82;
     padding: 16px 32px;
     cursor: pointer;
-    &:hover{
-        background: #526D82;
+    &:hover {
+        background: #526d82;
         color: #fff;
         transition: 0.2s ease-out;
     }
@@ -97,7 +89,7 @@ export const ButtonAlert = styled.button`
     color: #fff;
     padding: 16px 32px;
     cursor: pointer;
-    &:hover{
+    &:hover {
         background: #ff9b4f;
         color: #fff;
         transition: 0.2s ease-out;
@@ -107,12 +99,12 @@ export const ButtonOutlineAlert = styled.button`
     border: none;
     border-radius: 50px;
     height: 50px;
-    border:2px solid #ff7c11;
+    border: 2px solid #ff7c11;
     background: #fff;
-    color:#ff7c11;
+    color: #ff7c11;
     padding: 16px 32px;
     cursor: pointer;
-    &:hover{
+    &:hover {
         background: #ff7c11;
         color: #fff;
         transition: 0.2s ease-out;
@@ -127,7 +119,7 @@ export const ButtonDanger = styled.button`
     color: #fff;
     padding: 16px 32px;
     cursor: pointer;
-    &:hover{
+    &:hover {
         background: #f21515;
         color: #fff;
         transition: 0.2s ease-out;
@@ -137,65 +129,61 @@ export const ButtonOutlineDanger = styled.button`
     border: none;
     border-radius: 50px;
     height: 50px;
-    border:2px solid #f21515;
+    border: 2px solid #f21515;
     background: #fff;
-    color:#f21515;
+    color: #f21515;
     padding: 16px 32px;
     cursor: pointer;
-    &:hover{
+    &:hover {
         background: #f21515;
         color: #fff;
         transition: 0.2s ease-out;
     }
 `;
 
-export interface SizeParams{
+export interface SizeParams {
     size: 4 | 8 | 12 | 16 | 20 | 24 | 28 | 32 | 36 | 40;
 }
 
 export const Divider = styled.div<SizeParams>`
-
     @media (min-width: 768px) and (max-width: 1023px) {
-        margin:${(props) => props.size/2 || 0}px;
-
+        margin: ${(props) => props.size / 2 || 0}px;
     }
     @media (max-width: 767px) {
-        /* Estilos para dispositivos mobile */ 
-        margin:${(props) => props.size/3 || 0}px;
-
+        /* Estilos para dispositivos mobile */
+        margin: ${(props) => props.size / 3 || 0}px;
     }
-    margin:${(props) => props.size || 0}px;
+    margin: ${(props) => props.size || 0}px;
 `;
 
 export const InputWrapper = styled.div`
-    display:flex;
-    flex-direction:column;
-    
+    display: flex;
+    flex-direction: column;
 `;
 
 export const Input = styled.input`
-  border: none;
-  border-bottom: 2px solid #ccc;
-  transition: border-bottom-color 0.5s;
-  font-size: 18px;
-  &:focus {
-    border-bottom-color: #000;
-    outline: none;
-  }
+    border: none;
+    border-bottom: 2px solid #ccc;
+    transition: border-bottom-color 0.5s;
+    font-size: 18px;
+    &:focus {
+        border-bottom-color: #000;
+        outline: none;
+    }
 
     @media (min-width: 768px) and (max-width: 1023px) {
         /* Estilos para dispositivos tablet */
     }
     @media (max-width: 767px) {
-        /* Estilos para dispositivos mobile */ 
+        /* Estilos para dispositivos mobile */
         font-size: 80%;
     }
 `;
 
 export const Label = styled.label`
-    flex-direction:column-reverse;
+    flex-direction: column-reverse;
     pointer-events: none;
-    color: #27374D;
+    color: #27374d;
     font-weight: bold;
     transition: transform 0.3s, font-size 0.3s;
     transform-origin: top left;
@@ -207,27 +195,26 @@ export const Label = styled.label`
 `;
 
 export const SelectWrapper = styled.div`
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const Select = styled.select`
     border: none;
     border-bottom: 2px solid #ccc;
     transition: border-bottom-color 0.5s;
-    font-size: 18px;  
+    font-size: 18px;
     &:focus {
-        border-bottom-color: #27374D;
+        border-bottom-color: #27374d;
         outline: none;
     }
 `;
 
 export const Option = styled.option`
-    font-size: 18px;  
+    font-size: 18px;
     padding: 4px 8px;
     background-color: #fff;
 `;
-
 
 export const Row = styled.div`
     display: flex;
@@ -245,10 +232,10 @@ export const Col = styled.div`
 `;
 
 export const Container = styled.div`
-  width: 100%;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 16px;
-  padding-right: 16px;
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
 `;

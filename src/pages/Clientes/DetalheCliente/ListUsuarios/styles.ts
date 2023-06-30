@@ -44,7 +44,7 @@ export const SubHeaderHandler = styled.div`
 
 export const UsuarioTitleDiv = styled.div``;
 
-export const UsuarioTitle = styled.text`
+export const UsuarioTitle = styled.span`
     display: flex;
     flex-direction: row;
     justify-content: start;

@@ -36,8 +36,6 @@ const useDetalheCliente = (idCliente: number): IuseDetalheCliente => {
             .unwrap()
             .then((res) => res);
 
-        console.log(response);
-
         if (response.usuarios !== undefined) {
             setUsuariosFiltrados(response.usuarios);
             setUsuarios(response.usuarios);

@@ -34,9 +34,7 @@ const UseLogin = () => {
             const response = await dispatch(postLogin({ email, senha }))
                 .unwrap()
                 .then((res) => res)
-                .catch((err) => console.log(err));
-
-            console.log(response);
+                .catch((err) => err);
 
             if (response && response.error == null) {
                 await dispatch(logIn());

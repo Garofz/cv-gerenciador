@@ -73,7 +73,6 @@ export const consultaUsuariosCliente = createAsyncThunk(
             const response = await MiddlewareAPI.get(
                 `cardapioVirtual/cliente/${args.idCliente}/usuarios`
             );
-            console.log(response);
 
             if (response.data?.error !== undefined) return response.data;
             return response.data;

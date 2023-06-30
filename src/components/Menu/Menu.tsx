@@ -3,6 +3,7 @@ import React, {
     useState,
     useEffect,
     useImperativeHandle,
+    Ref,
 } from "react";
 import {
     Button,
@@ -25,7 +26,7 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
     currentSelectionPath?: string;
     onMenuSelected?: (menuName: string, menuIndex: number) => void;
     redirectTo?: (path: string) => void;
-    ref: React.Ref<MenuHandle>;
+    references: Ref<MenuHandle>;
 }
 
 export interface MenuHandle {
@@ -38,7 +39,7 @@ const Menu: React.ForwardRefRenderFunction<MenuHandle, Props> = ({
     onMenuSelected,
     redirectTo,
     currentSelectionPath,
-    ref,
+    references,
     ...props
 }): JSX.Element => {
     const [selected, setSelected] = useState<string>(menus[0].text);
@@ -58,7 +59,7 @@ const Menu: React.ForwardRefRenderFunction<MenuHandle, Props> = ({
         }
     }, [currentSelectionPath]);
 
-    useImperativeHandle(ref, () => ({
+    useImperativeHandle(references, () => ({
         setMenuButton: (path: string): void => {
             const menu = menus.find((menuItem) => menuItem.path === path);
             if (menu) setSelected(menu.text);
