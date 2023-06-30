@@ -30,6 +30,20 @@ function Login() {
 
     if (loading) return <Spinner />;
 
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Impede o comportamento padrão do formulário de ser disparado
+            if (!email || email.trim() === "") {
+                setValidEmail(false);
+                return;
+            }
+            if (!senha || senha.trim() === "") {
+                setValidSenha(false);
+                return;
+            }
+            submitForm();
+        }
+    };
     return (
         <LoginFormWrapper>
             <Toast
@@ -59,6 +73,7 @@ function Login() {
                         }
                         setEmail(e.target.value);
                     }}
+                    onKeyDown={handleKeyPress}
                     placeholder="Email"
                 />
                 {validEmail || (
@@ -82,6 +97,7 @@ function Login() {
                         }
                         setSenha(e.target.value);
                     }}
+                    onKeyDown={handleKeyPress}
                     placeholder="Senha"
                 />
                 {validSenha || (
