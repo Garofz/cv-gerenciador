@@ -1,25 +1,36 @@
 import styled, { css, keyframes } from "styled-components";
 
-export const TitleH1 = styled.h1``;
-export const TitleH2 = styled.h2``;
+export const TitleH1 = styled.h1`
+    color: ${({ theme }) => theme.colors.neutral10};
+`;
+export const TitleH2 = styled.h2`
+    color: ${({ theme }) => theme.colors.neutral9};
+`;
 export const TitleH3 = styled.h3`
     margin: 5px 0px !important;
+    color: ${({ theme }) => theme.colors.neutral8};
 `;
-export const TitleH4 = styled.h4``;
-export const TitleH5 = styled.h5``;
+export const TitleH4 = styled.h4`
+    color: ${({ theme }) => theme.colors.neutral8};
+`;
+export const TitleH5 = styled.h5`
+    color: ${({ theme }) => theme.colors.neutral7};
+`;
 export const TextBold = styled.span`
     font-weight: 600;
+    color: ${({ theme }) => theme.colors.neutral10};
 `;
 export const TextBody = styled.div`
     width: 200px;
+    color: ${({ theme }) => theme.colors.neutral10};
 `;
 export const Subtitle1 = styled.span`
     font-size: 24px;
-    color: ${({ color }) => color};
+    color: ${({ theme }) => theme.colors.neutral6};
 `;
 export const Subtitle2 = styled.span`
     font-size: 18px;
-    color: ${({ color }) => color};
+    color: ${({ theme }) => theme.colors.neutral6};
 `;
 
 export const ButtonPrimary = styled.button`
@@ -163,11 +174,13 @@ export const InputWrapper = styled.div`
 
 export const Input = styled.input`
     border: none;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid ${({ theme }) => theme.colors.ccc};
+    color: ${({ theme }) => theme.colors.neutral8};
     transition: border-bottom-color 0.5s;
     font-size: 18px;
+    background: transparent;
     &:focus {
-        border-bottom-color: #000;
+        border-bottom-color: ${({ theme }) => theme.colors.secondary};
         outline: none;
     }
 
@@ -183,7 +196,7 @@ export const Input = styled.input`
 export const Label = styled.label`
     flex-direction: column-reverse;
     pointer-events: none;
-    color: #27374d;
+    color: ${({ theme }) => theme.colors.primary};
     font-weight: bold;
     transition: transform 0.3s, font-size 0.3s;
     transform-origin: top left;
