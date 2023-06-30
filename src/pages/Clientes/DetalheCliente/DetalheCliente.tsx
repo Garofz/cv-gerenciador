@@ -26,15 +26,27 @@ import Modal from "../../../components/Modal/Modal";
 import CadastraEditaClientes from "../CadastraEditaClientes/CadastraEditaClientes";
 import useDetalheCliente from "./hooks/useDetalheCliente";
 import ListUsuarios from "./ListUsuarios/ListUsuarios";
+import Toast from "../../../components/Toast/Toast";
 
 export interface IDetalheClienteProps {
     cliente: ICliente;
 }
 
 function DetalheCliente({ cliente }: IDetalheClienteProps) {
-    const { filtrarUsuarios, usuarios } = useDetalheCliente(cliente.idCliente);
+    const { filtrarUsuarios, usuarios, setShowToast, showToast, toastMessage } =
+        useDetalheCliente(cliente.idCliente);
     return (
         <ContainerClienteDiv>
+            {showToast && (
+                <Toast
+                    mensagem={toastMessage}
+                    type="error"
+                    setShowToast={setShowToast}
+                    duration={5000}
+                    fixed={true}
+                    showToast={showToast}
+                />
+            )}
             <FadeIn duration={400}>
                 <ContainerClienteTitle>
                     <ClienteAvatarWrapper>

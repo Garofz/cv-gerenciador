@@ -8,6 +8,7 @@ import { IUsuario } from "../../../interfaces/IUsuario";
 import { MiddlewareAPI } from "../../../config/api";
 import { AxiosResponse } from "axios";
 import { IBadRequestResponse } from "../../../interfaces/IBadRequestResponse";
+import { IUserClienteResponse } from "../../../interfaces/IUserClienteResponse";
 
 export const getClients = createAsyncThunk(
     "clientsData/getClients",
@@ -54,6 +55,25 @@ export const editarClient = createAsyncThunk(
                 "cardapioVirtual/cliente",
                 { ...args.cliente }
             );
+
+            if (response.data?.error !== undefined) return response.data;
+            return response.data;
+        } catch (err: any) {
+            return err.repsonse;
+        }
+    }
+);
+
+export const consultaUsuariosCliente = createAsyncThunk(
+    "clientsData/editarClient",
+    async (args: {
+        idCliente: number;
+    }): Promise<IUserClienteResponse | any> => {
+        try {
+            const response = await MiddlewareAPI.get(
+                `cardapioVirtual/cliente/${args.idCliente}/usuarios`
+            );
+            console.log(response);
 
             if (response.data?.error !== undefined) return response.data;
             return response.data;
