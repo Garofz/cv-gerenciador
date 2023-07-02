@@ -33,6 +33,10 @@ export const Subtitle2 = styled.span`
     color: ${({ theme }) => theme.colors.neutral6};
 `;
 
+export const TextNormal = styled.span`
+    color: ${({ theme }) => theme.colors.neutral8};
+`;
+
 export const ButtonPrimary = styled.button`
     border: none;
     border-radius: 50px;

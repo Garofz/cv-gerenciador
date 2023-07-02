@@ -46,6 +46,10 @@ const UseLogin = () => {
 
             return false;
         } catch (err) {
+            setToastMessage(
+                "Erro critico ao tentar realizar o login do usuário, favor tente novamente mais tarde"
+            );
+            setToast(true);
             return false;
         }
     };

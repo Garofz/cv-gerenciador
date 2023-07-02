@@ -17,6 +17,7 @@ function LoginLayout() {
                     <ContainerLogo>
                         <TitleH1
                             style={{
+                                color: "#fff",
                                 textAlign: "center",
                             }}
                         >

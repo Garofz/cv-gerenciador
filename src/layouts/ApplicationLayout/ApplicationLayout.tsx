@@ -22,6 +22,7 @@ import {
 } from "./styles";
 import Menu, { MenuHandle } from "../../components/Menu/Menu";
 import UserMenu from "../../components/UserMenu/UserMenu";
+import { MouseActivityProvider } from "../../providers/Inactivity/MouseActivityProvider";
 
 function ApplicationLayout() {
     const [menuColapsed, setmenuColapsed] = useState<boolean>(true);
@@ -47,48 +48,53 @@ function ApplicationLayout() {
     }, [location.pathname]);
 
     return (
-        <ContainerDiv id="cointainer">
-            <HeaderMenuDiv>
-                <HeaderleftContentDiv>
-                    <MenuButton
-                        menuColapsed={menuColapsed}
-                        onClick={() => setmenuColapsed((props) => !props)}
-                    >
-                        {!menuColapsed ? (
-                            <AiOutlineMenuFold size={24} color="#DDE6ED" />
-                        ) : (
-                            <AiOutlineMenuUnfold size={24} color="#DDE6ED" />
-                        )}
-                    </MenuButton>
-                    <LogoButton onClick={() => navigation("/")}>
-                        Cardapio Virtual
-                    </LogoButton>
-                    <DividerDiv />
+        <MouseActivityProvider>
+            <ContainerDiv id="cointainer">
+                <HeaderMenuDiv>
+                    <HeaderleftContentDiv>
+                        <MenuButton
+                            menuColapsed={menuColapsed}
+                            onClick={() => setmenuColapsed((props) => !props)}
+                        >
+                            {!menuColapsed ? (
+                                <AiOutlineMenuFold size={24} color="#DDE6ED" />
+                            ) : (
+                                <AiOutlineMenuUnfold
+                                    size={24}
+                                    color="#DDE6ED"
+                                />
+                            )}
+                        </MenuButton>
+                        <LogoButton onClick={() => navigation("/")}>
+                            Cardapio Virtual
+                        </LogoButton>
+                        <DividerDiv />
 
-                    <PortalNameP>Gerenciador</PortalNameP>
-                </HeaderleftContentDiv>
-                <HeaderRightContentDiv>
-                    {/* <HelpButton>
+                        <PortalNameP>Gerenciador</PortalNameP>
+                    </HeaderleftContentDiv>
+                    <HeaderRightContentDiv>
+                        {/* <HelpButton>
                         <HelpButtonTextP>Ajuda</HelpButtonTextP>
                         <FaQuestion size={18} color="#DDE6ED" />
                     </HelpButton> */}
-                    <UserMenu />
-                </HeaderRightContentDiv>
-            </HeaderMenuDiv>
-            <SubContentDiv>
-                <SideMenuDiv>
-                    <Menu
-                        references={menuRef}
-                        menus={menus}
-                        colapsed={menuColapsed}
-                        redirectTo={(path) => navigation(path)}
-                    />
-                </SideMenuDiv>
-                <ContentDiv>
-                    <Outlet />
-                </ContentDiv>
-            </SubContentDiv>
-        </ContainerDiv>
+                        <UserMenu />
+                    </HeaderRightContentDiv>
+                </HeaderMenuDiv>
+                <SubContentDiv>
+                    <SideMenuDiv>
+                        <Menu
+                            references={menuRef}
+                            menus={menus}
+                            colapsed={menuColapsed}
+                            redirectTo={(path) => navigation(path)}
+                        />
+                    </SideMenuDiv>
+                    <ContentDiv>
+                        <Outlet />
+                    </ContentDiv>
+                </SubContentDiv>
+            </ContainerDiv>
+        </MouseActivityProvider>
     );
 }
 

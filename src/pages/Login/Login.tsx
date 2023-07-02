@@ -58,7 +58,8 @@ function Login() {
                 <Label>Email</Label>
                 <Divider size={4} />
                 <Input
-                    id="email"
+                    id="Email"
+                    autoComplete="email"
                     className={`${validEmail || "input-invalid"}`}
                     type="email"
                     value={email}
@@ -85,7 +86,8 @@ function Login() {
                 <Label>Senha</Label>
                 <Divider size={4} />
                 <Input
-                    id="senha"
+                    id="Password"
+                    autoComplete="password"
                     className={`${validSenha || "input-invalid"}`}
                     type="password"
                     value={senha}

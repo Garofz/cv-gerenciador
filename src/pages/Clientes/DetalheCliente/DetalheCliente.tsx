@@ -16,6 +16,8 @@ import {
     ButtonSecondary,
     Divider,
     Subtitle1,
+    TextBold,
+    TextNormal,
     TitleH1,
     TitleH3,
 } from "../../../globalStyles";
@@ -65,15 +67,24 @@ function DetalheCliente({ cliente }: IDetalheClienteProps) {
                 <ContainerClienteBodyDiv>
                     <ClienteDetailUL>
                         <ClienteDetailLI>
-                            <ClienteDetailSpan>Inscricao:</ClienteDetailSpan>
-                            {cliente?.inscricao}
+                            <ClienteDetailSpan>
+                                <TextBold>Inscricao:</TextBold>
+                            </ClienteDetailSpan>
+                            <TextNormal>{cliente?.inscricao}</TextNormal>
                         </ClienteDetailLI>
                         <ClienteDetailLI>
-                            <ClienteDetailSpan> Tipo: </ClienteDetailSpan>
-                            {cliente?.tipoPessoa.descricao}
+                            <ClienteDetailSpan>
+                                {" "}
+                                <TextBold>Tipo: </TextBold>
+                            </ClienteDetailSpan>
+                            <TextNormal>
+                                {cliente?.tipoPessoa.descricao}
+                            </TextNormal>
                         </ClienteDetailLI>
                         <ClienteDetailLI>
-                            <ClienteDetailSpan> Ativa:</ClienteDetailSpan>
+                            <ClienteDetailSpan>
+                                <TextBold> Ativa:</TextBold>
+                            </ClienteDetailSpan>
                             {cliente?.ativo ? (
                                 <FaCheck size={18} color="#27ca21" />
                             ) : (

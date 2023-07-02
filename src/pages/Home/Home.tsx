@@ -1,17 +1,20 @@
 import React from "react";
 import { useThemeSelectorContext } from "../../providers/ThemeProvider/ThemeSelectorProvider";
 import { ThemeSelector } from "../../providers/Theme/ThemeSelector";
+import { TextNormal } from "../../globalStyles";
 function Home() {
     const { selectedTheme } = useThemeSelectorContext();
     return (
         <div>
-            <div>Home</div>
+            <div>
+                <TextNormal>Home</TextNormal>{" "}
+            </div>
             <div style={{ padding: 12 }}>
-                Light Theme
+                <TextNormal>Light Theme</TextNormal>
                 <ThemeSelector mode="Default" />
             </div>
             <div style={{ padding: 12 }}>
-                Dark Theme
+                <TextNormal>Dark Theme</TextNormal>
                 <ThemeSelector mode="Dark" />
             </div>
         </div>

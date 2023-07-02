@@ -13,6 +13,7 @@ import ClienteLayout from "./layouts/ClienteLayout/ClienteLayout";
 import Account from "./pages/Account/Account";
 import { useThemeSelectorContext } from "./providers/ThemeProvider/ThemeSelectorProvider";
 import { ThemeProvider } from "styled-components";
+import { MouseActivityProvider } from "./providers/Inactivity/MouseActivityProvider";
 
 const App: React.FunctionComponent = (): JSX.Element => {
     const auth = useSelector(selectAuthAttributs);
