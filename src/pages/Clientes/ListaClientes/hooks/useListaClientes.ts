@@ -49,11 +49,11 @@ const useListaClientes = (): IUseListaClientes => {
             .unwrap()
             .then((res) => res);
 
-        if (response.clientes !== undefined)
+        if (response?.clientes !== undefined)
             return setClientes(response.clientes);
 
         setMessage(
-            response.controle?.message || "Erro ao consultar os clientes"
+            response?.controle?.message || "Erro ao consultar os clientes"
         );
         setShowMessage(true);
     };

@@ -65,13 +65,29 @@ export const editarClient = createAsyncThunk(
 );
 
 export const consultaUsuariosCliente = createAsyncThunk(
-    "clientsData/editarClient",
+    "clientsData/consultaUsuariosCliente",
     async (args: {
         idCliente: number;
     }): Promise<IUserClienteResponse | any> => {
         try {
             const response = await MiddlewareAPI.get(
                 `cardapioVirtual/cliente/${args.idCliente}/usuarios`
+            );
+
+            if (response.data?.error !== undefined) return response.data;
+            return response.data;
+        } catch (err: any) {
+            return err.repsonse;
+        }
+    }
+);
+
+export const consultaUsuarios = createAsyncThunk(
+    "clientsData/consultaUsuarios",
+    async (args): Promise<IUserClienteResponse | any> => {
+        try {
+            const response = await MiddlewareAPI.get(
+                `cardapioVirtual/usuarios`
             );
 
             if (response.data?.error !== undefined) return response.data;

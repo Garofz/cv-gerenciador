@@ -2,7 +2,11 @@ import React, { useRef, useState, useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FaHome, FaCaretDown, FaUsers } from "react-icons/fa";
 import { RxComponentBoolean } from "react-icons/rx";
-import { BsFillPersonLinesFill } from "react-icons/bs";
+import {
+    BsFillPersonLinesFill,
+    BsHouse,
+    BsPersonLinesFill,
+} from "react-icons/bs";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 import {
     ContainerDiv,
@@ -31,9 +35,19 @@ function ApplicationLayout() {
     const menuRef = useRef<MenuHandle>(null);
     const menus = [
         {
+            icon: <BsHouse />,
+            text: "Home",
+            path: "/Home",
+        },
+        {
             icon: <BsFillPersonLinesFill />,
             text: "Clientes",
             path: "/clientes",
+        },
+        {
+            icon: <FaUsers />,
+            text: "Usuários",
+            path: "/usuarios",
         },
         {
             icon: <RxComponentBoolean />,

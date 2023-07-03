@@ -13,7 +13,7 @@ import ClienteLayout from "./layouts/ClienteLayout/ClienteLayout";
 import Account from "./pages/Account/Account";
 import { useThemeSelectorContext } from "./providers/ThemeProvider/ThemeSelectorProvider";
 import { ThemeProvider } from "styled-components";
-import { MouseActivityProvider } from "./providers/Inactivity/MouseActivityProvider";
+import UsuarioLayout from "./layouts/UsuarioLayout/UsuarioLayout";
 
 const App: React.FunctionComponent = (): JSX.Element => {
     const auth = useSelector(selectAuthAttributs);
@@ -50,6 +50,10 @@ const App: React.FunctionComponent = (): JSX.Element => {
                                 <Route
                                     path="clientes"
                                     element={<ClienteLayout />}
+                                />
+                                <Route
+                                    path="usuarios"
+                                    element={<UsuarioLayout />}
                                 />
                                 <Route
                                     path="components"

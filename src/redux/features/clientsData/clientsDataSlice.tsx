@@ -1,11 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ClientsDataState } from "./clientsDataTypes";
-import { addClient, getClients } from "./clientsDataThunk";
+import { addClient, consultaUsuarios, getClients } from "./clientsDataThunk";
 import { ICliente } from "../../../interfaces/ICliente";
+import { IUserCliente } from "../../../interfaces/IUserClienteResponse";
 
 const initialState: ClientsDataState = {
     clientsData: undefined,
     clientsDataStatus: "idle",
+    usersData: undefined,
+    usersDataStatus: "idle",
 };
 
 const clientsDataSlice = createSlice({
@@ -51,6 +54,22 @@ const clientsDataSlice = createSlice({
         });
         buider.addCase(getClients.pending, (state: ClientsDataState) => {
             state.clientsDataStatus = "pending";
+        });
+        buider.addCase(
+            consultaUsuarios.fulfilled,
+            (
+                state: ClientsDataState,
+                action: PayloadAction<IUserCliente[]>
+            ) => {
+                state.usersData = action.payload;
+                state.usersDataStatus = "success";
+            }
+        );
+        buider.addCase(consultaUsuarios.rejected, (state: ClientsDataState) => {
+            state.usersDataStatus = "error";
+        });
+        buider.addCase(consultaUsuarios.pending, (state: ClientsDataState) => {
+            state.usersDataStatus = "pending";
         });
     },
 });

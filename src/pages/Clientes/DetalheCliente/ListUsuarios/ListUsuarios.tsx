@@ -29,43 +29,51 @@ import { FaCheck, FaTimes } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { IUserCliente } from "../../../../interfaces/IUserClienteResponse";
 import { formatarData } from "../../../../util/format";
+import { BsPencilFill } from "react-icons/bs";
 
 export interface IListUsuariosProps {
     usuarios?: IUserCliente[] | undefined;
+    layoutResumido: boolean;
     filtrarUsuario: (nome: string) => void;
-    idCliente: number;
+    onClickSelectUser?: React.Dispatch<React.SetStateAction<IUserCliente>>;
+    nextPage?: () => void;
 }
 
 function ListUsuarios({
     usuarios,
-    idCliente,
     filtrarUsuario,
+    layoutResumido = false,
+    onClickSelectUser,
+    nextPage,
 }: IListUsuariosProps) {
     return (
         <ContainerContentDiv>
-            <SubHeaderHandler>
-                <InputWrapper>
-                    <Label>Filtrar</Label>
-                    <div className="filterInput">
-                        <Input
-                            type="text"
-                            onChange={(e) => filtrarUsuario(e.target.value)}
-                            placeholder="Digite o Nome"
-                        />
-                        <FiSearch />
-                    </div>
-                </InputWrapper>
-                <div style={{ width: 200 }}>
-                    <ButtonOutlinePrimary style={{ padding: 8 }}>
-                        Cadastrar Representante
-                    </ButtonOutlinePrimary>
-                </div>
-            </SubHeaderHandler>
+            {!layoutResumido && (
+                <SubHeaderHandler>
+                    <InputWrapper>
+                        <Label>Filtrar</Label>
+                        <div className="filterInput">
+                            <Input
+                                type="text"
+                                onChange={(e) => filtrarUsuario(e.target.value)}
+                                placeholder="Digite o Nome"
+                            />
+                            <FiSearch />
+                        </div>
+                    </InputWrapper>
+                </SubHeaderHandler>
+            )}
 
             {!usuarios || usuarios?.length > 0 ? (
                 usuarios?.map((usuario, index) => (
                     <div key={index}>
-                        <ContainerUsuarioDiv>
+                        <ContainerUsuarioDiv
+                            onClick={() => {
+                                if (onClickSelectUser)
+                                    onClickSelectUser(usuario);
+                                if (nextPage) nextPage();
+                            }}
+                        >
                             <UsuarioTitleDiv>
                                 <UsuarioTitle>
                                     <AvatarContainer>
@@ -91,68 +99,81 @@ function ListUsuarios({
                                             <UsuarioSpan>Email:</UsuarioSpan>{" "}
                                             {usuario.email}
                                         </UsuarioTextWrapper>
-                                        <UsuarioTextWrapper>
-                                            <UsuarioSpan>
-                                                Acesso Principal:
-                                            </UsuarioSpan>{" "}
-                                            {usuario.acessoPrincipal ? (
-                                                <FaCheck
-                                                    size={18}
-                                                    color="#27ca21"
-                                                />
-                                            ) : (
-                                                <FaTimes
-                                                    size={18}
-                                                    color="#f21515"
-                                                />
-                                            )}
-                                        </UsuarioTextWrapper>
-                                        <UsuarioTextWrapper>
-                                            <UsuarioSpan>
-                                                Primeiro Acesso:
-                                            </UsuarioSpan>{" "}
-                                            {usuario.pimeiroAcesso ? (
-                                                <FaCheck
-                                                    size={18}
-                                                    color="#27ca21"
-                                                />
-                                            ) : (
-                                                <FaTimes
-                                                    size={18}
-                                                    color="#f21515"
-                                                />
-                                            )}
-                                        </UsuarioTextWrapper>
-                                        <UsuarioTextWrapper>
-                                            <UsuarioSpan>
-                                                Tipo Acesso:
-                                            </UsuarioSpan>{" "}
-                                            {usuario.tipoAcesso.descricao}
-                                        </UsuarioTextWrapper>
+                                        {!layoutResumido && (
+                                            <>
+                                                <UsuarioTextWrapper>
+                                                    <UsuarioSpan>
+                                                        Acesso Principal:
+                                                    </UsuarioSpan>{" "}
+                                                    {usuario.acessoPrincipal ? (
+                                                        <FaCheck
+                                                            size={18}
+                                                            color="#27ca21"
+                                                        />
+                                                    ) : (
+                                                        <FaTimes
+                                                            size={18}
+                                                            color="#f21515"
+                                                        />
+                                                    )}
+                                                </UsuarioTextWrapper>
+                                                <UsuarioTextWrapper>
+                                                    <UsuarioSpan>
+                                                        Primeiro Acesso:
+                                                    </UsuarioSpan>{" "}
+                                                    {usuario.pimeiroAcesso ? (
+                                                        <FaCheck
+                                                            size={18}
+                                                            color="#27ca21"
+                                                        />
+                                                    ) : (
+                                                        <FaTimes
+                                                            size={18}
+                                                            color="#f21515"
+                                                        />
+                                                    )}
+                                                </UsuarioTextWrapper>
+                                                <UsuarioTextWrapper>
+                                                    <UsuarioSpan>
+                                                        Tipo Acesso:
+                                                    </UsuarioSpan>{" "}
+                                                    {
+                                                        usuario.tipoAcesso
+                                                            .descricao
+                                                    }
+                                                </UsuarioTextWrapper>
+                                            </>
+                                        )}
                                     </div>
                                     <div>
-                                        <UsuarioTextWrapper>
-                                            <UsuarioSpan>
-                                                Data Cadastro:
-                                            </UsuarioSpan>{" "}
-                                            {formatarData(usuario.dataCadastro)}
-                                        </UsuarioTextWrapper>
-                                        <UsuarioTextWrapper>
-                                            <UsuarioSpan>
-                                                Data Inativação:
-                                            </UsuarioSpan>{" "}
-                                            {formatarData(
-                                                usuario.dataInativacao
-                                            )}
-                                        </UsuarioTextWrapper>
-                                        <UsuarioTextWrapper>
-                                            <UsuarioSpan>
-                                                Data Ultimo Acesso:
-                                            </UsuarioSpan>{" "}
-                                            {formatarData(
-                                                usuario.dataUltimoAcesso
-                                            )}
-                                        </UsuarioTextWrapper>
+                                        {!layoutResumido && (
+                                            <>
+                                                <UsuarioTextWrapper>
+                                                    <UsuarioSpan>
+                                                        Data Cadastro:
+                                                    </UsuarioSpan>{" "}
+                                                    {formatarData(
+                                                        usuario.dataCadastro
+                                                    )}
+                                                </UsuarioTextWrapper>
+                                                <UsuarioTextWrapper>
+                                                    <UsuarioSpan>
+                                                        Data Inativação:
+                                                    </UsuarioSpan>{" "}
+                                                    {formatarData(
+                                                        usuario.dataInativacao
+                                                    )}
+                                                </UsuarioTextWrapper>
+                                                <UsuarioTextWrapper>
+                                                    <UsuarioSpan>
+                                                        Data Ultimo Acesso:
+                                                    </UsuarioSpan>{" "}
+                                                    {formatarData(
+                                                        usuario.dataUltimoAcesso
+                                                    )}
+                                                </UsuarioTextWrapper>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </UsuarioBody>
