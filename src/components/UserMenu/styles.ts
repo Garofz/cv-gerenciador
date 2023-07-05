@@ -1,68 +1,72 @@
-import styled, {css} from "styled-components"
+import { BsCaretDownFill } from "react-icons/bs";
+import { FaSignOutAlt, FaUser } from "react-icons/fa";
+import styled, { css } from "styled-components";
 
 export const UserSettingsDiv = styled.div`
-    position:relative;
+    position: relative;
 `;
 
-interface UserButtonProps{
-    isSelected: boolean
+interface UserButtonProps {
+    isSelected: boolean;
 }
 
 export const UserConfigurationButton = styled.button.attrs({
-    type:"button",
+    type: "button",
 })<UserButtonProps>`
-    display:flex;
-    flex-direction:row;
-    align-items:center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     padding: 4px 4px;
     width: 70px;
     justify-content: space-between;
     border-radius: 40px;
     border: none;
     cursor: pointer;
-
-    ${(props) => props.isSelected &&
+    background-color: ${({ theme }) => theme.colors.light01};
+    ${(props) =>
+        props.isSelected &&
         css`
-            background-color: #9DB2BF;
+            background-color: ${({ theme }) => theme.colors.secondary};
         `}
-
 `;
 
-interface ModalProps{
-    showModal: boolean
+interface ModalProps {
+    showModal: boolean;
 }
 
 export const UserSettingsModal = styled.div<ModalProps>`
     z-index: 10;
-    position:absolute;
+    position: absolute;
     top: 40px;
     right: 0px;
-    background-color:#fff;
+    background-color: ${({ theme }) => theme.colors.light01};
     visibility: hidden;
-    
-    ${(props) => props.showModal &&
+    border: none;
+
+    border-radius: 0px 0px 20px 20px;
+    ${(props) =>
+        props.showModal &&
         css`
             visibility: visible;
-        `}
-
+        `};
 `;
-export const UserSettingsButton = styled.button.attrs({type:"button"})`
+export const UserSettingsButton = styled.button.attrs({ type: "button" })`
     padding: 16px;
-    display:flex;
+    display: flex;
     align-items: center;
-    flex-direction:row;
+    flex-direction: row;
     border: none;
     cursor: pointer;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.light01};
     width: 100%;
-    &:hover{
-        background-color: #DDE6ED;
-
+    transition: 0.2s ease;
+    &:hover {
+        background-color: ${({ theme }) => theme.colors.light02};
     }
 `;
 
 export const UserWelcomeMessageDiv = styled.div`
-    background-color:#27374D;
+    background-color: #27374d;
     padding: 15px 50px;
 `;
 
@@ -71,54 +75,61 @@ export const UserMessageP = styled.p`
     white-space: nowrap;
 `;
 
-
 export const UserSettingsButtonDiv = styled.div`
     padding: 16px;
-    display:flex;
-    align-items:center;
-    flex-direction:row;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
     cursor: pointer;
-
-    &:hover{
-        background-color: #DDE6ED
+    transition: 0.2s ease;
+    &:hover {
+        background-color: #dde6ed;
     }
 `;
 
 export const UserTextP = styled.p`
-    color: #27374D;
+    color: ${({ theme }) => theme.colors.primary};
     white-space: nowrap;
     margin-left: 10px;
-    
 `;
 
 export const ThemeSelectorDiv = styled.div`
     width: 100%;
-    display:flex;
-    flex-direction:row;
+    display: flex;
+    flex-direction: row;
     justify-content: space-around;
 `;
 
-interface ArrowWrapperProps{
+interface ArrowWrapperProps {
     rotateArrow: boolean;
 }
 
 export const ArrowDivWrapper = styled.div<ArrowWrapperProps>`
-    display:flex;
+    display: flex;
     padding: 4px;
-    flex-direction:row;
-    justify-content:center;
-    align-items:center;
-    svg{
-        ${(props) => 
-        props.rotateArrow ?
-            css`
-                transform: rotate(180deg);
-                transition: 0.35s;
-            ` :
-            css`
-                transform: rotate(0deg);
-                transition: 0.35s;
-            `}
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    svg {
+        ${(props) =>
+            props.rotateArrow
+                ? css`
+                      transform: rotate(180deg);
+                      transition: 0.35s;
+                  `
+                : css`
+                      transform: rotate(0deg);
+                      transition: 0.35s;
+                  `}
     }
+`;
 
+export const ArrowIcon = styled(BsCaretDownFill)`
+    color: ${({ theme }) => theme.colors.primary};
+`;
+export const FaUserIcon = styled(FaUser)`
+    color: ${({ theme }) => theme.colors.primary};
+`;
+export const FaSignOutAltIcon = styled(FaSignOutAlt)`
+    color: ${({ theme }) => theme.colors.secondary};
 `;

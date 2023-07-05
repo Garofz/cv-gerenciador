@@ -1,6 +1,9 @@
 import React from "react";
 import {
     ArrowDivWrapper,
+    ArrowIcon,
+    FaSignOutAltIcon,
+    FaUserIcon,
     UserConfigurationButton,
     UserMessageP,
     UserSettingsButton,
@@ -32,7 +35,7 @@ function UserMenu() {
                 onClick={() => setShowModal((prev) => !prev)}
             >
                 <ArrowDivWrapper rotateArrow={showModal}>
-                    <BsCaretDownFill size={18} color="#27374D" />
+                    <ArrowIcon size={18} />
                 </ArrowDivWrapper>
                 <Avatar name={usuario.name} />
             </UserConfigurationButton>
@@ -45,7 +48,6 @@ function UserMenu() {
                 </UserWelcomeMessageDiv>
                 <div
                     style={{
-                        border: "1px solid #9DB2BF",
                         borderRadius: "0px 0px 20px 20px",
                     }}
                 >
@@ -55,17 +57,16 @@ function UserMenu() {
                             setShowModal((prev) => !prev);
                         }}
                     >
-                        <FaUser size={30} color="#27374D" />
+                        <FaUserIcon size={30} />
                         <UserTextP>Minha Conta</UserTextP>
                     </UserSettingsButton>
-                    <Divider size={4} />
                     <UserSettingsButton
                         style={{
                             borderRadius: "0px 0px 20px 20px",
                         }}
                         onClick={() => dispatch(logOut())}
                     >
-                        <FaSignOutAlt size={30} color="#526D82" />
+                        <FaSignOutAltIcon size={30} />
                         <UserTextP>Sair</UserTextP>
                     </UserSettingsButton>
                 </div>
