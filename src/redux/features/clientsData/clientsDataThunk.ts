@@ -8,7 +8,10 @@ import { IUsuario } from "../../../interfaces/IUsuario";
 import { MiddlewareAPI } from "../../../config/api";
 import { AxiosResponse } from "axios";
 import { IBadRequestResponse } from "../../../interfaces/IBadRequestResponse";
-import { IUserClienteResponse } from "../../../interfaces/IUserClienteResponse";
+import {
+    IUserClienteResponse,
+    IUserListResponse,
+} from "../../../interfaces/IUserClienteResponse";
 
 export const getClients = createAsyncThunk(
     "clientsData/getClients",
@@ -84,7 +87,7 @@ export const consultaUsuariosCliente = createAsyncThunk(
 
 export const consultaUsuarios = createAsyncThunk(
     "clientsData/consultaUsuarios",
-    async (args): Promise<IUserClienteResponse | any> => {
+    async (args): Promise<IUserListResponse | any> => {
         try {
             const response = await MiddlewareAPI.get(
                 `cardapioVirtual/usuarios`
@@ -93,7 +96,28 @@ export const consultaUsuarios = createAsyncThunk(
             if (response.data?.error !== undefined) return response.data;
             return response.data;
         } catch (err: any) {
-            return err.repsonse;
+            return err.response;
+        }
+    }
+);
+
+export const cadastrarUsuarios = createAsyncThunk(
+    "clientsData/consultaUsuarios",
+    async (args: {
+        nomeUsuario: string;
+        email: string;
+        token: string;
+    }): Promise<IUserListResponse | any> => {
+        try {
+            const response = await MiddlewareAPI.post(
+                `authschema/usuario`,
+                args
+            );
+
+            if (response.data?.error !== undefined) return response.data;
+            return response.data;
+        } catch (err: any) {
+            return err.response;
         }
     }
 );

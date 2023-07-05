@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { IUserCliente } from "../../../interfaces/IUserClienteResponse";
+import {
+    IUserCliente,
+    IUserList,
+} from "../../../interfaces/IUserClienteResponse";
 import { useAsyncDispatch } from "../../../redux/store";
 import { selectUsuario } from "../../../redux/features/generalData/generalDataSelectors";
-import { consultaUsuarios } from "../../../redux/features/clientsData/clientsDataThunk";
+import {
+    cadastrarUsuarios,
+    consultaUsuarios,
+} from "../../../redux/features/clientsData/clientsDataThunk";
 
 interface IReturnEditAdd {
     validOperation: boolean;
@@ -11,22 +17,23 @@ interface IReturnEditAdd {
 }
 
 export interface IUseUsuarios {
-    usuarios: IUserCliente[];
+    usuarios: IUserList[];
     filtrarUsuarios: (nome: string) => void;
-    cadastrarUsuario: (usuario: IUserCliente) => Promise<IReturnEditAdd>;
-    editarUsuario: (usuario: IUserCliente) => Promise<IReturnEditAdd>;
+    cadastrarUsuario: (usuario: IUserList) => Promise<IReturnEditAdd>;
+    editarUsuario: (usuario: IUserList) => Promise<IReturnEditAdd>;
     message: string;
+    setMessage: React.Dispatch<React.SetStateAction<string>>;
     setShowMessage: React.Dispatch<React.SetStateAction<boolean>>;
     showMessage: boolean;
+    obterUsuarios: () => void;
 }
 
 const useUsuarios = (): IUseUsuarios => {
     const dispatch = useAsyncDispatch();
     const [message, setMessage] = useState<string>("");
     const [showMessage, setShowMessage] = useState<boolean>(false);
-    const [usuarios, setUsuarios] = useState<IUserCliente[]>([]);
+    const [usuarios, setUsuarios] = useState<IUserList[]>([]);
     const user = useSelector(selectUsuario);
-    //const clientesData = useSelector(selectClientsData);
 
     useEffect(() => {
         obterUsuarios();
@@ -40,7 +47,7 @@ const useUsuarios = (): IUseUsuarios => {
             .unwrap()
             .then((res) => res);
 
-        if (response?.usuarios !== undefined)
+        if (response.usuarios !== undefined)
             return setUsuarios(response.usuarios);
 
         setMessage(
@@ -56,14 +63,14 @@ const useUsuarios = (): IUseUsuarios => {
             obterUsuarios();
         } else {
             const filtrados = usuarios.filter((usuario) =>
-                usuario.nome.toUpperCase().includes(param.toUpperCase())
+                usuario.nomeUsuario.toUpperCase().includes(param.toUpperCase())
             );
             setUsuarios(filtrados);
         }
     };
 
     const cadastrarUsuario = async (
-        usuario: IUserCliente
+        usuario: IUserList
     ): Promise<IReturnEditAdd> => {
         if (!user)
             return {
@@ -71,41 +78,35 @@ const useUsuarios = (): IUseUsuarios => {
                 validOperation: false,
             };
 
-        // usuario.usuarioInclusao = user._Id;
+        if (usuario.nomeUsuario.trim() === "")
+            return {
+                message: "Nome Obrigatório",
+                validOperation: false,
+            };
+        if (usuario.emailUsuario.trim() === "")
+            return {
+                message: "Email Obrigatório",
+                validOperation: false,
+            };
 
-        // if (cliente.nome.trim() === "")
-        //     return {
-        //         message: "Nome Obrigatório",
-        //         validOperation: false,
-        //     };
-        // if (cliente.inscricao.trim() === "")
-        //     return {
-        //         message: "Inscrição Obrigatória",
-        //         validOperation: false,
-        //     };
-        // if (
-        //     (cliente.idtipoPessoa === 1 &&
-        //         cliente.inscricao.trim().length !== 11) ||
-        //     (cliente.idtipoPessoa === 2 &&
-        //         cliente.inscricao.trim().length !== 14)
-        // )
-        //     return {
-        //         message: "Inscrição Inválida para o tipo de Pessoa",
-        //         validOperation: false,
-        //     };
+        const result = await dispatch(
+            cadastrarUsuarios({
+                nomeUsuario: usuario.nomeUsuario,
+                email: usuario.emailUsuario,
+                token: user.accessToken.token,
+            })
+        )
+            .unwrap()
+            .then((res) => res);
 
-        // const result = await dispatch(addClient({ cliente: cliente }))
-        //     .unwrap()
-        //     .then((res) => res);
-        // if (result.error !== undefined || result.data?.statusCode === 500) {
-        //     return {
-        //         message:
-        //             result.controle.message || "erro ao cadastrar o cliente",
-        //         validOperation: false,
-        //     };
-        // }
+        if (result.error !== undefined || result.data?.statusCode === 500) {
+            return {
+                message:
+                    result.controle.message || "erro ao cadastrar o usuário",
+                validOperation: false,
+            };
+        }
 
-        // obterClientes();
         return {
             message: "",
             validOperation: true,
@@ -113,13 +114,14 @@ const useUsuarios = (): IUseUsuarios => {
     };
 
     const editarUsuario = async (
-        usuario: IUserCliente
+        usuario: IUserList
     ): Promise<IReturnEditAdd> => {
         if (!user)
             return {
                 message: "Usuário inválido",
                 validOperation: false,
             };
+        console.log("edit", usuario);
 
         // cliente.usuarioInclusao = user._Id;
 
@@ -169,8 +171,10 @@ const useUsuarios = (): IUseUsuarios => {
         cadastrarUsuario,
         editarUsuario,
         message,
+        setMessage,
         setShowMessage,
         showMessage,
+        obterUsuarios,
     };
 };
 

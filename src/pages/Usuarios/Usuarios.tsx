@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IUserCliente } from "../../interfaces/IUserClienteResponse";
+import { IUserCliente, IUserList } from "../../interfaces/IUserClienteResponse";
 import {
     ButtonDanger,
     ButtonOutlinePrimary,
@@ -15,15 +15,16 @@ import FadeIn from "../../components/Animations/FadeIn/FadeIn";
 import Modal from "../../components/Modal/Modal";
 import CadastraEditaRepresentantes from "../Clientes/CadastraEditaRepresentantes/CadastraEditaRepresentantes";
 import { useSelector } from "react-redux";
-import { selectUsersDataStatus } from "../../redux/features/clientsData/clientsDataSelectors";
+import { selectUserDataStatus } from "../../redux/features/clientsData/clientsDataSelectors";
 import Spinner from "../../components/Spinner/Spinner";
 import { Navigate } from "react-router-dom";
 import useUsuarios from "./hooks/useUsuario";
 import Toast from "../../components/Toast/Toast";
 import ListUsuarios from "../Clientes/DetalheCliente/ListUsuarios/ListUsuarios";
+import ListAllUsuarios from "../Clientes/DetalheCliente/ListUsuarios/ListAllUsuarios";
 export interface Props {
-    selectUsuario: React.Dispatch<React.SetStateAction<IUserCliente>>;
-    selectedUsuario: IUserCliente | undefined;
+    selectUsuario: React.Dispatch<React.SetStateAction<IUserList>>;
+    selectedUsuario: IUserList;
     nextLayout: (layout: "list" | "detail") => void;
 }
 const SubHeaderHandler = styled.div`
@@ -54,30 +55,31 @@ const SubHeaderHandler = styled.div`
 `;
 
 const initialStateUsuario = {
-    id: 0,
-    nome: "",
-    email: "",
-    tipoAcesso: {
-        id: 0,
-        descricao: "",
-    },
-    acessoPrincipal: false,
-    dataCadastro: new Date(),
-    pimeiroAcesso: false,
+    idUsuario: 0,
+    nomeUsuario: "",
+    emailUsuario: "",
 };
 function Usuarios({ selectUsuario, selectedUsuario, nextLayout }: Props) {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showModalEdit, setShowModalEdit] = useState<boolean>(false);
-    const userDataStatus = useSelector(selectUsersDataStatus);
+    const userDataStatus = useSelector(selectUserDataStatus);
     const {
         cadastrarUsuario,
         editarUsuario,
         filtrarUsuarios,
         message,
+        setMessage,
         setShowMessage,
         showMessage,
         usuarios,
+        obterUsuarios,
     } = useUsuarios();
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setShowModalEdit(false);
+        selectUsuario(initialStateUsuario);
+    };
     return (
         <div>
             <Toast
@@ -91,15 +93,29 @@ function Usuarios({ selectUsuario, selectedUsuario, nextLayout }: Props) {
             {showModal && (
                 <FadeIn duration={200}>
                     <Modal
-                        closeModal={() => setShowModal(false)}
+                        closeModal={() => handleCloseModal()}
                         title="Cadastrar Representante"
                     >
                         <CadastraEditaRepresentantes
                             type="Cadastra"
-                            onClickVoltar={() => {
-                                setShowModal(false);
-                                selectUsuario(initialStateUsuario);
+                            selectedUser={selectedUsuario}
+                            selectUser={selectUsuario}
+                            onClickSalvar={async () => {
+                                const cadastra = await cadastrarUsuario(
+                                    selectedUsuario
+                                );
+                                if (cadastra.validOperation) {
+                                    handleCloseModal();
+                                    obterUsuarios();
+                                } else {
+                                    setMessage(
+                                        cadastra.message ||
+                                            "Ocorreu um erro ao cadastrar o usuário"
+                                    );
+                                    setShowMessage(true);
+                                }
                             }}
+                            onClickVoltar={() => handleCloseModal()}
                         />
                     </Modal>
                 </FadeIn>
@@ -107,19 +123,15 @@ function Usuarios({ selectUsuario, selectedUsuario, nextLayout }: Props) {
             {showModalEdit && selectedUsuario && (
                 <FadeIn duration={200}>
                     <Modal
-                        closeModal={() => {
-                            setShowModalEdit(false);
-                            selectUsuario(initialStateUsuario);
-                        }}
+                        closeModal={() => handleCloseModal()}
                         title="Editar Representante"
                     >
                         <CadastraEditaRepresentantes
                             selectedUser={selectedUsuario}
+                            selectUser={selectUsuario}
                             type="Edita"
-                            onClickVoltar={() => {
-                                setShowModalEdit(false);
-                                selectUsuario(initialStateUsuario);
-                            }}
+                            onClickSalvar={() => editarUsuario(selectedUsuario)}
+                            onClickVoltar={() => handleCloseModal()}
                         />
                     </Modal>
                 </FadeIn>
@@ -162,7 +174,10 @@ function Usuarios({ selectUsuario, selectedUsuario, nextLayout }: Props) {
                         </InputWrapper>
                         <div>
                             <ButtonOutlinePrimary
-                                onClick={() => setShowModal(true)}
+                                onClick={() => {
+                                    selectUsuario(initialStateUsuario);
+                                    setShowModal(true);
+                                }}
                             >
                                 Cadastrar Representante
                             </ButtonOutlinePrimary>
@@ -170,11 +185,12 @@ function Usuarios({ selectUsuario, selectedUsuario, nextLayout }: Props) {
                     </SubHeaderHandler>
                     <Divider size={24} />
                     {usuarios && (
-                        <ListUsuarios
+                        <ListAllUsuarios
                             layoutResumido={true}
                             usuarios={usuarios}
                             filtrarUsuario={filtrarUsuarios}
                             onClickSelectUser={selectUsuario}
+                            onClickEditUser={() => setShowModalEdit(true)}
                             nextPage={() => nextLayout("detail")}
                         />
                     )}

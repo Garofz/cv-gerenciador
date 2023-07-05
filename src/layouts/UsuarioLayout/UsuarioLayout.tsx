@@ -3,11 +3,17 @@ import { Outlet } from "react-router-dom";
 import ListaClientes from "../../pages/Clientes/ListaClientes/ListaClientes";
 import { ICliente } from "../../interfaces/ICliente";
 import { Button } from "../../components/Menu/styles";
-import { ButtonOutlineSecondary, Divider } from "../../globalStyles";
+import {
+    BreadCrumbs,
+    ButtonOutlineSecondary,
+    Divider,
+    TextNormal,
+} from "../../globalStyles";
 import DetalheCliente from "../../pages/Clientes/DetalheCliente/DetalheCliente";
 import { FaChevronLeft } from "react-icons/fa";
 import useUsuarioLayout from "./hooks/useUsuarioLayout";
 import Usuarios from "../../pages/Usuarios/Usuarios";
+import DetalheUsuario from "../../pages/Usuarios/DetalheUsuario/DetalheUsuario";
 
 function UsuarioLayout() {
     const { selectedUsuario, changeUsuario, layout, changelayout } =
@@ -34,11 +40,13 @@ function UsuarioLayout() {
                         }}
                         onClick={() => changelayout("list")}
                     >
-                        <FaChevronLeft /> Usuários
+                        <BreadCrumbs>
+                            <FaChevronLeft /> Usuários
+                        </BreadCrumbs>
                     </div>
                     <Divider size={24} />
 
-                    <div>DETALHE</div>
+                    <DetalheUsuario usuario={selectedUsuario} />
                 </div>
             )}
         </div>

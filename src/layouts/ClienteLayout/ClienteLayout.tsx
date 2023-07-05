@@ -4,7 +4,11 @@ import ListaClientes from "../../pages/Clientes/ListaClientes/ListaClientes";
 import { ICliente } from "../../interfaces/ICliente";
 import useClienteLayout from "./hooks/useClienteLayout";
 import { Button } from "../../components/Menu/styles";
-import { ButtonOutlineSecondary, Divider } from "../../globalStyles";
+import {
+    BreadCrumbs,
+    ButtonOutlineSecondary,
+    Divider,
+} from "../../globalStyles";
 import DetalheCliente from "../../pages/Clientes/DetalheCliente/DetalheCliente";
 import { FaChevronLeft } from "react-icons/fa";
 
@@ -33,7 +37,9 @@ function ClienteLayout() {
                         }}
                         onClick={() => changelayout("list")}
                     >
-                        <FaChevronLeft /> Clientes
+                        <BreadCrumbs>
+                            <FaChevronLeft /> Clientes
+                        </BreadCrumbs>
                     </div>
                     <Divider size={24} />
 

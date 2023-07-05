@@ -68,6 +68,9 @@ function ListUsuarios({
                 usuarios?.map((usuario, index) => (
                     <div key={index}>
                         <ContainerUsuarioDiv
+                            style={{
+                                display: "block",
+                            }}
                             onClick={() => {
                                 if (onClickSelectUser)
                                     onClickSelectUser(usuario);
@@ -76,14 +79,23 @@ function ListUsuarios({
                         >
                             <UsuarioTitleDiv>
                                 <UsuarioTitle>
-                                    <AvatarContainer>
-                                        <Avatar shadow name={usuario.nome} />
-                                    </AvatarContainer>
+                                    <div
+                                        style={{
+                                            padding: "0.5rem",
+                                        }}
+                                    >
+                                        <AvatarContainer size="small">
+                                            <Avatar
+                                                shadow
+                                                name={usuario.nome}
+                                            />
+                                        </AvatarContainer>
+                                    </div>
+                                    <Subtitle2># {usuario.id}</Subtitle2>
+                                    <DividerDiv color="#27374D" />
                                     <TitleH4 style={{ margin: 0 }}>
                                         {usuario.nome}
                                     </TitleH4>
-                                    <DividerDiv color="#27374D" />
-                                    <Subtitle2>#{usuario.id}</Subtitle2>
                                 </UsuarioTitle>
                             </UsuarioTitleDiv>
                             <UsuarioBody>

@@ -19,3 +19,13 @@ export interface IUserCliente {
     dataInativacao?: Date;
     dataCadastro: Date;
 }
+
+export interface IUserListResponse {
+    usuarios: IUserList[];
+    controle: IControleResponse;
+}
+export interface IUserList {
+    idUsuario: number;
+    nomeUsuario: string;
+    emailUsuario: string;
+}

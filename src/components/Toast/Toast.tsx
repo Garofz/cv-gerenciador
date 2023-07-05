@@ -37,6 +37,7 @@ const bounceRightAnimation = keyframes`
 `;
 
 const ToastContainer = styled.div<ToastContainerProps>`
+    z-index: 9999999;
     position: ${(props) => (props.fixed ? "fixed" : "static")};
     top: 70px;
     right: 20px;

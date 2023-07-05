@@ -6,6 +6,10 @@ export const ContainerContentDiv = styled.div`
 
 export const ContainerUsuarioDiv = styled.div`
     padding: 8px;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 16px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);

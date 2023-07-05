@@ -1,3 +1,4 @@
+import { FaPlus, FaTrash } from "react-icons/fa";
 import styled, { css, keyframes } from "styled-components";
 
 export const TitleH1 = styled.h1`
@@ -36,7 +37,6 @@ export const Subtitle2 = styled.span`
 export const TextNormal = styled.span`
     color: ${({ theme }) => theme.colors.neutral8};
 `;
-
 export const ButtonPrimary = styled.button`
     border: none;
     border-radius: 50px;
@@ -255,4 +255,71 @@ export const Container = styled.div`
     margin-right: auto;
     padding-left: 16px;
     padding-right: 16px;
+`;
+
+export interface ITableProps {
+    width: 50 | 100;
+}
+export const Table = styled.table<ITableProps>`
+    width: ${({ width }) => `${width}%`};
+`;
+
+export const TableHead = styled.thead``;
+export const TableBody = styled.tbody``;
+export const TableFoot = styled.tfoot``;
+
+export interface IColumnProps {
+    textAlign?: "left" | "right" | "center";
+    width?: number;
+}
+
+export const TableRow = styled.tr<IColumnProps>`
+    text-align: ${({ textAlign }) => textAlign || "left"};
+    width: ${({ width }) => `${width}px` || "100%"};
+    color: ${({ theme }) => theme.colors.neutral8};
+    transition: 0.2s ease;
+    &:hover {
+        color: ${({ theme }) => theme.colors.neutral4};
+    }
+`;
+export const TableColumn = styled.td<IColumnProps>`
+    padding: 8px;
+    text-align: ${({ textAlign }) => textAlign || "left"};
+    width: ${({ width }) => `${width}px` || "100%"};
+`;
+export const TableColumnHeader = styled.th<IColumnProps>`
+    padding: 8px;
+    color: ${({ theme }) => theme.colors.neutral10};
+    text-align: ${({ textAlign }) => textAlign || "left"};
+    width: ${({ width }) => `${width}px` || "100%"};
+`;
+export const IconDelete = styled(FaTrash)`
+    color: ${({ theme }) => theme.colors.neutral8};
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    &:hover {
+        color: ${({ theme }) => theme.colors.primaryWhiteContrast};
+    }
+`;
+
+export const IconPlus = styled(FaPlus)`
+    color: ${({ theme }) => theme.colors.primary};
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    &:hover {
+        color: ${({ theme }) => theme.colors.secondary};
+    }
+`;
+
+export const BreadCrumbs = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    color: ${({ theme }) => theme.colors.primary};
+    &:hover {
+        color: ${({ theme }) => theme.colors.secondary};
+    }
 `;
