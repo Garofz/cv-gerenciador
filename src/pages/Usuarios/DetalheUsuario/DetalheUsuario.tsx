@@ -45,13 +45,17 @@ import Avatar from "../../../components/UserMenu/Avatar/Avatar";
 import Modal from "../../../components/Modal/Modal";
 import { formatarData } from "../../../util/format";
 import useDetalheUsuario from "./hooks/useDetalheUsuario";
+import ListProdutosUsuario from "./ListProdutosUsuario/ListProdutosUsuario";
+import ListClientesUsuario from "./ListClientesUsuario/ListClientesUsuario";
 
 export interface IProps {
     usuario: IUserList;
 }
 
 function DetalheUsuario({ usuario }: IProps) {
-    const {} = useDetalheUsuario({ usuario });
+    const { clientes, produtos, detalheUsuario } = useDetalheUsuario({
+        usuario,
+    });
     return (
         <FadeIn duration={400}>
             <ContainerUsuarioTitle>
@@ -80,6 +84,7 @@ function DetalheUsuario({ usuario }: IProps) {
                         <div
                             style={{
                                 textAlign: "left",
+                                width: "70%",
                             }}
                         >
                             <div
@@ -103,71 +108,7 @@ function DetalheUsuario({ usuario }: IProps) {
                                     padding: 8,
                                 }}
                             >
-                                <Table width={50}>
-                                    <TableHead>
-                                        <TableColumnHeader textAlign="right">
-                                            #
-                                        </TableColumnHeader>
-                                        <TableColumnHeader>
-                                            Nome
-                                        </TableColumnHeader>
-                                        <TableColumnHeader>
-                                            Descrição
-                                        </TableColumnHeader>
-                                        <TableColumnHeader textAlign="center">
-                                            Data Cadastro
-                                        </TableColumnHeader>
-                                        <TableColumnHeader></TableColumnHeader>
-                                    </TableHead>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableColumn textAlign="right">
-                                                <TextBold>1</TextBold>
-                                            </TableColumn>
-                                            <TableColumn>
-                                                Gerenciador
-                                            </TableColumn>
-                                            <TableColumn>
-                                                Sistema Gerenciador de Clientes
-                                            </TableColumn>
-
-                                            <TableColumn textAlign="center">
-                                                {formatarData(
-                                                    new Date("2021-02-02")
-                                                )}
-                                            </TableColumn>
-                                            <TableColumn textAlign="center">
-                                                <IconDelete />
-                                            </TableColumn>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableColumn textAlign="right">
-                                                <TextBold>2</TextBold>
-                                            </TableColumn>
-                                            <TableColumn>Cardápio</TableColumn>
-                                            <TableColumn>
-                                                Sistema Cardápio Virtual
-                                            </TableColumn>
-
-                                            <TableColumn textAlign="center">
-                                                {formatarData(
-                                                    new Date("2021-02-02")
-                                                )}
-                                            </TableColumn>
-                                            <TableColumn textAlign="center">
-                                                <IconDelete />
-                                            </TableColumn>
-                                        </TableRow>
-                                    </TableBody>
-                                    <TableFoot>
-                                        <TableColumnHeader
-                                            colSpan={5}
-                                            textAlign="center"
-                                        >
-                                            2 registros
-                                        </TableColumnHeader>
-                                    </TableFoot>
-                                </Table>
+                                <ListProdutosUsuario detalhe={detalheUsuario} />
                             </div>
                         </div>
                     </Col>
@@ -207,81 +148,7 @@ function DetalheUsuario({ usuario }: IProps) {
                                 padding: 8,
                             }}
                         >
-                            <Table width={100}>
-                                <TableHead>
-                                    <TableColumnHeader textAlign="right">
-                                        #
-                                    </TableColumnHeader>
-                                    <TableColumnHeader>Nome</TableColumnHeader>
-                                    <TableColumnHeader>
-                                        Inscrição
-                                    </TableColumnHeader>
-                                    <TableColumnHeader textAlign="center">
-                                        Tipo Pessoa
-                                    </TableColumnHeader>
-                                    <TableColumnHeader textAlign="center">
-                                        Ativo
-                                    </TableColumnHeader>
-                                    <TableColumnHeader textAlign="center">
-                                        Data Cadastro
-                                    </TableColumnHeader>
-                                    <TableColumnHeader textAlign="center">
-                                        Tipo Acesso
-                                    </TableColumnHeader>
-                                    <TableColumnHeader textAlign="center">
-                                        Primeiro Acesso
-                                    </TableColumnHeader>
-                                    <TableColumnHeader textAlign="center">
-                                        Data Inativação
-                                    </TableColumnHeader>
-                                    <TableColumnHeader></TableColumnHeader>
-                                </TableHead>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableColumn textAlign="right">
-                                            <TextBold>1</TextBold>
-                                        </TableColumn>
-                                        <TableColumn>
-                                            Tabacaria Santo André
-                                        </TableColumn>
-                                        <TableColumn>
-                                            26.609.455/0001-00
-                                        </TableColumn>
-                                        <TableColumn textAlign="center">
-                                            Pessoa Física
-                                        </TableColumn>
-                                        <TableColumn textAlign="center">
-                                            Sim
-                                        </TableColumn>
-                                        <TableColumn textAlign="center">
-                                            {formatarData(
-                                                new Date("2021-02-02")
-                                            )}
-                                        </TableColumn>
-                                        <TableColumn textAlign="center">
-                                            Admin
-                                        </TableColumn>
-                                        <TableColumn textAlign="center">
-                                            Sim
-                                        </TableColumn>
-                                        <TableColumn textAlign="center">
-                                            {" "}
-                                            N/I{" "}
-                                        </TableColumn>
-                                        <TableColumn>
-                                            <IconDelete />
-                                        </TableColumn>
-                                    </TableRow>
-                                </TableBody>
-                                <TableFoot>
-                                    <TableColumnHeader
-                                        colSpan={9}
-                                        textAlign="center"
-                                    >
-                                        1 registro
-                                    </TableColumnHeader>
-                                </TableFoot>
-                            </Table>
+                            <ListClientesUsuario detalhe={detalheUsuario} />
                         </div>
                     </Col>
                 </Row>

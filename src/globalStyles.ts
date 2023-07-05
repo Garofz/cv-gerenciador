@@ -258,7 +258,7 @@ export const Container = styled.div`
 `;
 
 export interface ITableProps {
-    width: 50 | 100;
+    width: 50 | 70 | 100;
 }
 export const Table = styled.table<ITableProps>`
     width: ${({ width }) => `${width}%`};

@@ -12,6 +12,7 @@ import {
     IUserClienteResponse,
     IUserListResponse,
 } from "../../../interfaces/IUserClienteResponse";
+import { IUserDetailResponse } from "../../../interfaces/IUserDetail";
 
 export const getClients = createAsyncThunk(
     "clientsData/getClients",
@@ -115,6 +116,51 @@ export const cadastrarUsuarios = createAsyncThunk(
             );
 
             if (response.data?.error !== undefined) return response.data;
+            return response.data;
+        } catch (err: any) {
+            return err.response;
+        }
+    }
+);
+
+export const getProducts = createAsyncThunk(
+    "clientsData/getProducts",
+    async (args: { token: string }): Promise<ICliente | any> => {
+        try {
+            const response = await MiddlewareAPI.get(
+                "cardapioVirtual/produtos",
+                {
+                    headers: {
+                        Authorization: args.token,
+                    },
+                }
+            );
+            if (response.data.error !== undefined) return response.data;
+
+            return response.data;
+        } catch (err: any) {
+            return err.response;
+        }
+    }
+);
+
+export const getUserDetail = createAsyncThunk(
+    "clientsData/getUserDetail",
+    async (args: {
+        idUsuario: number;
+        token: string;
+    }): Promise<IUserDetailResponse | any> => {
+        try {
+            const response = await MiddlewareAPI.get(
+                `cardapioVirtual/usuario/detalhe/${args.idUsuario}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${args.token}`,
+                    },
+                }
+            );
+            if (response.data.error !== undefined) return response.data;
+
             return response.data;
         } catch (err: any) {
             return err.response;
