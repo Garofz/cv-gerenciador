@@ -47,7 +47,7 @@ const useUsuarios = (): IUseUsuarios => {
             .unwrap()
             .then((res) => res);
 
-        if (response.usuarios !== undefined)
+        if (response?.usuarios !== undefined)
             return setUsuarios(response.usuarios);
 
         setMessage(
