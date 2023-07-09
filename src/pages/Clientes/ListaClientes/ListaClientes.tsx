@@ -138,8 +138,8 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                             <div>
                                 <Button
                                     text="Adicionar Cliente"
-                                    buttonType="secundary"
-                                    size="small"
+                                    buttonType="primary"
+                                    size="medium"
                                     onClick={() => {
                                         selectCliente(undefined);
                                         openModal();
@@ -157,23 +157,11 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                                                 title={`#${cliente.idCliente} - ${cliente.nome} `}
                                                 children={
                                                     <ClienteWrapper>
-                                                        <ClienteBody
-                                                            style={{
-                                                                cursor: "pointer",
-                                                            }}
-                                                            onClick={() => {
-                                                                selectCliente(
-                                                                    cliente
-                                                                );
-                                                                nextLayout(
-                                                                    "detail"
-                                                                );
-                                                            }}
-                                                        >
+                                                        <ClienteBody>
                                                             <div
                                                                 style={{
                                                                     padding: 8,
-                                                                    width: "250px",
+                                                                    width: "280px",
                                                                 }}
                                                             >
                                                                 <TextBold>
@@ -239,6 +227,25 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                                                                             .descricao
                                                                     }
                                                                 </TextNormal>
+                                                            </div>
+                                                            <div
+                                                                style={{
+                                                                    padding: 8,
+                                                                }}
+                                                            >
+                                                                <Button
+                                                                    text="Ver detalhes"
+                                                                    size="small"
+                                                                    buttonType="secundary"
+                                                                    onClick={() => {
+                                                                        selectCliente(
+                                                                            cliente
+                                                                        );
+                                                                        nextLayout(
+                                                                            "detail"
+                                                                        );
+                                                                    }}
+                                                                />
                                                             </div>
                                                         </ClienteBody>
                                                         <IconContainer>

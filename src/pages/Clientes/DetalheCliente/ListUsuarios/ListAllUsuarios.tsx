@@ -13,10 +13,10 @@ import {
 import {
     ButtonOutlinePrimary,
     Divider,
-    Input,
     InputWrapper,
-    Label,
     Subtitle2,
+    TextBold,
+    TextNormal,
     TitleH3,
     TitleH4,
     TitleH5,
@@ -33,6 +33,9 @@ import {
 } from "../../../../interfaces/IUserClienteResponse";
 import { formatarData } from "../../../../util/format";
 import { BsPencilFill } from "react-icons/bs";
+import { BriefCard, Button, EditFileIcon, Input, SearchIcon } from "ui-gds";
+import FadeIn from "../../../../components/Animations/FadeIn/FadeIn";
+import { IconContainer } from "../../ListaClientes/styles";
 
 export interface IListUsuariosProps {
     usuarios?: IUserList[] | undefined;
@@ -55,88 +58,91 @@ function ListAllUsuarios({
         <ContainerContentDiv>
             {!layoutResumido && (
                 <SubHeaderHandler>
-                    <InputWrapper>
-                        <Label>Filtrar</Label>
-                        <div className="filterInput">
-                            <Input
-                                type="text"
-                                onChange={(e) => filtrarUsuario(e.target.value)}
-                                placeholder="Digite o Nome"
-                            />
-                            <FiSearch />
-                        </div>
-                    </InputWrapper>
+                    <Input
+                        customIcon={<SearchIcon />}
+                        name="Filtrar"
+                        placeholder="Informe o nome"
+                        inputType="default"
+                        labelText="Filtrar"
+                        labelStyle="bold"
+                        onChange={(e) => filtrarUsuario(e.target.value)}
+                    />
                 </SubHeaderHandler>
             )}
 
             {!usuarios || usuarios?.length > 0 ? (
                 usuarios?.map((usuario, index) => (
                     <div key={index}>
-                        <ContainerUsuarioDiv>
-                            <div
-                                style={{
-                                    width: "100%",
-                                }}
-                                onClick={() => {
-                                    if (onClickSelectUser)
-                                        onClickSelectUser(usuario);
-                                    if (nextPage) nextPage();
-                                }}
-                            >
-                                <UsuarioTitleDiv>
-                                    <UsuarioTitle>
+                        <FadeIn duration={200}>
+                            <BriefCard
+                                title={`#${usuario.idUsuario} - ${usuario.nomeUsuario} `}
+                                children={
+                                    <ContainerUsuarioDiv>
                                         <div
                                             style={{
-                                                padding: "0.5rem",
+                                                width: "100%",
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                justifyContent: "space-between",
                                             }}
                                         >
-                                            <AvatarContainer size="small">
-                                                <Avatar
-                                                    shadow
-                                                    name={usuario.nomeUsuario}
+                                            <div>
+                                                <div>
+                                                    <UsuarioTextWrapper>
+                                                        <TextBold>
+                                                            Email:
+                                                        </TextBold>{" "}
+                                                        <TextNormal>
+                                                            {
+                                                                usuario.emailUsuario
+                                                            }
+                                                        </TextNormal>
+                                                    </UsuarioTextWrapper>
+                                                </div>
+                                                <div
+                                                    style={{
+                                                        padding: 8,
+                                                    }}
+                                                >
+                                                    <Button
+                                                        text="Ver detalhes"
+                                                        size="small"
+                                                        buttonType="secundary"
+                                                        onClick={() => {
+                                                            if (
+                                                                onClickSelectUser
+                                                            )
+                                                                onClickSelectUser(
+                                                                    usuario
+                                                                );
+                                                            if (nextPage)
+                                                                nextPage();
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <IconContainer
+                                                style={{
+                                                    cursor: "pointer",
+                                                }}
+                                            >
+                                                <EditFileIcon
+                                                    onClick={() => {
+                                                        if (onClickSelectUser)
+                                                            onClickSelectUser(
+                                                                usuario
+                                                            );
+                                                        if (onClickEditUser)
+                                                            onClickEditUser();
+                                                    }}
                                                 />
-                                            </AvatarContainer>
+                                            </IconContainer>
                                         </div>
-                                        <Subtitle2>
-                                            # {usuario.idUsuario}
-                                        </Subtitle2>
-                                        <DividerDiv color="#27374D" />
-                                        <TitleH4 style={{ margin: 0 }}>
-                                            {usuario.nomeUsuario}
-                                        </TitleH4>
-                                    </UsuarioTitle>
-                                </UsuarioTitleDiv>
-                                <UsuarioBody>
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            justifyContent: "space-between",
-                                        }}
-                                    >
-                                        <div>
-                                            <UsuarioTextWrapper>
-                                                <UsuarioSpan>
-                                                    Email:
-                                                </UsuarioSpan>{" "}
-                                                {usuario.emailUsuario}
-                                            </UsuarioTextWrapper>
-                                        </div>
-                                    </div>
-                                </UsuarioBody>
-                            </div>
-                            <div>
-                                <FaPen
-                                    style={{ cursor: "pointer", padding: 20 }}
-                                    size={20}
-                                    onClick={() => {
-                                        if (onClickSelectUser)
-                                            onClickSelectUser(usuario);
-                                        if (onClickEditUser) onClickEditUser();
-                                    }}
-                                />
-                            </div>
-                        </ContainerUsuarioDiv>
+                                    </ContainerUsuarioDiv>
+                                }
+                            />
+                        </FadeIn>
+
                         <Divider size={4} />
                     </div>
                 ))

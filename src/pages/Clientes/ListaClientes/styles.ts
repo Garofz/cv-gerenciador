@@ -58,15 +58,7 @@ export const ClienteBody = styled.div`
     }
 `;
 
-export const IconContainer = styled.div`
-    width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &:hover {
-        color: red;
-    }
-`;
+export const IconContainer = styled.div``;
 
 export const ClienteIconWrapper = styled.div`
     display: flex;

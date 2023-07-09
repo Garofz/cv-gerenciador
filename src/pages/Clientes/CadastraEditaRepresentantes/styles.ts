@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const FormWrapper = styled.div`
     padding: 14px;
-    .inputWrapper {
+    input {
         width: 400px;
     }
     @media (min-width: 768px) and (max-width: 1023px) {

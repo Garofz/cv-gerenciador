@@ -33,6 +33,7 @@ const useUsuarios = (): IUseUsuarios => {
     const [message, setMessage] = useState<string>("");
     const [showMessage, setShowMessage] = useState<boolean>(false);
     const [usuarios, setUsuarios] = useState<IUserList[]>([]);
+    const [usuariosFitrados, setUsuariosFiltrados] = useState<IUserList[]>([]);
     const user = useSelector(selectUsuario);
 
     useEffect(() => {
@@ -47,8 +48,11 @@ const useUsuarios = (): IUseUsuarios => {
             .unwrap()
             .then((res) => res);
 
-        if (response?.usuarios !== undefined)
-            return setUsuarios(response.usuarios);
+        if (response?.usuarios !== undefined) {
+            setUsuarios(response.usuarios);
+            setUsuariosFiltrados(response.usuarios);
+            return;
+        }
 
         setMessage(
             response?.controle?.message || "Erro ao consultar os usuários"
@@ -58,9 +62,10 @@ const useUsuarios = (): IUseUsuarios => {
 
     const filtrarUsuarios = (param: string) => {
         if (!usuarios) return;
+        if (!usuariosFitrados) return;
 
         if (!param || param.trim() === "") {
-            obterUsuarios();
+            setUsuarios(usuariosFitrados);
         } else {
             const filtrados = usuarios.filter((usuario) =>
                 usuario.nomeUsuario.toUpperCase().includes(param.toUpperCase())

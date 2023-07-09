@@ -13,9 +13,6 @@ import {
 import {
     ButtonOutlinePrimary,
     Divider,
-    Input,
-    InputWrapper,
-    Label,
     Subtitle2,
     TitleH3,
     TitleH4,
@@ -30,6 +27,7 @@ import { FiSearch } from "react-icons/fi";
 import { IUserCliente } from "../../../../interfaces/IUserClienteResponse";
 import { formatarData } from "../../../../util/format";
 import { BsPencilFill } from "react-icons/bs";
+import { Input, SearchIcon } from "ui-gds";
 
 export interface IListUsuariosProps {
     usuarios?: IUserCliente[] | undefined;
@@ -50,17 +48,15 @@ function ListUsuarios({
         <ContainerContentDiv>
             {!layoutResumido && (
                 <SubHeaderHandler>
-                    <InputWrapper>
-                        <Label>Filtrar</Label>
-                        <div className="filterInput">
-                            <Input
-                                type="text"
-                                onChange={(e) => filtrarUsuario(e.target.value)}
-                                placeholder="Digite o Nome"
-                            />
-                            <FiSearch />
-                        </div>
-                    </InputWrapper>
+                    <Input
+                        customIcon={<SearchIcon />}
+                        name="Filtrar"
+                        placeholder="Informe o nome"
+                        inputType="default"
+                        labelText="Filtrar"
+                        labelStyle="bold"
+                        onChange={(e) => filtrarUsuario(e.target.value)}
+                    />
                 </SubHeaderHandler>
             )}
 

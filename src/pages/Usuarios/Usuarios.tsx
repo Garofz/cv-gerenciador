@@ -4,7 +4,6 @@ import {
     ButtonDanger,
     ButtonOutlinePrimary,
     Divider,
-    Input,
     InputWrapper,
     Label,
     TitleH2,
@@ -22,6 +21,7 @@ import useUsuarios from "./hooks/useUsuario";
 import Toast from "../../components/Toast/Toast";
 import ListUsuarios from "../Clientes/DetalheCliente/ListUsuarios/ListUsuarios";
 import ListAllUsuarios from "../Clientes/DetalheCliente/ListUsuarios/ListAllUsuarios";
+import { Button, Input, SearchIcon } from "ui-gds";
 export interface Props {
     selectUsuario: React.Dispatch<React.SetStateAction<IUserList>>;
     selectedUsuario: IUserList;
@@ -157,30 +157,29 @@ function Usuarios({ selectUsuario, selectedUsuario, nextLayout }: Props) {
             {userDataStatus === "success" && (
                 <div>
                     <SubHeaderHandler>
-                        <InputWrapper>
-                            <Label>Filtrar</Label>
-                            <div className="filterInput">
-                                <Input
-                                    type="text"
-                                    onChange={
-                                        (e) => console.log(e)
-
-                                        //filtrarClientes(e.target.value)
-                                    }
-                                    placeholder="Digite o Nome"
-                                />
-                                <FiSearch />
-                            </div>
-                        </InputWrapper>
+                        <SubHeaderHandler>
+                            <Input
+                                customIcon={<SearchIcon />}
+                                name="Filtrar"
+                                placeholder="Informe o nome"
+                                inputType="default"
+                                labelText="Filtrar"
+                                labelStyle="bold"
+                                onChange={(e) =>
+                                    filtrarUsuarios(e.target.value)
+                                }
+                            />
+                        </SubHeaderHandler>
                         <div>
-                            <ButtonOutlinePrimary
+                            <Button
+                                text="Cadastrar Representante"
+                                buttonType="primary"
+                                size="medium"
                                 onClick={() => {
                                     selectUsuario(initialStateUsuario);
                                     setShowModal(true);
                                 }}
-                            >
-                                Cadastrar Representante
-                            </ButtonOutlinePrimary>
+                            />
                         </div>
                     </SubHeaderHandler>
                     <Divider size={24} />

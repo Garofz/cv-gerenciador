@@ -9,7 +9,6 @@ import {
     ButtonPrimary,
     Col,
     Divider,
-    Input,
     InputWrapper,
     Label,
     Option,
@@ -18,6 +17,7 @@ import {
     SelectWrapper,
 } from "../../../globalStyles";
 import { convertStringToDate, formatarData } from "../../../util/format";
+import { Button, Input } from "ui-gds";
 
 export interface IProps {
     selectedUser: IUserList;
@@ -37,52 +37,47 @@ function CadastraEditaRepresentantes({
         <FormWrapper>
             <Row className="row">
                 <Col className="col">
-                    <InputWrapper
-                        className="inputWrapper"
-                        style={{ width: "350px" }}
-                    >
-                        <Label>Nome</Label>
-                        <Input
-                            placeholder="Nome"
-                            value={selectedUser.nomeUsuario}
-                            onChange={(e) =>
-                                selectUser((prev) => ({
-                                    ...prev,
-                                    nomeUsuario: e.target.value,
-                                }))
-                            }
-                        />
-                    </InputWrapper>
+                    <Input
+                        name="Nome"
+                        labelText="Nome"
+                        placeholder="Nome"
+                        value={selectedUser.nomeUsuario}
+                        onChange={(e) =>
+                            selectUser((prev) => ({
+                                ...prev,
+                                nomeUsuario: e.target.value,
+                            }))
+                        }
+                    />
                 </Col>
                 <Col className="col">
-                    <InputWrapper
-                        className="inputWrapper"
-                        style={{ width: "400px" }}
-                    >
-                        <Label>Email</Label>
-                        <Input
-                            disabled={type === "Edita"}
-                            placeholder="Email"
-                            value={selectedUser.emailUsuario}
-                            onChange={(e) =>
-                                selectUser((prev) => ({
-                                    ...prev,
-                                    emailUsuario: e.target.value,
-                                }))
-                            }
-                        />
-                    </InputWrapper>
+                    <Input
+                        labelText="Email"
+                        name="Email"
+                        disabled={type === "Edita"}
+                        placeholder="Email"
+                        value={selectedUser.emailUsuario}
+                        onChange={(e) =>
+                            selectUser((prev) => ({
+                                ...prev,
+                                emailUsuario: e.target.value,
+                            }))
+                        }
+                    />
                 </Col>
             </Row>
             <Divider size={32} />
-            <Row className="row" style={{ width: "50%", margin: "0 auto" }}>
-                <Col className="col" onClick={onClickSalvar}>
-                    <ButtonPrimary>Salvar</ButtonPrimary>
+            <Row className="row" style={{ width: "100%", margin: "0 auto" }}>
+                <Col className="col">
+                    <Button text="Salvar" expandable onClick={onClickSalvar} />
                 </Col>
                 <Col className="col">
-                    <ButtonOutlinePrimary onClick={onClickVoltar}>
-                        Voltar
-                    </ButtonOutlinePrimary>
+                    <Button
+                        text="Voltar"
+                        buttonType="secundary"
+                        expandable
+                        onClick={onClickVoltar}
+                    />
                 </Col>
             </Row>
         </FormWrapper>
