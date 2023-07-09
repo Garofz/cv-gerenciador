@@ -33,7 +33,7 @@ function Login() {
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
             event.preventDefault(); // Impede o comportamento padrão do formulário de ser disparado
-            if (!email || email.trim() === "") {
+            if (!email || email.trim() === "" || !email.includes("@")) {
                 setValidEmail(false);
                 return;
             }
@@ -44,6 +44,7 @@ function Login() {
             submitForm();
         }
     };
+
     return (
         <LoginFormWrapper>
             <Toast
@@ -62,6 +63,8 @@ function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 labelText="Email"
                 labelStyle="bold"
+                error={!validEmail}
+                errorMessage="Email inválido"
                 onKeyDown={handleKeyPress}
             />
             <Divider size={12} />
@@ -73,6 +76,8 @@ function Login() {
                 onChange={(e) => setSenha(e.target.value)}
                 labelText="Senha"
                 labelStyle="bold"
+                error={!validSenha}
+                errorMessage="Senha inválida"
                 onKeyDown={handleKeyPress}
             />
             <Divider size={24} />
