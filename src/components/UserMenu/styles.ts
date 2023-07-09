@@ -22,11 +22,11 @@ export const UserConfigurationButton = styled.button.attrs({
     border-radius: 40px;
     border: none;
     cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.light01};
+    background-color: ${({ theme }) => theme.colors.primaryLight};
     ${(props) =>
         props.isSelected &&
         css`
-            background-color: ${({ theme }) => theme.colors.secondary};
+            background-color: ${({ theme }) => theme.colors.neutral5};
         `}
 `;
 
@@ -39,7 +39,7 @@ export const UserSettingsModal = styled.div<ModalProps>`
     position: absolute;
     top: 40px;
     right: 0px;
-    background-color: ${({ theme }) => theme.colors.light01};
+    background-color: ${({ theme }) => theme.colors.background};
     visibility: hidden;
     border: none;
 
@@ -57,11 +57,11 @@ export const UserSettingsButton = styled.button.attrs({ type: "button" })`
     flex-direction: row;
     border: none;
     cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.light01};
+    background-color: ${({ theme }) => theme.colors.background};
     width: 100%;
     transition: 0.2s ease;
     &:hover {
-        background-color: ${({ theme }) => theme.colors.light02};
+        background-color: ${({ theme }) => theme.colors.neutral4};
     }
 `;
 
@@ -88,7 +88,7 @@ export const UserSettingsButtonDiv = styled.div`
 `;
 
 export const UserTextP = styled.p`
-    color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.carbon};
     white-space: nowrap;
     margin-left: 10px;
 `;
@@ -125,11 +125,11 @@ export const ArrowDivWrapper = styled.div<ArrowWrapperProps>`
 `;
 
 export const ArrowIcon = styled(BsCaretDownFill)`
-    color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.carbon};
 `;
 export const FaUserIcon = styled(FaUser)`
-    color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.carbon};
 `;
 export const FaSignOutAltIcon = styled(FaSignOutAlt)`
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.carbon};
 `;

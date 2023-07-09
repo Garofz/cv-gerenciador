@@ -26,6 +26,7 @@
     "redux-thunk": "^2.4.2",
     "styled-components": "^5.3.3",
     "typescript": "^4.9.5",
+    "ui-gds": "file:ui-gds-0.1.0.tgz",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

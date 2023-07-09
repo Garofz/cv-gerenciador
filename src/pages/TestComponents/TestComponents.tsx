@@ -11,13 +11,8 @@ import {
     Col,
     Container,
     Divider,
-    Input,
-    InputWrapper,
     Label,
-    Option,
     Row,
-    Select,
-    SelectWrapper,
     Subtitle1,
     Subtitle2,
     TitleH1,
@@ -26,10 +21,21 @@ import {
     TitleH4,
     TitleH5,
 } from "../../globalStyles";
-import Accordion from "../../components/Accordion/Accordion";
+
+import {
+    Accordion,
+    Button,
+    CheckIcon,
+    Datepicker,
+    EmailIcon,
+    Input,
+    TextArea,
+} from "ui-gds";
+//import Accordion from "../../components/Accordion/Accordion";
 import FadeIn from "../../components/Animations/FadeIn/FadeIn";
 import FadeInLeft from "../../components/Animations/FadeInLeft/FadeInLeft";
 import Toast from "../../components/Toast/Toast";
+import { FaCheck } from "react-icons/fa";
 function TestComponents() {
     const [showToast, setShowToast] = useState<boolean>(false);
     const [showFixedToast, setShowFixedToast] = useState<boolean>(false);
@@ -46,117 +52,76 @@ function TestComponents() {
                     <Subtitle2 color="#27374D">Subtilte 2</Subtitle2>
                 </div>
             </Accordion>
+            <Divider size={32} />
             <Accordion title="Botões">
                 <div style={{ padding: "12px 0px" }}>
-                    <Row>
-                        <Col>
-                            <ButtonPrimary style={{ width: "fit-content" }}>
-                                Button Primary
-                            </ButtonPrimary>
-                            <ButtonOutlinePrimary
-                                style={{ width: "fit-content" }}
-                            >
-                                Button Outline Primary
-                            </ButtonOutlinePrimary>
-                        </Col>
-                    </Row>
-                    <Divider size={12} />
-                    <Row>
-                        <Col>
-                            <ButtonSecondary style={{ width: "fit-content" }}>
-                                Button Secondary
-                            </ButtonSecondary>
-                            <ButtonOutlineSecondary
-                                style={{ width: "fit-content" }}
-                            >
-                                Button Outline Secondary
-                            </ButtonOutlineSecondary>
-                        </Col>
-                    </Row>
-                    <Divider size={12} />
-                    <Row>
-                        <Col>
-                            <ButtonAlert style={{ width: "fit-content" }}>
-                                Button Alert
-                            </ButtonAlert>
-                            <ButtonOutlineAlert
-                                style={{ width: "fit-content" }}
-                            >
-                                Button Outline Alert
-                            </ButtonOutlineAlert>
-                        </Col>
-                    </Row>
-                    <Divider size={12} />
-                    <Row>
-                        <Col>
-                            <ButtonDanger style={{ width: "fit-content" }}>
-                                Button Danger
-                            </ButtonDanger>
-                            <ButtonOutlineDanger
-                                style={{ width: "fit-content" }}
-                            >
-                                Button Outline Danger
-                            </ButtonOutlineDanger>
-                        </Col>
-                    </Row>
+                    <Button
+                        buttonType="primary"
+                        text="Primary"
+                        expandable
+                        iconPosition="left"
+                        customIcon={<CheckIcon stroke="#fff" />}
+                    />
+                    <Divider size={8} />
+                    <Button
+                        buttonType="secundary"
+                        text="Secondary"
+                        expandable
+                    />
+                    <Divider size={8} />
+                    <Button
+                        buttonType="primary"
+                        text="danger"
+                        variant="danger"
+                        expandable
+                    />
+                    <Divider size={8} />
+                    <Button
+                        buttonType="secundary"
+                        text="error"
+                        variant="danger"
+                        expandable
+                    />
                 </div>
             </Accordion>
+            <Divider size={32} />
             <Accordion title="Input">
                 <form style={{ padding: "12px 0px" }}>
-                    <InputWrapper style={{ width: "500px" }}>
-                        <Label>Teste</Label>
-                        <Input type="text" placeholder="Com Label" />
-                    </InputWrapper>
-                    <Divider size={12} />
-                    <InputWrapper style={{ width: "500px" }}>
-                        <Input type="text" placeholder="Sem Label" />
-                    </InputWrapper>
-                    <Divider size={12} />
-                    <InputWrapper style={{ width: "500px" }}>
-                        <Label>Data 1</Label>
-                        <Input type="date" placeholder="Data" />
-                    </InputWrapper>
-                    <Divider size={12} />
-                    <InputWrapper style={{ width: "500px" }}>
-                        <Input type="date" placeholder="Data" />
-                    </InputWrapper>
-                    <Divider size={12} />
-                    <InputWrapper style={{ width: "500px" }}>
-                        <Label>Password</Label>
-                        <Input
-                            type="password"
-                            autoComplete="senha"
-                            placeholder="Com Label"
-                        />
-                    </InputWrapper>
-                    <Divider size={12} />
-                    <InputWrapper style={{ width: "500px" }}>
-                        <Input
-                            type="password"
-                            autoComplete="senha"
-                            placeholder="Sem Label"
-                        />
-                    </InputWrapper>
-                    <Divider size={12} />
-                    <InputWrapper style={{ width: "500px" }}>
-                        <Input type="email" placeholder="Email" />
-                    </InputWrapper>
-
-                    <Divider size={12} />
-                    <SelectWrapper style={{ width: "500px" }}>
-                        <Label>Select</Label>
-                        <Select>
-                            <Option value={0} defaultChecked>
-                                --- Select ---
-                            </Option>
-                            <Option value={0}> Teste</Option>
-                            <Option value={1}> Teste 2</Option>
-                            <Option value={2}> Teste 3</Option>
-                            <Option value={3}> Teste 4</Option>
-                        </Select>
-                    </SelectWrapper>
+                    <Input
+                        name="Email"
+                        labelText="E-mail"
+                        labelStyle="bold"
+                        inputSize="medium"
+                        placeholder="informe o e-mail"
+                        tip={true}
+                        tipMessage="Informe o Email"
+                        customIcon={<EmailIcon />}
+                    />
+                    <Divider size={24} />
+                    <Input
+                        inputType="password"
+                        name="Senha"
+                        labelText="Senha"
+                        labelStyle="bold"
+                        inputSize="medium"
+                        placeholder="informe a senha"
+                    />
+                    <Divider size={24} />
+                    <Datepicker
+                        labelText="Data"
+                        onChange={() => console.log()}
+                        onClear={() => console.log()}
+                    />
+                    <Divider size={24} />
+                    <TextArea
+                        disable={false}
+                        error={false}
+                        label="Text Area"
+                        resize="both"
+                    />
                 </form>
             </Accordion>
+            <Divider size={32} />
             <Accordion title="Animations">
                 <Divider size={32} />
                 <FadeIn>
@@ -167,6 +132,7 @@ function TestComponents() {
                     <div>Teste Fade In Left</div>
                 </FadeInLeft>
             </Accordion>
+            <Divider size={32} />
             <Accordion title="Toast">
                 <Divider size={32} />
                 <Label>Relative</Label>

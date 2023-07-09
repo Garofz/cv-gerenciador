@@ -1,7 +1,8 @@
 import React from "react";
 import { useThemeSelectorContext } from "../../providers/ThemeProvider/ThemeSelectorProvider";
-import { ThemeSelector } from "../../providers/Theme/ThemeSelector";
+// import { ThemeSelector } from "../../providers/Theme/ThemeSelector";
 import { TextNormal } from "../../globalStyles";
+import { ThemeSelector } from "ui-gds";
 function Home() {
     const { selectedTheme } = useThemeSelectorContext();
     return (
@@ -15,7 +16,11 @@ function Home() {
             </div>
             <div style={{ padding: 12 }}>
                 <TextNormal>Dark Theme</TextNormal>
-                <ThemeSelector mode="Dark" />
+                <ThemeSelector mode="DarkBlack" />
+            </div>
+            <div style={{ padding: 12 }}>
+                <TextNormal>Blue Theme</TextNormal>
+                <ThemeSelector mode="DarkBlue" />
             </div>
         </div>
     );

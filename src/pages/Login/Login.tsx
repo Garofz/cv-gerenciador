@@ -3,7 +3,6 @@ import {
     ButtonOutlinePrimary,
     Container,
     Divider,
-    Input,
     InputWrapper,
     Label,
 } from "../../globalStyles";
@@ -11,6 +10,7 @@ import { LoginFormWrapper } from "./styles";
 import UseLogin from "./hooks/UseLogin";
 import Spinner from "../../components/Spinner/Spinner";
 import Toast from "../../components/Toast/Toast";
+import { Button, Input } from "ui-gds";
 
 function Login() {
     const {
@@ -54,60 +54,31 @@ function Login() {
                 fixed={true}
                 duration={6000}
             />
-            <InputWrapper>
-                <Label>Email</Label>
-                <Divider size={4} />
-                <Input
-                    id="Email"
-                    autoComplete="email"
-                    className={`${validEmail || "input-invalid"}`}
-                    type="email"
-                    value={email}
-                    onChange={(e) => {
-                        if (
-                            e.target.value.trim() == "" ||
-                            !e.target.value.includes("@")
-                        ) {
-                            setValidEmail(false);
-                        } else {
-                            setValidEmail(true);
-                        }
-                        setEmail(e.target.value);
-                    }}
-                    onKeyDown={handleKeyPress}
-                    placeholder="Email"
-                />
-                {validEmail || (
-                    <li style={{ color: "lightcoral" }}>Email inválido</li>
-                )}
-            </InputWrapper>
+            <Input
+                inputType="default"
+                name="Email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                labelText="Email"
+                labelStyle="bold"
+                onKeyDown={handleKeyPress}
+            />
             <Divider size={12} />
-            <InputWrapper>
-                <Label>Senha</Label>
-                <Divider size={4} />
-                <Input
-                    id="Password"
-                    autoComplete="password"
-                    className={`${validSenha || "input-invalid"}`}
-                    type="password"
-                    value={senha}
-                    onChange={(e) => {
-                        if (e.target.value.trim() === "") {
-                            setValidSenha(false);
-                        } else {
-                            setValidSenha(true);
-                        }
-                        setSenha(e.target.value);
-                    }}
-                    onKeyDown={handleKeyPress}
-                    placeholder="Senha"
-                />
-                {validSenha || (
-                    <li style={{ color: "lightcoral" }}>Senha inválida</li>
-                )}
-            </InputWrapper>
+            <Input
+                inputType="password"
+                name="Senha"
+                placeholder="Senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                labelText="Senha"
+                labelStyle="bold"
+                onKeyDown={handleKeyPress}
+            />
             <Divider size={24} />
-            <ButtonOutlinePrimary
+            <Button
+                buttonType="secundary"
+                text="Entrar"
                 disabled={!validSenha || !validEmail ? true : false}
                 type="button"
                 onClick={() => {
@@ -121,9 +92,7 @@ function Login() {
                     }
                     submitForm();
                 }}
-            >
-                Entrar
-            </ButtonOutlinePrimary>
+            />
         </LoginFormWrapper>
     );
 }

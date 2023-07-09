@@ -11,10 +11,10 @@ import { useSelector } from "react-redux";
 import Defaultlayout from "./layouts/DefaultLayout/Defaultlayout";
 import ClienteLayout from "./layouts/ClienteLayout/ClienteLayout";
 import Account from "./pages/Account/Account";
-import { useThemeSelectorContext } from "./providers/ThemeProvider/ThemeSelectorProvider";
+// import { useThemeSelectorContext } from "./providers/ThemeProvider/ThemeSelectorProvider";
 import { ThemeProvider } from "styled-components";
 import UsuarioLayout from "./layouts/UsuarioLayout/UsuarioLayout";
-
+import { Light, useThemeSelectorContext } from "ui-gds";
 const App: React.FunctionComponent = (): JSX.Element => {
     const auth = useSelector(selectAuthAttributs);
     const { selectedTheme } = useThemeSelectorContext();

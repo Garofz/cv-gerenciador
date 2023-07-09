@@ -6,7 +6,7 @@ import App from "./App";
 import { store } from "./redux/store";
 import persistStore from "redux-persist/es/persistStore";
 import { PersistGate } from "redux-persist/integration/react";
-import { ThemeSelectorProvider } from "./providers/ThemeProvider/ThemeSelectorProvider";
+import { ThemeSelectorProvider } from "ui-gds";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
