@@ -24,3 +24,30 @@ export function mascararCelular(celular: string): string {
 
     return celularMascarado;
 }
+
+export function mascararDocumento(
+    tipoPessoa: number,
+    documento: string
+): string {
+    let mascara: string = "";
+
+    if (tipoPessoa === 1) {
+        // Máscara para pessoa física (CPF)
+        mascara = documento.replace(
+            /(\d{3})(\d{3})(\d{3})(\d{2})/,
+            "$1.$2.$3-$4"
+        );
+    } else if (tipoPessoa === 2) {
+        // Máscara para pessoa jurídica (CNPJ)
+        mascara = documento.replace(
+            /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+            "$1.$2.$3/$4-$5"
+        );
+    } else {
+        throw new Error(
+            "Tipo de pessoa inválido. Use 1 para pessoa física ou 2 para pessoa jurídica."
+        );
+    }
+
+    return mascara;
+}

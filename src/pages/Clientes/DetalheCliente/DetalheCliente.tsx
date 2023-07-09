@@ -31,6 +31,7 @@ import ListUsuarios from "./ListUsuarios/ListUsuarios";
 import Toast from "../../../components/Toast/Toast";
 import { IUserCliente } from "../../../interfaces/IUserClienteResponse";
 import CadastraEditaRepresentantes from "../CadastraEditaRepresentantes/CadastraEditaRepresentantes";
+import { mascararDocumento } from "../../../util/mask";
 
 export interface IDetalheClienteProps {
     cliente: ICliente;
@@ -72,9 +73,14 @@ function DetalheCliente({ cliente }: IDetalheClienteProps) {
                         <ClienteDetailUL>
                             <ClienteDetailLI>
                                 <ClienteDetailSpan>
-                                    <TextBold>Inscricao:</TextBold>
+                                    <TextBold>Documento:</TextBold>
                                 </ClienteDetailSpan>
-                                <TextNormal>{cliente?.inscricao}</TextNormal>
+                                <TextNormal>
+                                    {mascararDocumento(
+                                        cliente.tipoPessoa.idTipoPessoa,
+                                        cliente.inscricao
+                                    )}
+                                </TextNormal>
                             </ClienteDetailLI>
                             <ClienteDetailLI>
                                 <ClienteDetailSpan>

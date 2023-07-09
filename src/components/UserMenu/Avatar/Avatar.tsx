@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 export const AvatarWrapper = styled.div`
-    background-color: #ff7c11;
+    background-color: ${({ theme }) => theme.colors.primary};
     border-radius: 50%;
 `;
 export const AvatarContainer = styled.div<SizeParams>`

@@ -107,7 +107,7 @@ export const DividerDiv = styled.div<ColorStyleProps>`
     height: 28px;
     width: 1px;
     margin: 0px 16px;
-    background-color: ${(props) => props.color || "#ff7c11"};
+    background-color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const PortalNameP = styled.p`

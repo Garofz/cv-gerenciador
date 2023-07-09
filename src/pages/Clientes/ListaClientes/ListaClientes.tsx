@@ -42,7 +42,8 @@ import { selectClientsDataStatus } from "../../../redux/features/clientsData/cli
 import Spinner from "../../../components/Spinner/Spinner";
 import { Navigate } from "react-router-dom";
 import Toast from "../../../components/Toast/Toast";
-import { BriefCard, Button, EditFileIcon, Input } from "ui-gds";
+import { BriefCard, Button, EditFileIcon, Input, SearchIcon } from "ui-gds";
+import { mascararDocumento } from "../../../util/mask";
 
 export interface Props {
     selectCliente: (cliente?: ICliente) => void;
@@ -127,6 +128,7 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                                 onChange={(e) =>
                                     filtrarClientes(e.target.value)
                                 }
+                                customIcon={<SearchIcon />}
                                 name="Filtrar"
                                 placeholder="Informe o nome"
                                 inputType="default"
@@ -175,12 +177,15 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                                                                 }}
                                                             >
                                                                 <TextBold>
-                                                                    Inscrição:{" "}
+                                                                    Documento:{" "}
                                                                 </TextBold>
                                                                 <TextNormal>
-                                                                    {
+                                                                    {mascararDocumento(
+                                                                        cliente
+                                                                            .tipoPessoa
+                                                                            .idTipoPessoa,
                                                                         cliente.inscricao
-                                                                    }
+                                                                    )}
                                                                 </TextNormal>
                                                             </div>
                                                             <div
