@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
     Container,
     Divider,
-    Input,
     InputWrapper,
     Label,
     Option,
@@ -11,6 +10,7 @@ import {
     Subtitle2,
     TextBody,
     TextBold,
+    TextNormal,
     TitleH2,
     TitleH3,
 } from "../../../globalStyles";
@@ -42,6 +42,7 @@ import { selectClientsDataStatus } from "../../../redux/features/clientsData/cli
 import Spinner from "../../../components/Spinner/Spinner";
 import { Navigate } from "react-router-dom";
 import Toast from "../../../components/Toast/Toast";
+import { BriefCard, Button, EditFileIcon, Input } from "ui-gds";
 
 export interface Props {
     selectCliente: (cliente?: ICliente) => void;
@@ -122,25 +123,25 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                 {clientesStatus === "success" && (
                     <div>
                         <SubHeaderHandler>
-                            <InputWrapper>
-                                <Label>Filtrar</Label>
-                                <div className="filterInput">
-                                    <Input
-                                        type="text"
-                                        onChange={(e) =>
-                                            filtrarClientes(e.target.value)
-                                        }
-                                        placeholder="Digite o Nome"
-                                    />
-                                    <FiSearch />
-                                </div>
-                            </InputWrapper>
+                            <Input
+                                onChange={(e) =>
+                                    filtrarClientes(e.target.value)
+                                }
+                                name="Filtrar"
+                                placeholder="Informe o nome"
+                                inputType="default"
+                                labelText="Filtrar"
+                                labelStyle="bold"
+                            />
                             <div>
-                                <ButtonOutlinePrimary
-                                    onClick={() => openModal()}
-                                >
-                                    Adicionar Cliente
-                                </ButtonOutlinePrimary>
+                                <Button
+                                    text="Adicionar Cliente"
+                                    buttonType="secundary"
+                                    onClick={() => {
+                                        selectCliente(undefined);
+                                        openModal();
+                                    }}
+                                />
                             </div>
                         </SubHeaderHandler>
                         <Divider size={24} />
@@ -149,98 +150,107 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                                 return (
                                     <div key={index}>
                                         <FadeIn duration={200}>
-                                            <ClienteWrapper>
-                                                <div
-                                                    style={{ width: "95%" }}
-                                                    onClick={() => {
-                                                        selectCliente(cliente);
-                                                        nextLayout("detail");
-                                                    }}
-                                                >
-                                                    <ClienteTitle>
-                                                        <TitleH3>
-                                                            {cliente.nome}
-                                                        </TitleH3>
-                                                        <Subtitle2>
-                                                            <b>#</b>{" "}
-                                                            {cliente.idCliente}
-                                                        </Subtitle2>
-                                                    </ClienteTitle>
-                                                    <ClienteBody>
-                                                        <div
+                                            <BriefCard
+                                                title={`#${cliente.idCliente} - ${cliente.nome} `}
+                                                children={
+                                                    <ClienteWrapper>
+                                                        <ClienteBody
                                                             style={{
-                                                                padding: 8,
-                                                                width: "250px",
+                                                                cursor: "pointer",
+                                                            }}
+                                                            onClick={() => {
+                                                                selectCliente(
+                                                                    cliente
+                                                                );
+                                                                nextLayout(
+                                                                    "detail"
+                                                                );
                                                             }}
                                                         >
-                                                            <TextBold>
-                                                                Inscrição:{" "}
-                                                            </TextBold>
-                                                            {cliente.inscricao}
-                                                        </div>
-                                                        <div
-                                                            style={{
-                                                                padding: 8,
-                                                                display: "flex",
-                                                                flexDirection:
-                                                                    "row",
-                                                                alignItems:
-                                                                    "center",
-                                                            }}
-                                                        >
-                                                            <TextBold>
-                                                                Ativo:{" "}
-                                                            </TextBold>
                                                             <div
                                                                 style={{
-                                                                    marginLeft: 4,
+                                                                    padding: 8,
+                                                                    width: "250px",
                                                                 }}
                                                             >
-                                                                {cliente.ativo ? (
-                                                                    <FaCheck
-                                                                        size={
-                                                                            18
-                                                                        }
-                                                                        color="#27ca21"
-                                                                    />
-                                                                ) : (
-                                                                    <FaTimes
-                                                                        size={
-                                                                            18
-                                                                        }
-                                                                        color="#f21515"
-                                                                    />
-                                                                )}
+                                                                <TextBold>
+                                                                    Inscrição:{" "}
+                                                                </TextBold>
+                                                                <TextNormal>
+                                                                    {
+                                                                        cliente.inscricao
+                                                                    }
+                                                                </TextNormal>
                                                             </div>
-                                                        </div>
-                                                        <div
-                                                            style={{
-                                                                padding: 8,
-                                                            }}
-                                                        >
-                                                            <TextBold>
-                                                                Pessoa:{" "}
-                                                            </TextBold>
-                                                            {
-                                                                cliente
-                                                                    .tipoPessoa
-                                                                    .descricao
-                                                            }
-                                                        </div>
-                                                    </ClienteBody>
-                                                </div>
-                                                <IconContainer
-                                                    style={{ width: "5%" }}
-                                                    onClick={() => {
-                                                        selectCliente(cliente);
-                                                        openModal();
-                                                    }}
-                                                >
-                                                    <ClienteIconWrapper>
-                                                        <FaPen size={20} />
-                                                    </ClienteIconWrapper>
-                                                </IconContainer>
-                                            </ClienteWrapper>
+                                                            <div
+                                                                style={{
+                                                                    padding: 8,
+                                                                    display:
+                                                                        "flex",
+                                                                    flexDirection:
+                                                                        "row",
+                                                                    alignItems:
+                                                                        "center",
+                                                                }}
+                                                            >
+                                                                <TextBold>
+                                                                    Ativo:{" "}
+                                                                </TextBold>
+                                                                <div
+                                                                    style={{
+                                                                        marginLeft: 4,
+                                                                    }}
+                                                                >
+                                                                    {cliente.ativo ? (
+                                                                        <FaCheck
+                                                                            size={
+                                                                                18
+                                                                            }
+                                                                            color="#27ca21"
+                                                                        />
+                                                                    ) : (
+                                                                        <FaTimes
+                                                                            size={
+                                                                                18
+                                                                            }
+                                                                            color="#f21515"
+                                                                        />
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                style={{
+                                                                    padding: 8,
+                                                                }}
+                                                            >
+                                                                <TextBold>
+                                                                    Pessoa:{" "}
+                                                                </TextBold>
+                                                                <TextNormal>
+                                                                    {
+                                                                        cliente
+                                                                            .tipoPessoa
+                                                                            .descricao
+                                                                    }
+                                                                </TextNormal>
+                                                            </div>
+                                                        </ClienteBody>
+                                                        <IconContainer>
+                                                            <EditFileIcon
+                                                                style={{
+                                                                    cursor: "pointer",
+                                                                }}
+                                                                onClick={() => {
+                                                                    selectCliente(
+                                                                        cliente
+                                                                    );
+                                                                    openModal();
+                                                                }}
+                                                            />
+                                                        </IconContainer>
+                                                    </ClienteWrapper>
+                                                }
+                                            />
                                             <Divider size={4} />
                                         </FadeIn>
                                     </div>

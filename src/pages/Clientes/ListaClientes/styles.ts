@@ -1,22 +1,9 @@
 import styled, { css } from "styled-components";
 
 export const ClienteWrapper = styled.div`
-    padding: 12px;
-    border: 1px solid #9db2bf;
-    border-radius: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    min-width: 100%;
-    cursor: pointer;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
-
-    transition: background 0.2s ease-in-out;
-    &:hover {
-        background: #dde6ed;
-    }
-
     @media (min-width: 768px) and (max-width: 1023px) {
         /* Estilos para dispositivos tablet */
     }
@@ -57,9 +44,9 @@ export const ClienteTitle = styled.div`
 `;
 export const ClienteBody = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: left;
-
+    width: 100%;
     @media (min-width: 768px) and (max-width: 1023px) {
         /* Estilos para dispositivos tablet */
     }

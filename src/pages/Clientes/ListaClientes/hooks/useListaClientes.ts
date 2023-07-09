@@ -30,10 +30,11 @@ export interface IUseListaClientes {
 
 const useListaClientes = (): IUseListaClientes => {
     const [clientes, setClientes] = useState<ICliente[]>([]);
+    const [clientesFiltrados, setClientesFiltrados] =
+        useState<ICliente[]>(clientes);
     const [message, setMessage] = useState<string>("");
     const [showMessage, setShowMessage] = useState<boolean>(false);
     const dispatch = useAsyncDispatch();
-    const clientesData = useSelector(selectClientsData);
     const user = useSelector(selectUsuario);
 
     useEffect(() => {
@@ -49,8 +50,11 @@ const useListaClientes = (): IUseListaClientes => {
             .unwrap()
             .then((res) => res);
 
-        if (response?.clientes !== undefined)
-            return setClientes(response.clientes);
+        if (response?.clientes !== undefined) {
+            setClientes(response.clientes);
+            setClientesFiltrados(response.clientes);
+            return;
+        }
 
         setMessage(
             response?.controle?.message || "Erro ao consultar os clientes"
@@ -62,12 +66,12 @@ const useListaClientes = (): IUseListaClientes => {
         if (!clientes) return;
 
         if (!param || param.trim() === "") {
-            obterClientes();
+            setClientesFiltrados(clientes);
         } else {
             const filtrados = clientes.filter((cliente) =>
                 cliente.nome.toUpperCase().includes(param.toUpperCase())
             );
-            setClientes(filtrados);
+            setClientesFiltrados(filtrados);
         }
     };
 
@@ -173,7 +177,7 @@ const useListaClientes = (): IUseListaClientes => {
     };
 
     return {
-        clientes,
+        clientes: clientesFiltrados,
         filtrarClientes,
         cadastrarCliente,
         editarCliente,
