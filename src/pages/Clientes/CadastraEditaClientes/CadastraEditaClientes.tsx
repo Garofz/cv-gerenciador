@@ -103,7 +103,7 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                     />
                 </Col>
             </Row>
-            <Divider size={12} />
+            <Divider size={16} />
             <Row className="row">
                 <Col className="col">
                     <SelectWrapper className="inputWrapper">
