@@ -137,6 +137,7 @@ function ListaClientes({ selectCliente, nextLayout, selectedCliente }: Props) {
                                 <Button
                                     text="Adicionar Cliente"
                                     buttonType="secundary"
+                                    size="small"
                                     onClick={() => {
                                         selectCliente(undefined);
                                         openModal();

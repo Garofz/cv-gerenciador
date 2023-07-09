@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const FormWrapper = styled.div`
+    padding: 14px;
     .inputWrapper {
         width: 400px;
     }

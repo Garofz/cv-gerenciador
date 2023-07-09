@@ -6,7 +6,6 @@ import {
     Col,
     Container,
     Divider,
-    Input,
     InputWrapper,
     Label,
     Option,
@@ -18,6 +17,7 @@ import { FormWrapper } from "./styles";
 import { useSelector } from "react-redux";
 import { selectClientsData } from "../../../redux/features/clientsData/clientsDataSelectors";
 import Toast from "../../../components/Toast/Toast";
+import { Button, Input, Toggle } from "ui-gds";
 interface IReturnEditAdd {
     validOperation: boolean;
     message: string;
@@ -73,34 +73,34 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
             )}
             <Row className="row">
                 <Col className="col">
-                    <InputWrapper className="inputWrapper">
-                        <Label>Nome</Label>
-                        <Input
-                            placeholder="Nome"
-                            value={clienteContext.nome}
-                            onChange={(e) =>
-                                setClienteContext((prev) => ({
-                                    ...prev,
-                                    nome: e.target.value,
-                                }))
-                            }
-                        />
-                    </InputWrapper>
+                    <Input
+                        type="default"
+                        labelText="Nome"
+                        name="Nome"
+                        placeholder="Nome"
+                        value={clienteContext.nome}
+                        onChange={(e) =>
+                            setClienteContext((prev) => ({
+                                ...prev,
+                                nome: e.target.value,
+                            }))
+                        }
+                    />
                 </Col>
                 <Col className="col">
-                    <InputWrapper className="inputWrapper">
-                        <Label>Inscrição</Label>
-                        <Input
-                            placeholder="Inscrição"
-                            value={clienteContext.inscricao}
-                            onChange={(e) =>
-                                setClienteContext((prev) => ({
-                                    ...prev,
-                                    inscricao: e.target.value,
-                                }))
-                            }
-                        />
-                    </InputWrapper>
+                    <Input
+                        type="default"
+                        labelText="Inscrição"
+                        name="Inscrição"
+                        placeholder="Inscrição"
+                        value={clienteContext.inscricao}
+                        onChange={(e) =>
+                            setClienteContext((prev) => ({
+                                ...prev,
+                                inscricao: e.target.value,
+                            }))
+                        }
+                    />
                 </Col>
             </Row>
             <Divider size={12} />
@@ -124,22 +124,16 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                 </Col>
                 <Col className="col">
                     <SelectWrapper className="inputWrapper">
-                        <Label>Ativo</Label>
-                        <Select
-                            value={clienteContext.ativo ? "true" : "false"}
+                        <Toggle
+                            checked={clienteContext.ativo}
+                            labelText="Ativo"
                             onChange={(e) =>
                                 setClienteContext((prev) => ({
                                     ...prev,
-                                    ativo:
-                                        e.target.value === "true"
-                                            ? true
-                                            : false,
+                                    ativo: e.target.checked,
                                 }))
                             }
-                        >
-                            <Option value="true"> SIM</Option>
-                            <Option value="false"> NÃO</Option>
-                        </Select>
+                        />
                     </SelectWrapper>
                 </Col>
             </Row>
@@ -156,7 +150,9 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                     }}
                 >
                     <div style={{ padding: "4px", width: "50%" }}>
-                        <ButtonPrimary
+                        <Button
+                            text="Salvar"
+                            expandable
                             onClick={async () => {
                                 const saveObj = await salvar(clienteContext);
                                 if (!saveObj.validOperation) {
@@ -168,14 +164,15 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                                     voltar();
                                 }
                             }}
-                        >
-                            Salvar
-                        </ButtonPrimary>
+                        />
                     </div>
                     <div style={{ padding: "4px", width: "50%" }}>
-                        <ButtonOutlinePrimary onClick={() => voltar()}>
-                            Voltar
-                        </ButtonOutlinePrimary>
+                        <Button
+                            buttonType="secundary"
+                            text="Voltar"
+                            expandable
+                            onClick={() => voltar()}
+                        />
                     </div>
                 </Col>
             </Row>

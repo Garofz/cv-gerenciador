@@ -9,7 +9,7 @@ import {
     ModalTitleWrapper,
     ModalWrapper,
 } from "./styles";
-import { Container, TitleH1 } from "../../globalStyles";
+import { Container, TitleH1, TitleH2, TitleH3 } from "../../globalStyles";
 import { FaTimes } from "react-icons/fa";
 
 export interface Props {
@@ -24,7 +24,7 @@ const Modal = ({ children, title, closeModal }: Props) => {
             <ModalWrapper>
                 <ModalTitle>
                     <ModalTitleWrapper>
-                        <TitleH1>{title}</TitleH1>
+                        <TitleH2>{title}</TitleH2>
                     </ModalTitleWrapper>
                     <ModalIconTitleWrapper>
                         <FaTimes

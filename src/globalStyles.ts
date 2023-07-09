@@ -200,14 +200,15 @@ export const Input = styled.input`
 export const Label = styled.label`
     flex-direction: column-reverse;
     pointer-events: none;
-    color: ${({ theme }) => theme.colors.primary};
-    font-weight: bold;
+    color: ${({ theme }) => theme.colors.neutral9};
+    font-weight: 500;
+    font-size: 14px;
     transition: transform 0.3s, font-size 0.3s;
     transform-origin: top left;
     ${Input}:focus ~ &,
     ${Input}:valid ~ & {
         transform: translateY(-100%) scale(0.8);
-        font-size: 12px;
+        font-size: 6px;
     }
 `;
 
@@ -218,19 +219,25 @@ export const SelectWrapper = styled.div`
 
 export const Select = styled.select`
     border: none;
-    border-bottom: 2px solid #ccc;
-    transition: border-bottom-color 0.5s;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.neutral3};
     font-size: 18px;
-    &:focus {
-        border-bottom-color: #27374d;
-        outline: none;
+    background-color: transparent;
+    color: ${({ theme }) => theme.colors.neutral7};
+    &:hover {
+        ${(props) =>
+            !props.disabled &&
+            css`
+                border-bottom: 1px solid ${({ theme }) => theme.colors.primary};
+            `}
     }
 `;
 
 export const Option = styled.option`
     font-size: 18px;
-    padding: 4px 8px;
-    background-color: #fff;
+    padding: 8px 12px;
+
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.neutral7};
 `;
 
 export const Row = styled.div`
