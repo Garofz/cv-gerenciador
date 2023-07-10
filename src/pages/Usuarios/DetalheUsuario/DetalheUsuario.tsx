@@ -26,7 +26,11 @@ import {
     Divider,
     IconDelete,
     IconPlus,
+    Label,
+    Option,
     Row,
+    Select,
+    SelectWrapper,
     Subtitle1,
     Table,
     TableBody,
@@ -47,7 +51,7 @@ import { formatarData } from "../../../util/format";
 import useDetalheUsuario from "./hooks/useDetalheUsuario";
 import ListProdutosUsuario from "./ListProdutosUsuario/ListProdutosUsuario";
 import ListClientesUsuario from "./ListClientesUsuario/ListClientesUsuario";
-import { Button, Tabs } from "ui-gds";
+import { Button, Datepicker, Tabs } from "ui-gds";
 
 export interface IProps {
     usuario: IUserList;
@@ -59,6 +63,8 @@ function DetalheUsuario({ usuario }: IProps) {
     });
 
     const [selectedTab, setSelectedTab] = useState(0);
+    const [showModalCliente, setShowModalCliente] = useState<boolean>(false);
+    const [showModalProduto, setShowModalProduto] = useState<boolean>(false);
 
     const handleTabClicked = (name: string, tabIndex: number) => {
         setSelectedTab(tabIndex);
@@ -70,8 +76,135 @@ function DetalheUsuario({ usuario }: IProps) {
         console.log("Redirecionar para:", path);
         // Adicione aqui a lógica de redirecionamento com base no caminho
     };
+
+    // FIXME: Criar as modais em pastas separadas
+    // TODO: Criar modais de edição de inativação, tipo de acesso e status do usuario no cliente/produto (ativo ou inativo)
+
     return (
         <FadeIn duration={400}>
+            {showModalCliente && (
+                <Modal
+                    title="Cadastrar acesso a cliente"
+                    closeModal={() => setShowModalCliente(false)}
+                >
+                    <div style={{ width: 600, padding: 12 }}>
+                        <Row>
+                            <Col>
+                                <SelectWrapper className="inputWrapper">
+                                    <Label>Cliente*</Label>
+                                    <Select style={{ padding: "4px" }}>
+                                        {clientes?.map((cliente, index) => (
+                                            <Option
+                                                style={{ padding: "12rem" }}
+                                                value={cliente.idCliente}
+                                                key={index}
+                                            >
+                                                {cliente.idCliente}# -{" "}
+                                                {cliente.nome} -{" "}
+                                                {cliente.inscricao}
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                </SelectWrapper>
+                                <Divider size={12} />
+                                <SelectWrapper className="inputWrapper">
+                                    <Label>Tipo de Acesso*</Label>
+                                    <Select style={{ padding: "4px" }}>
+                                        <Option value={1}>Admin</Option>
+                                        <Option value={2}>Comun</Option>
+                                    </Select>
+                                </SelectWrapper>
+                                <Divider size={12} />
+                                <Datepicker
+                                    labelText="Data de Inativação do acesso"
+                                    onClear={() => console.log()}
+                                    onChange={() => console.log()}
+                                />
+                                <Divider size={20} />
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <Button
+                                        type="submit"
+                                        buttonType="primary"
+                                        text="Salvar"
+                                        size="medium"
+                                    />
+                                    <Button
+                                        type="button"
+                                        buttonType="secundary"
+                                        text="Voltar"
+                                        size="medium"
+                                        onClick={() =>
+                                            setShowModalCliente(false)
+                                        }
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                </Modal>
+            )}
+            {showModalProduto && (
+                <Modal
+                    title="Cadastrar acesso a produto"
+                    closeModal={() => setShowModalProduto(false)}
+                >
+                    <div style={{ width: 650 }}>
+                        <Row>
+                            <Col>
+                                <SelectWrapper className="inputWrapper">
+                                    <Label>Produto*</Label>
+                                    <Select style={{ padding: "4px" }}>
+                                        {produtos?.map((produto, index) => (
+                                            <Option
+                                                style={{ padding: "12rem" }}
+                                                value={produto.idProduto}
+                                                key={index}
+                                            >
+                                                {produto.idProduto}# -{" "}
+                                                {produto.nome} -{" "}
+                                                {produto.descricao}
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                </SelectWrapper>
+
+                                <Divider size={20} />
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <Button
+                                        type="submit"
+                                        buttonType="primary"
+                                        text="Salvar"
+                                        size="medium"
+                                    />
+                                    <Button
+                                        type="button"
+                                        buttonType="secundary"
+                                        text="Voltar"
+                                        size="medium"
+                                        onClick={() =>
+                                            setShowModalProduto(false)
+                                        }
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                </Modal>
+            )}
             <ContainerUsuarioTitle>
                 <UsuarioAvatarWrapper>
                     <UsuarioAvatar>
@@ -140,6 +273,9 @@ function DetalheUsuario({ usuario }: IProps) {
                                         }}
                                     >
                                         <Button
+                                            onClick={() =>
+                                                setShowModalProduto(true)
+                                            }
                                             text="Adicionar Produto"
                                             buttonType="primary"
                                             size="small"
@@ -185,6 +321,9 @@ function DetalheUsuario({ usuario }: IProps) {
                                         }}
                                     >
                                         <Button
+                                            onClick={() =>
+                                                setShowModalCliente(true)
+                                            }
                                             text="Adicionar Cliente"
                                             buttonType="primary"
                                             size="small"

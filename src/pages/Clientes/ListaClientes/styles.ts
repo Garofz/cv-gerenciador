@@ -58,7 +58,13 @@ export const ClienteBody = styled.div`
     }
 `;
 
-export const IconContainer = styled.div``;
+export const IconContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+`;
 
 export const ClienteIconWrapper = styled.div`
     display: flex;
