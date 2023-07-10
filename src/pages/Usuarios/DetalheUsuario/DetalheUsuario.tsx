@@ -79,7 +79,7 @@ function DetalheUsuario({ usuario }: IProps) {
 
     // FIXME: Criar as modais em pastas separadas
     // TODO: Criar modais de edição de inativação, tipo de acesso e status do usuario no cliente/produto (ativo ou inativo)
-
+    // TODO: Retornar Usuario de inclusao/alteração na consulta de detalhes
     return (
         <FadeIn duration={400}>
             {showModalCliente && (
@@ -222,6 +222,37 @@ function DetalheUsuario({ usuario }: IProps) {
             </ContainerUsuarioTitle>
             <Divider size={12} />
             <ContainerUsuarioBodyDiv>
+                <Divider size={20} />
+                <UsuarioDetailLI>
+                    <UsuarioDetailSpan>
+                        <TextBold> Incluído em:</TextBold>
+                    </UsuarioDetailSpan>
+                    <TextNormal>{formatarData(undefined)}</TextNormal>
+                </UsuarioDetailLI>
+                <UsuarioDetailLI>
+                    <UsuarioDetailSpan>
+                        <TextBold> Por: </TextBold>
+                    </UsuarioDetailSpan>
+                    <TextNormal>N/I</TextNormal>
+                </UsuarioDetailLI>
+                {!undefined && (
+                    <>
+                        <Divider size={20} />
+                        <UsuarioDetailLI>
+                            <UsuarioDetailSpan>
+                                <TextBold> Alterado em:</TextBold>
+                            </UsuarioDetailSpan>
+                            <TextNormal>{formatarData(undefined)}</TextNormal>
+                        </UsuarioDetailLI>
+                        <UsuarioDetailLI>
+                            <UsuarioDetailSpan>
+                                <TextBold> Por: </TextBold>
+                            </UsuarioDetailSpan>
+                            <TextNormal>N/I</TextNormal>
+                        </UsuarioDetailLI>
+                    </>
+                )}
+                <Divider size={20} />
                 <Tabs
                     initialTabIndex={0}
                     type="primary"

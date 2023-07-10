@@ -41,7 +41,7 @@ function Account() {
     const { usuario } = useAccount();
     const dispatch = useAsyncDispatch();
     const [maskedEmail, setMaskedEmail] = useState<boolean>(true);
-    const [showResetPassword, setShowResetPassword] = useState<boolean>(true);
+    const [showResetPassword, setShowResetPassword] = useState<boolean>(false);
     const [validPassword, setValidPassword] = useState<boolean>(false);
     const [newPassword, setNewPassword] = useState<string>("");
     const [newPasswordValidate, setNewPasswordValidate] = useState<string>("");
