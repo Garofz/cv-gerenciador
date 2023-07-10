@@ -13,6 +13,7 @@ import {
 } from "../../../../globalStyles";
 import { formatarData } from "../../../../util/format";
 import { IDetalheUsuario } from "../../../../interfaces/IUserDetail";
+import { Button } from "ui-gds";
 export interface IProps {
     detalhe?: IDetalheUsuario;
 }
@@ -72,11 +73,13 @@ function ListProdutosUsuario({ detalhe }: IProps) {
             <TableFoot>
                 <TableRow>
                     <TableColumnHeader colSpan={7} textAlign="center">
-                        {detalhe?.produtos.length === 0 && "0 Registros"}
-                        {detalhe?.produtos.length === 1 && "1 Registro"}
+                        {detalhe?.produtos.length === 0 &&
+                            "Nenhum Produto Econtrados"}
+                        {detalhe?.produtos.length === 1 &&
+                            "1 Registro Econtrado"}
                         {detalhe?.produtos &&
                             detalhe?.produtos.length > 1 &&
-                            `${detalhe?.produtos.length} Registros`}
+                            `${detalhe?.produtos.length} Registros Econtrados`}
                     </TableColumnHeader>
                 </TableRow>
             </TableFoot>

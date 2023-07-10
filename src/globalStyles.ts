@@ -283,10 +283,10 @@ export interface IColumnProps {
 export const TableRow = styled.tr<IColumnProps>`
     text-align: ${({ textAlign }) => textAlign || "left"};
     width: ${({ width }) => `${width}px` || "100%"};
-    color: ${({ theme }) => theme.colors.neutral8};
+    color: ${({ theme }) => theme.colors.neutral7};
     transition: 0.2s ease;
     &:hover {
-        color: ${({ theme }) => theme.colors.neutral4};
+        color: ${({ theme }) => theme.colors.neutral9};
     }
 `;
 export const TableColumn = styled.td<IColumnProps>`
@@ -296,7 +296,7 @@ export const TableColumn = styled.td<IColumnProps>`
 `;
 export const TableColumnHeader = styled.th<IColumnProps>`
     padding: 8px;
-    color: ${({ theme }) => theme.colors.neutral10};
+    color: ${({ theme }) => theme.colors.neutral8};
     text-align: ${({ textAlign }) => textAlign || "left"};
     width: ${({ width }) => `${width}px` || "100%"};
 `;
@@ -305,7 +305,7 @@ export const IconDelete = styled(FaTrash)`
     cursor: pointer;
     transition: 0.2s ease-in-out;
     &:hover {
-        color: ${({ theme }) => theme.colors.primaryWhiteContrast};
+        color: ${({ theme }) => theme.colors.redWhiteContrast};
     }
 `;
 

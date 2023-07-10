@@ -32,6 +32,9 @@ import Toast from "../../../components/Toast/Toast";
 import { IUserCliente } from "../../../interfaces/IUserClienteResponse";
 import CadastraEditaRepresentantes from "../CadastraEditaRepresentantes/CadastraEditaRepresentantes";
 import { mascararDocumento } from "../../../util/mask";
+import { formatarData } from "../../../util/format";
+import { HighRiseBuildingIcon, UserIcon, UserProfileIcon } from "ui-gds";
+import Avatar from "../../../components/UserMenu/Avatar/Avatar";
 
 export interface IDetalheClienteProps {
     cliente: ICliente;
@@ -58,7 +61,7 @@ function DetalheCliente({ cliente }: IDetalheClienteProps) {
                     <ContainerClienteTitle>
                         <ClienteAvatarWrapper>
                             <ClienteAvatar>
-                                <FaUserAstronaut size={50} color="#27374D" />
+                                <Avatar name={cliente.nome} size="large" />
                             </ClienteAvatar>
                             <div style={{ padding: "12px" }}>
                                 <TitleH1 style={{ margin: 0 }}>
@@ -101,16 +104,50 @@ function DetalheCliente({ cliente }: IDetalheClienteProps) {
                                     <FaTimes size={18} color="#f21515" />
                                 )}
                             </ClienteDetailLI>
+                            <Divider size={20} />
+                            <ClienteDetailLI>
+                                <ClienteDetailSpan>
+                                    <TextBold> Incluído em:</TextBold>
+                                </ClienteDetailSpan>
+                                <TextNormal>
+                                    {formatarData(
+                                        cliente?.usuarioInclusao?.dataInclusao
+                                    )}
+                                </TextNormal>
+                            </ClienteDetailLI>
+                            <ClienteDetailLI>
+                                <ClienteDetailSpan>
+                                    <TextBold> Por: </TextBold>
+                                </ClienteDetailSpan>
+                                <TextNormal>
+                                    {cliente?.usuarioInclusao?.nome}
+                                </TextNormal>
+                            </ClienteDetailLI>
+                            {cliente?.usuarioAlteracao?.dataAlteracao && (
+                                <>
+                                    <Divider size={20} />
+                                    <ClienteDetailLI>
+                                        <ClienteDetailSpan>
+                                            <TextBold> Alterado em:</TextBold>
+                                        </ClienteDetailSpan>
+                                        <TextNormal>
+                                            {formatarData(
+                                                cliente?.usuarioAlteracao
+                                                    ?.dataAlteracao
+                                            )}
+                                        </TextNormal>
+                                    </ClienteDetailLI>
+                                    <ClienteDetailLI>
+                                        <ClienteDetailSpan>
+                                            <TextBold> Por: </TextBold>
+                                        </ClienteDetailSpan>
+                                        <TextNormal>
+                                            {cliente?.usuarioAlteracao?.nome}
+                                        </TextNormal>
+                                    </ClienteDetailLI>
+                                </>
+                            )}
                         </ClienteDetailUL>
-                        <Divider size={24} />
-
-                        <TitleH3>Representantes</TitleH3>
-                        <DividerLine />
-                        <ListUsuarios
-                            layoutResumido={false}
-                            filtrarUsuario={filtrarUsuarios}
-                            usuarios={usuarios}
-                        />
                     </ContainerClienteBodyDiv>
                 </FadeIn>
             </ContainerClienteDiv>

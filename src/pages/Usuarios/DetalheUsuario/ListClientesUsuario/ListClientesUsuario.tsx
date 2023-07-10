@@ -13,6 +13,7 @@ import {
 } from "../../../../globalStyles";
 import { formatarData } from "../../../../util/format";
 import { IDetalheUsuario } from "../../../../interfaces/IUserDetail";
+import { mascararDocumento } from "../../../../util/mask";
 export interface IProps {
     detalhe?: IDetalheUsuario;
 }
@@ -57,7 +58,10 @@ function ListClientesUsuario({ detalhe }: IProps) {
                             </TableColumn>
                             <TableColumn>{cliente.cliente.nome}</TableColumn>
                             <TableColumn>
-                                {cliente.cliente.inscricao}
+                                {mascararDocumento(
+                                    cliente.cliente.tipoPessoa.idTipoPessoa,
+                                    cliente.cliente.inscricao
+                                )}
                             </TableColumn>
                             <TableColumn textAlign="center">
                                 {cliente.cliente.tipoPessoa.descricao}
@@ -90,7 +94,7 @@ function ListClientesUsuario({ detalhe }: IProps) {
                     ))
                 ) : (
                     <TableRow>
-                        <TableColumn colSpan={9} textAlign="center">
+                        <TableColumn colSpan={11} textAlign="center">
                             Nenhum Cliente Cadastrado
                         </TableColumn>
                     </TableRow>
@@ -98,12 +102,14 @@ function ListClientesUsuario({ detalhe }: IProps) {
             </TableBody>
             <TableFoot>
                 <TableRow>
-                    <TableColumnHeader colSpan={9} textAlign="center">
-                        {detalhe?.clientes.length === 0 && "0 Registros"}
-                        {detalhe?.clientes.length === 1 && "1 Registro"}
+                    <TableColumnHeader colSpan={11} textAlign="center">
+                        {detalhe?.clientes.length === 0 &&
+                            "Nenhum Cliente Econtrado"}
+                        {detalhe?.clientes.length === 1 &&
+                            "1 Registro Econtrados"}
                         {detalhe?.clientes &&
                             detalhe?.clientes.length > 1 &&
-                            `${detalhe?.clientes.length} Registros`}
+                            `${detalhe?.clientes.length} Registros Econtrados`}
                     </TableColumnHeader>
                 </TableRow>
             </TableFoot>

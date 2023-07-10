@@ -47,6 +47,7 @@ import { formatarData } from "../../../util/format";
 import useDetalheUsuario from "./hooks/useDetalheUsuario";
 import ListProdutosUsuario from "./ListProdutosUsuario/ListProdutosUsuario";
 import ListClientesUsuario from "./ListClientesUsuario/ListClientesUsuario";
+import { Button, Tabs } from "ui-gds";
 
 export interface IProps {
     usuario: IUserList;
@@ -56,6 +57,19 @@ function DetalheUsuario({ usuario }: IProps) {
     const { clientes, produtos, detalheUsuario } = useDetalheUsuario({
         usuario,
     });
+
+    const [selectedTab, setSelectedTab] = useState(0);
+
+    const handleTabClicked = (name: string, tabIndex: number) => {
+        setSelectedTab(tabIndex);
+        console.log("Aba clicada:", name);
+        console.log("Índice da aba:", tabIndex);
+    };
+
+    const handleRedirectTo = (path: string) => {
+        console.log("Redirecionar para:", path);
+        // Adicione aqui a lógica de redirecionamento com base no caminho
+    };
     return (
         <FadeIn duration={400}>
             <ContainerUsuarioTitle>
@@ -73,85 +87,122 @@ function DetalheUsuario({ usuario }: IProps) {
                     </div>
                 </UsuarioAvatarWrapper>
             </ContainerUsuarioTitle>
+            <Divider size={12} />
             <ContainerUsuarioBodyDiv>
-                <Divider size={24} />
-                <Row
-                    style={{
-                        padding: 12,
-                    }}
-                >
-                    <Col>
-                        <div
-                            style={{
-                                textAlign: "left",
-                                width: "70%",
-                            }}
-                        >
+                <Tabs
+                    initialTabIndex={0}
+                    type="primary"
+                    onTabClicked={handleTabClicked}
+                    redirecTo={handleRedirectTo}
+                    limit={5}
+                    animation={true}
+                    tabs={[
+                        {
+                            name: "Produtos Representados",
+                            notificationNumber:
+                                detalheUsuario?.produtos.length || 0,
+                            path: "usuarios",
+                            color: "info",
+                        },
+                        {
+                            name: "Clientes Representados",
+                            notificationNumber:
+                                detalheUsuario?.clientes.length || 0,
+                            path: "clientes",
+                            color: "success",
+                        },
+                    ]}
+                />
+                {selectedTab === 0 && (
+                    <Row
+                        style={{
+                            padding: 12,
+                        }}
+                    >
+                        <Col>
                             <div
                                 style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    justifyContent: "space-between",
+                                    textAlign: "left",
+                                    width: "100%",
                                 }}
                             >
-                                <TitleH3>Produtos Representados</TitleH3>
-                                <IconPlus
+                                <div
                                     style={{
-                                        padding: 12,
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "end",
                                     }}
-                                />
+                                >
+                                    <div
+                                        style={{
+                                            padding: 12,
+                                        }}
+                                    >
+                                        <Button
+                                            text="Adicionar Produto"
+                                            buttonType="primary"
+                                            size="small"
+                                        />
+                                    </div>
+                                </div>
+                                <div
+                                    style={{
+                                        padding: 8,
+                                    }}
+                                >
+                                    <ListProdutosUsuario
+                                        detalhe={detalheUsuario}
+                                    />
+                                </div>
                             </div>
-                            <DividerLine />
+                        </Col>
+                    </Row>
+                )}
+                {selectedTab === 1 && (
+                    <Row
+                        style={{
+                            padding: 12,
+                        }}
+                    >
+                        <Col>
+                            <div
+                                style={{
+                                    textAlign: "left",
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "end",
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            padding: 12,
+                                        }}
+                                    >
+                                        <Button
+                                            text="Adicionar Cliente"
+                                            buttonType="primary"
+                                            size="small"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                             <div
                                 style={{
                                     padding: 8,
                                 }}
                             >
-                                <ListProdutosUsuario detalhe={detalheUsuario} />
+                                <ListClientesUsuario detalhe={detalheUsuario} />
                             </div>
-                        </div>
-                    </Col>
-                </Row>
-                <Row
-                    style={{
-                        padding: 12,
-                    }}
-                >
-                    <Col>
-                        <div
-                            style={{
-                                textAlign: "left",
-                            }}
-                        >
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <TitleH3>Clientes Representados</TitleH3>
-                                <div
-                                    style={{
-                                        padding: 12,
-                                    }}
-                                >
-                                    <IconPlus />
-                                </div>
-                            </div>
-                            <DividerLine />
-                        </div>
-                        <div
-                            style={{
-                                padding: 8,
-                            }}
-                        >
-                            <ListClientesUsuario detalhe={detalheUsuario} />
-                        </div>
-                    </Col>
-                </Row>
+                        </Col>
+                    </Row>
+                )}
+                <Divider size={24} />
             </ContainerUsuarioBodyDiv>
         </FadeIn>
     );

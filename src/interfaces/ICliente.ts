@@ -43,7 +43,7 @@ export interface UsuarioAlteracao {
     idUsuario: number;
     nome: string;
     email: string;
-    dataInclusao: Date;
+    dataAlteracao: Date;
 }
 
 export interface Controle {

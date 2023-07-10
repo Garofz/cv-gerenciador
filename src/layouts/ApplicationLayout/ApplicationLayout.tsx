@@ -35,9 +35,9 @@ function ApplicationLayout() {
     const menuRef = useRef<MenuHandle>(null);
     const menus = [
         {
-            icon: <BsHouse />,
+            icon: <FaHome />,
             text: "Home",
-            path: "/Home",
+            path: "/home",
         },
         {
             icon: <BsFillPersonLinesFill />,
@@ -48,11 +48,6 @@ function ApplicationLayout() {
             icon: <FaUsers />,
             text: "Usuários",
             path: "/usuarios",
-        },
-        {
-            icon: <RxComponentBoolean />,
-            text: "Components",
-            path: "/components",
         },
     ];
 

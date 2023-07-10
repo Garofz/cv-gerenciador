@@ -3,8 +3,12 @@ import {
     Divider,
     Subtitle1,
     Subtitle2,
+    TextBold,
+    TextNormal,
     TitleH1,
+    TitleH2,
     TitleH3,
+    TitleH5,
 } from "../../globalStyles";
 import {
     AccountDetailLI,
@@ -14,200 +18,230 @@ import {
     ContainerAccountDiv,
     LogOutDiv,
     LogOutLink,
+    PreferencesIcon,
 } from "./styles";
 import useAccount from "./hooks/useAccount";
 import { mascararCelular, mascararEmail } from "../../util/mask";
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaLightbulb, FaSignOutAlt } from "react-icons/fa";
 import { useAsyncDispatch } from "../../redux/store";
 import { logOut } from "../../redux/features/generalData/generalDataSlice";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import {
+    BodyTextBold,
+    Button,
+    Input,
+    PasswordStrength,
+    ThemeSelector,
+    Warning,
+} from "ui-gds";
+import Modal from "../../components/Modal/Modal";
+import Toast from "../../components/Toast/Toast";
 
 function Account() {
     const { usuario } = useAccount();
     const dispatch = useAsyncDispatch();
     const [maskedEmail, setMaskedEmail] = useState<boolean>(true);
+    const [showResetPassword, setShowResetPassword] = useState<boolean>(true);
+    const [validPassword, setValidPassword] = useState<boolean>(false);
+    const [newPassword, setNewPassword] = useState<string>("");
+    const [newPasswordValidate, setNewPasswordValidate] = useState<string>("");
+    const [messageError, setMessageError] = useState<string>("");
+    const [showMessageError, setShowMessageError] = useState<boolean>(false);
     if (!usuario) return <></>;
+
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        setMessageError("");
+        setShowMessageError(false);
+
+        if (!validPassword) {
+            setMessageError("A senha informada está inválida");
+            setShowMessageError(true);
+        }
+
+        if (newPassword !== newPasswordValidate) {
+            setMessageError("As senhas precisam estar iguais");
+            setShowMessageError(true);
+        }
+        // Impede o comportamento padrão do formulário de ser disparado
+        // if (!email || email.trim() === "" || !email.includes("@")) {
+        //     setValidEmail(false);
+        //     return;
+        // }
+        // if (!senha || senha.trim() === "") {
+        //     setValidSenha(false);
+        //     return;
+        // }
+        // submitForm();
+    }
+
     return (
-        <div style={{ height: "90%" }}>
-            <TitleH1>Minha Conta</TitleH1>
-            <DividerLine />
-
-            <ContainerAccountDiv>
-                <AccountDetailUL>
-                    <AccountDetailLI>
-                        <AccountDetailSpan>Nome:</AccountDetailSpan>
-                        {usuario?.name}
-                    </AccountDetailLI>
-                    <AccountDetailLI>
-                        <AccountDetailSpan>Email:</AccountDetailSpan>
-                        {maskedEmail ? usuario?.maskedEmail : usuario?.email}
-                        {maskedEmail ? (
-                            <BsEyeFill
-                                color="#888888"
-                                style={{ cursor: "pointer", paddingLeft: 8 }}
-                                onClick={() => setMaskedEmail(!maskedEmail)}
-                            />
-                        ) : (
-                            <BsEyeSlashFill
-                                color="#888888"
-                                style={{ cursor: "pointer", paddingLeft: 8 }}
-                                onClick={() => setMaskedEmail(!maskedEmail)}
-                            />
+        <>
+            {showResetPassword && (
+                <Modal
+                    closeModal={() => setShowResetPassword(false)}
+                    title="Alterar a senha"
+                >
+                    <form
+                        onSubmit={(e) => handleSubmit(e)}
+                        style={{
+                            width: "600px",
+                            padding: "20px 20px 0px 20px",
+                        }}
+                    >
+                        {showMessageError && (
+                            <div>
+                                <Warning type="error" message={messageError} />
+                                <Divider size={12} />
+                            </div>
                         )}
-                    </AccountDetailLI>
-                    <Divider size={24} />
-                    <AccountDetailLI>
-                        <div>
-                            <TitleH3>Acessos</TitleH3>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    width: "100%",
-                                    padding: "1rem",
-                                }}
-                            >
-                                {usuario?.agents.length === 0 && (
-                                    <Subtitle2>
-                                        Você não possúi nenhum acesso cadastrado
-                                    </Subtitle2>
-                                )}
-                                {usuario?.agents.map((item, index) => {
-                                    if (item.agent.active) {
-                                        return (
-                                            <div
-                                                style={{
-                                                    display: "flex",
-                                                    flexDirection: "column",
-                                                }}
-                                                key={index}
-                                            >
-                                                <ul>
-                                                    <li>
-                                                        <AccountDetailSpan>
-                                                            Nome:
-                                                        </AccountDetailSpan>
-                                                        {item.agent.name}
-                                                    </li>
-                                                    <li>
-                                                        <AccountDetailSpan>
-                                                            Documento:
-                                                        </AccountDetailSpan>
-                                                        {
-                                                            item.agent.document
-                                                                .maskedDocument
-                                                        }
-                                                    </li>
-                                                    <li>
-                                                        <AccountDetailSpan>
-                                                            Tipo De Pessoa:
-                                                        </AccountDetailSpan>
-                                                        {
-                                                            item.agent
-                                                                .personCategory
-                                                                .description
-                                                        }
-                                                    </li>
-                                                    <li>
-                                                        <AccountDetailSpan>
-                                                            Ativo:
-                                                        </AccountDetailSpan>
-                                                        {item.agent.active
-                                                            ? "Sim"
-                                                            : "Não"}
-                                                    </li>
-                                                    <li>
-                                                        <AccountDetailSpan>
-                                                            Tipo Acesso:
-                                                        </AccountDetailSpan>
-                                                        {
-                                                            item.agent.access
-                                                                .description
-                                                        }
-                                                    </li>
-                                                    <li>
-                                                        <AccountDetailSpan>
-                                                            Acesso Principal:
-                                                        </AccountDetailSpan>
-                                                        {item.agent.access
-                                                            .mainAccess
-                                                            ? "Sim"
-                                                            : "Não"}
-                                                    </li>
-                                                    <li>
-                                                        <AccountDetailSpan>
-                                                            Primeiro Acesso:
-                                                        </AccountDetailSpan>
-                                                        {item.agent.access
-                                                            .firstAccess
-                                                            ? "Sim"
-                                                            : "Não"}
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        );
-                                    }
-                                })}
-                            </div>
-                            <TitleH3>Produtos</TitleH3>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    width: "100%",
-                                    padding: "1rem",
-                                }}
-                            >
-                                {usuario?.products.length === 0 && (
-                                    <Subtitle2>
-                                        Você não possúi nenhum produto
-                                        cadastrado
-                                    </Subtitle2>
-                                )}
-                                {usuario?.products.map((item, index) => {
-                                    return (
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                flexDirection: "column",
-                                            }}
-                                            key={index}
-                                        >
-                                            <ul>
-                                                <li>
-                                                    <AccountDetailSpan>
-                                                        Código:
-                                                    </AccountDetailSpan>
-                                                    {item.product._Id}
-                                                </li>
-                                                <li>
-                                                    <AccountDetailSpan>
-                                                        Descrição:
-                                                    </AccountDetailSpan>
-                                                    {item.product.description}
-                                                </li>
-                                                <li>
-                                                    <AccountDetailSpan>
-                                                        Nome:
-                                                    </AccountDetailSpan>
-                                                    {item.product.name}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                        <Input
+                            autoComplete="new-password"
+                            inputType="password"
+                            name="new-password"
+                            placeholder="Digite a Nova Senha"
+                            labelText="Nova Senha"
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                        <Divider size={12} />
+                        <PasswordStrength
+                            isValid={(valid) => setValidPassword(valid)}
+                            lengthStrength={8}
+                            value={newPassword}
+                        />
+                        <Divider size={12} />
+                        <Input
+                            autoComplete="new-password-verify"
+                            id="new-password-verify"
+                            inputType="password"
+                            name="SenhaVerify"
+                            placeholder="Digite Novamente a Senha"
+                            labelText="Nova Senha"
+                            onChange={(e) =>
+                                setNewPasswordValidate(e.target.value)
+                            }
+                        />
+                        <Divider size={20} />
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Button
+                                type="submit"
+                                buttonType="primary"
+                                text="Enviar"
+                                size="medium"
+                            />
+                            <Button
+                                type="button"
+                                buttonType="secundary"
+                                text="Voltar"
+                                size="medium"
+                                onClick={() => setShowResetPassword(false)}
+                            />
                         </div>
-                    </AccountDetailLI>
-                </AccountDetailUL>
+                    </form>
+                </Modal>
+            )}
+            <div style={{ height: "90%" }}>
+                <TitleH1>Minha Conta</TitleH1>
+                <DividerLine />
 
-                <LogOutDiv>
-                    <LogOutLink onClick={() => dispatch(logOut())}>
-                        Realizar LogOut <FaSignOutAlt size={24} />
-                    </LogOutLink>
-                </LogOutDiv>
-            </ContainerAccountDiv>
-        </div>
+                <ContainerAccountDiv>
+                    <AccountDetailUL>
+                        <AccountDetailLI>
+                            <TextBold style={{ padding: "0 4px" }}>
+                                Nome:{" "}
+                            </TextBold>
+                            <TextNormal> {usuario?.name} </TextNormal>
+                        </AccountDetailLI>
+                        <AccountDetailLI>
+                            <TextBold style={{ padding: "0 4px" }}>
+                                Email:{" "}
+                            </TextBold>
+                            {maskedEmail ? (
+                                <TextNormal>{usuario?.maskedEmail}</TextNormal>
+                            ) : (
+                                <TextNormal>{usuario?.email}</TextNormal>
+                            )}
+                            {maskedEmail ? (
+                                <BsEyeFill
+                                    color="#888888"
+                                    style={{
+                                        cursor: "pointer",
+                                        paddingLeft: 8,
+                                    }}
+                                    onClick={() => setMaskedEmail(!maskedEmail)}
+                                />
+                            ) : (
+                                <BsEyeSlashFill
+                                    color="#888888"
+                                    style={{
+                                        cursor: "pointer",
+                                        paddingLeft: 8,
+                                    }}
+                                    onClick={() => setMaskedEmail(!maskedEmail)}
+                                />
+                            )}
+                        </AccountDetailLI>
+                        <Divider size={20} />
+                        <AccountDetailLI>
+                            <Button
+                                buttonType="secundary"
+                                text="Alterar senha para esse acesso"
+                                size="medium"
+                                onClick={() => setShowResetPassword(true)}
+                            />
+                        </AccountDetailLI>
+                        <Divider size={24} />
+                        <AccountDetailLI style={{ flexDirection: "column" }}>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: 180,
+                                }}
+                            >
+                                <PreferencesIcon />
+                                <TitleH2>Preferências</TitleH2>
+                            </div>
+                            <Divider size={12} />
+
+                            <TitleH3>Tema</TitleH3>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                }}
+                            >
+                                <div style={{ padding: 12 }}>
+                                    <ThemeSelector mode="Default" />
+                                </div>
+                                <div style={{ padding: 12 }}>
+                                    <ThemeSelector mode="DarkBlack" />
+                                </div>
+                                <div style={{ padding: 12 }}>
+                                    <ThemeSelector mode="DarkBlue" />
+                                </div>
+                            </div>
+                        </AccountDetailLI>
+                    </AccountDetailUL>
+
+                    <LogOutDiv>
+                        <LogOutLink onClick={() => dispatch(logOut())}>
+                            Realizar LogOut <FaSignOutAlt size={24} />
+                        </LogOutLink>
+                    </LogOutDiv>
+                </ContainerAccountDiv>
+            </div>
+        </>
     );
 }
 
