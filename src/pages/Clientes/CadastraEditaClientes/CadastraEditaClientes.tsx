@@ -151,6 +151,7 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                 >
                     <div style={{ padding: "4px", width: "50%" }}>
                         <Button
+                            size="medium"
                             text="Salvar"
                             expandable
                             onClick={async () => {
@@ -168,6 +169,7 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                     </div>
                     <div style={{ padding: "4px", width: "50%" }}>
                         <Button
+                            size="medium"
                             buttonType="secundary"
                             text="Voltar"
                             expandable

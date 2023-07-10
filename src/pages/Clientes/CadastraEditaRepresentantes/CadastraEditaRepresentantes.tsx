@@ -69,10 +69,16 @@ function CadastraEditaRepresentantes({
             <Divider size={32} />
             <Row className="row" style={{ width: "100%", margin: "0 auto" }}>
                 <Col className="col">
-                    <Button text="Salvar" expandable onClick={onClickSalvar} />
+                    <Button
+                        text="Salvar"
+                        size="medium"
+                        expandable
+                        onClick={onClickSalvar}
+                    />
                 </Col>
                 <Col className="col">
                     <Button
+                        size="medium"
                         text="Voltar"
                         buttonType="secundary"
                         expandable
