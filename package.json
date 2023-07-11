@@ -29,6 +29,7 @@
         "ui-gds": "file:ui-gds-0.1.0.tgz",
         "web-vitals": "^2.1.4"
     },
+    "main": "src/electron-starter.js",
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
