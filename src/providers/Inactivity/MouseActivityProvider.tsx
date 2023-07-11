@@ -28,7 +28,7 @@ const MouseActivityProvider = ({ children }: IProps) => {
         await dispatch(logOut());
     };
     const onIdle = () => {
-        // setIsInactive(true);
+        setIsInactive(true);
     };
     const onPresenceChange = () => {
         setIsInactive(false);
