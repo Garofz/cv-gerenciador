@@ -19,6 +19,7 @@ export interface IReturnProps {
     produtos: IProduto[] | undefined;
     clientes: ICliente[] | undefined;
     detalheUsuario: IDetalheUsuario | undefined;
+    consultaDetalhesUsuario: () => Promise<void>;
 }
 export interface IProps {
     usuario: IUserList;
@@ -80,7 +81,7 @@ function useDetalheUsuario({ usuario }: IProps): IReturnProps {
             return setDetalheUsuario(response.detalhes);
     };
 
-    return { produtos, clientes, detalheUsuario };
+    return { produtos, clientes, detalheUsuario, consultaDetalhesUsuario };
 }
 
 export default useDetalheUsuario;

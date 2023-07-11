@@ -26,15 +26,6 @@ function useModalCadastraClienteUsuario(): IProps {
         tipoAcesso: number,
         dataExpiracao?: Date | null
     ): Promise<boolean> => {
-        console.log("cliente", cliente);
-        console.log("tipoAcesso", tipoAcesso);
-        console.log(
-            "dataExpiracao",
-            dataExpiracao && formatarData(dataExpiracao, true)
-        );
-        console.log("idUsuario", idUsuario);
-        console.log("acessoPrincipal", acessoPrincipal);
-
         if (!user) return false;
         ///REQUEST
         const response = await dispatch(

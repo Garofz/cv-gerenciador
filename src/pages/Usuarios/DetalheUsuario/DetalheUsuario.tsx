@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IUserList } from "../../../interfaces/IUserClienteResponse";
 import FadeIn from "../../../components/Animations/FadeIn/FadeIn";
 import {
@@ -60,13 +60,17 @@ export interface IProps {
 }
 
 function DetalheUsuario({ usuario }: IProps) {
-    const { clientes, produtos, detalheUsuario } = useDetalheUsuario({
-        usuario,
-    });
-
+    const { clientes, produtos, detalheUsuario, consultaDetalhesUsuario } =
+        useDetalheUsuario({
+            usuario,
+        });
     const [selectedTab, setSelectedTab] = useState(0);
     const [showModalCliente, setShowModalCliente] = useState<boolean>(false);
     const [showModalProduto, setShowModalProduto] = useState<boolean>(false);
+
+    useEffect(() => {
+        consultaDetalhesUsuario();
+    }, [showModalCliente, showModalProduto]);
 
     const handleTabClicked = (name: string, tabIndex: number) => {
         setSelectedTab(tabIndex);

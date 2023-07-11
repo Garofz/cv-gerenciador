@@ -200,3 +200,30 @@ export const cadastrarClienteUsuario = createAsyncThunk(
         }
     }
 );
+
+export const cadastrarAcessoUsuario = createAsyncThunk(
+    "clientsData/cadastrarAcessoUsuario",
+    async (args: {
+        userId: number;
+        productId: number;
+        password: string;
+        token: string;
+    }): Promise<IUserListResponse | any> => {
+        try {
+            const response = await MiddlewareAPI.post(
+                `authschema/usuario/accessKey`,
+                {
+                    userId: args.userId,
+                    productId: args.productId,
+                    password: args.password,
+                    token: args.token,
+                }
+            );
+
+            if (response.data?.error !== undefined) return response.data;
+            return response.data;
+        } catch (err: any) {
+            return err.response;
+        }
+    }
+);
