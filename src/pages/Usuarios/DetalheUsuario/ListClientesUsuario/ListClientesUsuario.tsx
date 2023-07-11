@@ -1,7 +1,7 @@
 import React from "react";
 import { ICliente } from "../../../../interfaces/ICliente";
 import {
-    IconDelete,
+    IconEdit,
     Table,
     TableBody,
     TableColumn,
@@ -94,7 +94,7 @@ function ListClientesUsuario({ detalhe }: IProps) {
                                 {formatarData(cliente.dataInativacao)}
                             </TableColumn>
                             <TableColumn>
-                                <IconDelete />
+                                <IconEdit />
                             </TableColumn>
                         </TableRow>
                     ))

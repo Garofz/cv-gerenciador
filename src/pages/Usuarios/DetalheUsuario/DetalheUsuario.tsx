@@ -24,7 +24,6 @@ import {
     ButtonPrimary,
     Col,
     Divider,
-    IconDelete,
     IconPlus,
     Label,
     Option,

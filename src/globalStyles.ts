@@ -1,4 +1,4 @@
-import { FaPlus, FaTrash } from "react-icons/fa";
+import { FaPen, FaPlus, FaTrash } from "react-icons/fa";
 import styled, { css, keyframes } from "styled-components";
 
 export const TitleH1 = styled.h1`
@@ -300,12 +300,12 @@ export const TableColumnHeader = styled.th<IColumnProps>`
     text-align: ${({ textAlign }) => textAlign || "left"};
     width: ${({ width }) => `${width}px` || "100%"};
 `;
-export const IconDelete = styled(FaTrash)`
+export const IconEdit = styled(FaPen)`
     color: ${({ theme }) => theme.colors.neutral8};
     cursor: pointer;
     transition: 0.2s ease-in-out;
     &:hover {
-        color: ${({ theme }) => theme.colors.redWhiteContrast};
+        color: ${({ theme }) => theme.colors.yellowWhiteContrast};
     }
 `;
 

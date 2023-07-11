@@ -1,7 +1,7 @@
 import React from "react";
 import { IProduto } from "../../../../interfaces/IProduto";
 import {
-    IconDelete,
+    IconEdit,
     Table,
     TableBody,
     TableColumn,
@@ -58,7 +58,7 @@ function ListProdutosUsuario({ detalhe }: IProps) {
                                 {formatarData(produto.dataCriacao)}
                             </TableColumn>
                             <TableColumn textAlign="center">
-                                <IconDelete />
+                                <IconEdit />
                             </TableColumn>
                         </TableRow>
                     ))
