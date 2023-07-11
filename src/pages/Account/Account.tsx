@@ -53,7 +53,6 @@ function Account() {
     const [showMessageError, setShowMessageError] = useState<boolean>(false);
     if (!usuario) return <></>;
 
-    //TODO: TRATAR ERROS
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         if (!usuario) return;
 
@@ -89,18 +88,8 @@ function Account() {
             return;
         }
 
-        setMessageError("A senha informada está inválida");
+        setMessageError("Não foi possível alterar a senha");
         setShowMessageError(true);
-        // Impede o comportamento padrão do formulário de ser disparado
-        // if (!email || email.trim() === "" || !email.includes("@")) {
-        //     setValidEmail(false);
-        //     return;
-        // }
-        // if (!senha || senha.trim() === "") {
-        //     setValidSenha(false);
-        //     return;
-        // }
-        // submitForm();
     }
 
     return (
