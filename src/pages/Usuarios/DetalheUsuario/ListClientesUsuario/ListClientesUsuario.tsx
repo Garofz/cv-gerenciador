@@ -14,10 +14,15 @@ import {
 import { formatarData } from "../../../../util/format";
 import { IDetalheUsuario } from "../../../../interfaces/IUserDetail";
 import { mascararDocumento } from "../../../../util/mask";
+import { IUserCliente } from "../../../../interfaces/IUserClienteResponse";
 export interface IProps {
     detalhe?: IDetalheUsuario;
+    clickEditar: (
+        cliente: ICliente,
+        acesso: IUserCliente
+    ) => { cliente: ICliente; acesso: IUserCliente };
 }
-function ListClientesUsuario({ detalhe }: IProps) {
+function ListClientesUsuario({ detalhe, clickEditar }: IProps) {
     return (
         <Table width={100}>
             <TableHead>
@@ -94,7 +99,25 @@ function ListClientesUsuario({ detalhe }: IProps) {
                                 {formatarData(cliente.dataInativacao)}
                             </TableColumn>
                             <TableColumn>
-                                <IconEdit />
+                                <IconEdit
+                                    onClick={() =>
+                                        clickEditar(cliente.cliente, {
+                                            acessoPrincipal:
+                                                cliente.acessoPrincipal,
+                                            dataCadastro: cliente.dataCadastro,
+                                            pimeiroAcesso:
+                                                cliente.primeiroAcesso,
+                                            tipoAcesso: cliente.tipoAcesso,
+                                            dataUltimoAcesso:
+                                                cliente.dataUltimoAcesso,
+                                            dataInativacao:
+                                                cliente.dataInativacao,
+                                            email: detalhe.usuario.emailUsaurio,
+                                            id: detalhe.usuario.idUsuario,
+                                            nome: detalhe.usuario.nomeUsuario,
+                                        })
+                                    }
+                                />
                             </TableColumn>
                         </TableRow>
                     ))

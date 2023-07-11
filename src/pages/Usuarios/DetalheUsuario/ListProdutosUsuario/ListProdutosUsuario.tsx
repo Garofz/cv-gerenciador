@@ -12,12 +12,13 @@ import {
     TextBold,
 } from "../../../../globalStyles";
 import { formatarData } from "../../../../util/format";
-import { IDetalheUsuario } from "../../../../interfaces/IUserDetail";
+import { IDetalheUsuario, Produto } from "../../../../interfaces/IUserDetail";
 import { Button } from "ui-gds";
 export interface IProps {
     detalhe?: IDetalheUsuario;
+    clickEditar: (produto: Produto) => Produto;
 }
-function ListProdutosUsuario({ detalhe }: IProps) {
+function ListProdutosUsuario({ detalhe, clickEditar }: IProps) {
     return (
         <Table width={100}>
             <TableHead>
@@ -58,7 +59,9 @@ function ListProdutosUsuario({ detalhe }: IProps) {
                                 {formatarData(produto.dataCriacao)}
                             </TableColumn>
                             <TableColumn textAlign="center">
-                                <IconEdit />
+                                <IconEdit
+                                    onClick={() => clickEditar(produto)}
+                                />
                             </TableColumn>
                         </TableRow>
                     ))

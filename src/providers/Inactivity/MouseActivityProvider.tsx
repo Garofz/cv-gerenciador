@@ -17,7 +17,6 @@ const MouseActivityProvider = ({ children }: IProps) => {
     useEffect(() => {
         if (isInactive) {
             const timeout = setTimeout(() => {
-                console.log("desloga");
                 logout();
             }, 50000);
             return () => clearTimeout(timeout);
@@ -37,7 +36,7 @@ const MouseActivityProvider = ({ children }: IProps) => {
         <div style={{ width: "100%", height: "100%" }}>
             {children}
             <IdleTimerProvider
-                timeout={1000 * 10 * 3}
+                timeout={1000 * 60 * 2}
                 onIdle={onIdle}
                 onActive={onPresenceChange}
             ></IdleTimerProvider>

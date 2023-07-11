@@ -1,8 +1,8 @@
 export function formatarData(
-    date: Date | undefined,
+    date: Date | null | undefined,
     short: boolean = false,
     mask: "normal" | "input" = "normal"
-): string {
+): string | null {
     if (date) {
         const data = new Date(date);
         const dia = String(data.getDate()).padStart(2, "0");
@@ -22,6 +22,7 @@ export function formatarData(
         return `${dia}/${mes}/${ano} ${hora}:${minuto}:${segundo}`;
     }
 
+    if (date === null) return date;
     return "N/I";
 }
 

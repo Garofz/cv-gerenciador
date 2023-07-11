@@ -16,7 +16,7 @@ export interface IUserCliente {
     acessoPrincipal: boolean;
     pimeiroAcesso: boolean;
     dataUltimoAcesso?: Date;
-    dataInativacao?: Date;
+    dataInativacao?: Date | null;
     dataCadastro: Date;
 }
 

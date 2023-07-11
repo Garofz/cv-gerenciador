@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { IUserList } from "../../../interfaces/IUserClienteResponse";
+import {
+    IUserCliente,
+    IUserList,
+} from "../../../interfaces/IUserClienteResponse";
 import FadeIn from "../../../components/Animations/FadeIn/FadeIn";
 import {
     ContainerUsuarioBodyDiv,
@@ -53,6 +56,10 @@ import ListClientesUsuario from "./ListClientesUsuario/ListClientesUsuario";
 import { Button, Datepicker, Tabs } from "ui-gds";
 import ModalCadastraClienteUsuario from "./ModalCadastraClienteUsuario/ModalCadastraClienteUsuario";
 import ModalCadastraProdutoUsuario from "./ModalCadastraProdutoUsuario/ModalCadastraProdutoUsuario";
+import { Produto } from "../../../interfaces/IUserDetail";
+import ModalEditaProdutoUsuario from "./ModalEditaProdutoUsuario/ModalEditaProdutoUsuario";
+import { ICliente } from "../../../interfaces/ICliente";
+import ModalEditaClienteUsuario from "./ModalEditaClienteUsuario/ModalEditaClienteUsuario";
 
 export interface IProps {
     usuario: IUserList;
@@ -66,10 +73,24 @@ function DetalheUsuario({ usuario }: IProps) {
     const [selectedTab, setSelectedTab] = useState(0);
     const [showModalCliente, setShowModalCliente] = useState<boolean>(false);
     const [showModalProduto, setShowModalProduto] = useState<boolean>(false);
+    const [showModalEditaProduto, setShowModalEditaProduto] = useState<{
+        produto: Produto | undefined;
+        show: boolean;
+    }>();
+    const [showModalEditaCliente, setShowModalEditaCliente] = useState<{
+        cliente: ICliente | undefined;
+        acesso: IUserCliente | undefined;
+        show: boolean;
+    }>();
 
     useEffect(() => {
         consultaDetalhesUsuario();
-    }, [showModalCliente, showModalProduto]);
+    }, [
+        showModalCliente,
+        showModalProduto,
+        showModalEditaCliente,
+        showModalEditaProduto,
+    ]);
 
     const handleTabClicked = (name: string, tabIndex: number) => {
         setSelectedTab(tabIndex);
@@ -77,7 +98,6 @@ function DetalheUsuario({ usuario }: IProps) {
 
     const handleRedirectTo = (path: string) => {};
 
-    // TODO: Criar modais de edição de inativação, tipo de acesso e status do usuario no cliente/produto (ativo ou inativo)
     return (
         <FadeIn duration={400}>
             {showModalCliente && clientes && detalheUsuario && (
@@ -94,6 +114,37 @@ function DetalheUsuario({ usuario }: IProps) {
                     setCloseModal={() => setShowModalProduto(false)}
                 />
             )}
+            {showModalEditaProduto &&
+                showModalEditaProduto.produto &&
+                detalheUsuario && (
+                    <ModalEditaProdutoUsuario
+                        detalhe={detalheUsuario}
+                        produto={showModalEditaProduto.produto}
+                        setCloseModal={() =>
+                            setShowModalEditaProduto({
+                                produto: undefined,
+                                show: false,
+                            })
+                        }
+                    />
+                )}
+            {showModalEditaCliente &&
+                showModalEditaCliente.cliente &&
+                showModalEditaCliente.acesso &&
+                detalheUsuario && (
+                    <ModalEditaClienteUsuario
+                        cliente={showModalEditaCliente.cliente}
+                        acesso={showModalEditaCliente.acesso}
+                        detalhe={detalheUsuario}
+                        setCloseModal={() =>
+                            setShowModalEditaCliente({
+                                cliente: undefined,
+                                acesso: undefined,
+                                show: false,
+                            })
+                        }
+                    />
+                )}
             <ContainerUsuarioTitle>
                 <UsuarioAvatarWrapper>
                     <UsuarioAvatar>
@@ -178,6 +229,13 @@ function DetalheUsuario({ usuario }: IProps) {
                                     }}
                                 >
                                     <ListProdutosUsuario
+                                        clickEditar={(res) => {
+                                            setShowModalEditaProduto({
+                                                show: true,
+                                                produto: res,
+                                            });
+                                            return res;
+                                        }}
                                         detalhe={detalheUsuario}
                                     />
                                 </div>
@@ -226,7 +284,17 @@ function DetalheUsuario({ usuario }: IProps) {
                                     padding: 8,
                                 }}
                             >
-                                <ListClientesUsuario detalhe={detalheUsuario} />
+                                <ListClientesUsuario
+                                    clickEditar={(cliente, acesso) => {
+                                        setShowModalEditaCliente({
+                                            cliente: cliente,
+                                            acesso: acesso,
+                                            show: true,
+                                        });
+                                        return { cliente, acesso };
+                                    }}
+                                    detalhe={detalheUsuario}
+                                />
                             </div>
                         </Col>
                     </Row>

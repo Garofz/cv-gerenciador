@@ -200,6 +200,38 @@ export const cadastrarClienteUsuario = createAsyncThunk(
         }
     }
 );
+export const editarClienteUsuario = createAsyncThunk(
+    "clientsData/editarClienteUsuario",
+    async (args: {
+        idUsuario: number;
+        idCliente: number;
+        acessoPrincipal: boolean;
+        idTipoAcesso: number;
+        dataInativacaoAcesso: string | null;
+        token: string;
+    }): Promise<IUserListResponse | any> => {
+        try {
+            const response = await MiddlewareAPI.put(
+                `cardapioVirtual/usuario/cliente`,
+                {
+                    idUsuario: args.idUsuario,
+                    idCliente: args.idCliente,
+                    acessoPrincipal: args.acessoPrincipal,
+                    idTipoAcesso: args.idTipoAcesso,
+                    token: args.token,
+                    dataInativacaoAcesso: args.dataInativacaoAcesso
+                        ? new Date(args.dataInativacaoAcesso)
+                        : null,
+                }
+            );
+
+            if (response.data?.error !== undefined) return response.data;
+            return response.data;
+        } catch (err: any) {
+            return err.response;
+        }
+    }
+);
 
 export const cadastrarAcessoUsuario = createAsyncThunk(
     "clientsData/cadastrarAcessoUsuario",
@@ -216,6 +248,35 @@ export const cadastrarAcessoUsuario = createAsyncThunk(
                     userId: args.userId,
                     productId: args.productId,
                     password: args.password,
+                    token: args.token,
+                }
+            );
+
+            if (response.data?.error !== undefined) return response.data;
+            return response.data;
+        } catch (err: any) {
+            return err.response;
+        }
+    }
+);
+
+export const editaAcessoUsuario = createAsyncThunk(
+    "clientsData/editaAcessoUsuario",
+    async (args: {
+        userId: number;
+        productId: number;
+        active: boolean;
+        blocked: boolean;
+        token: string;
+    }): Promise<IUserListResponse | any> => {
+        try {
+            const response = await MiddlewareAPI.put(
+                `authschema/usuario/accessKey`,
+                {
+                    userId: args.userId,
+                    productId: args.productId,
+                    active: args.active,
+                    blocked: args.blocked,
                     token: args.token,
                 }
             );

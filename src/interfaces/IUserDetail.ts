@@ -26,7 +26,7 @@ export interface ICliente {
     acessoPrincipal: boolean;
     primeiroAcesso: boolean;
     dataUltimoAcesso?: Date;
-    dataInativacao?: Date;
+    dataInativacao: Date | null;
     dataCadastro: Date;
 }
 
