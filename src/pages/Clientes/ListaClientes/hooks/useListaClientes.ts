@@ -110,6 +110,9 @@ const useListaClientes = (): IUseListaClientes => {
         const result = await dispatch(addClient({ cliente: cliente }))
             .unwrap()
             .then((res) => res);
+
+        console.log(result);
+
         if (result.error !== undefined || result.data?.statusCode === 500) {
             return {
                 message:
@@ -134,7 +137,7 @@ const useListaClientes = (): IUseListaClientes => {
                 validOperation: false,
             };
 
-        cliente.usuarioInclusao = user._Id;
+        cliente.usuarioAlteracao = user._Id;
 
         if (cliente.nome.trim() === "")
             return {
@@ -160,6 +163,7 @@ const useListaClientes = (): IUseListaClientes => {
         const result = await dispatch(editarClient({ cliente: cliente }))
             .unwrap()
             .then((res) => res);
+
         if (result.error !== undefined || result.data?.statusCode === 500) {
             return {
                 message:

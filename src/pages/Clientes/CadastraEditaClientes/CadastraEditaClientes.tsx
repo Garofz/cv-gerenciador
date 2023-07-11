@@ -113,7 +113,7 @@ const CadastraEditaClientes = ({ cliente, voltar, salvar }: Props) => {
                             onChange={(e) =>
                                 setClienteContext((prev) => ({
                                     ...prev,
-                                    tipoPessoa: parseInt(e.target.value),
+                                    idtipoPessoa: parseInt(e.target.value),
                                 }))
                             }
                         >

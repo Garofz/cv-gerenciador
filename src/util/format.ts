@@ -1,7 +1,8 @@
 export function formatarData(
     date: Date | null | undefined,
     short: boolean = false,
-    mask: "normal" | "input" = "normal"
+    mask: "normal" | "input" = "normal",
+    exibeNI: boolean = false
 ): string | null {
     if (date) {
         const data = new Date(date);
@@ -22,7 +23,9 @@ export function formatarData(
         return `${dia}/${mes}/${ano} ${hora}:${minuto}:${segundo}`;
     }
 
+    if (exibeNI) return "N/I";
     if (date === null) return date;
+
     return "N/I";
 }
 

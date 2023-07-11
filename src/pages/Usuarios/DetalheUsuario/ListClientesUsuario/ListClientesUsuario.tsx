@@ -90,13 +90,23 @@ function ListClientesUsuario({ detalhe, clickEditar }: IProps) {
                                 {cliente.tipoAcesso.descricao}
                             </TableColumn>
                             <TableColumn textAlign="center">
-                                {formatarData(cliente.dataUltimoAcesso)}
+                                {formatarData(
+                                    cliente.dataUltimoAcesso,
+                                    false,
+                                    "normal",
+                                    true
+                                )}
                             </TableColumn>
                             <TableColumn textAlign="center">
                                 {cliente.primeiroAcesso ? "Sim" : "Não"}
                             </TableColumn>
                             <TableColumn textAlign="center">
-                                {formatarData(cliente.dataInativacao)}
+                                {formatarData(
+                                    cliente.dataInativacao,
+                                    false,
+                                    "normal",
+                                    true
+                                )}
                             </TableColumn>
                             <TableColumn>
                                 <IconEdit
