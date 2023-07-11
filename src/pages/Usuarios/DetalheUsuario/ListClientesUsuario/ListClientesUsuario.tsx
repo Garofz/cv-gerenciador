@@ -32,6 +32,9 @@ function ListClientesUsuario({ detalhe }: IProps) {
                         Ativo
                     </TableColumnHeader>
                     <TableColumnHeader textAlign="center">
+                        Acesso Pricipal
+                    </TableColumnHeader>
+                    <TableColumnHeader textAlign="center">
                         Data Cadastro
                     </TableColumnHeader>
                     <TableColumnHeader textAlign="center">
@@ -67,10 +70,13 @@ function ListClientesUsuario({ detalhe }: IProps) {
                                 {cliente.cliente.tipoPessoa.descricao}
                             </TableColumn>
                             <TableColumn textAlign="center">
-                                {!cliente.dataInativacao ||
+                                {cliente.dataInativacao &&
                                 new Date(cliente.dataInativacao) <= new Date()
                                     ? "Não"
                                     : "Sim"}
+                            </TableColumn>
+                            <TableColumn textAlign="center">
+                                {cliente.acessoPrincipal ? "Sim" : "Não"}
                             </TableColumn>
                             <TableColumn textAlign="center">
                                 {formatarData(cliente.dataCadastro)}
@@ -94,7 +100,7 @@ function ListClientesUsuario({ detalhe }: IProps) {
                     ))
                 ) : (
                     <TableRow>
-                        <TableColumn colSpan={11} textAlign="center">
+                        <TableColumn colSpan={12} textAlign="center">
                             Nenhum Cliente Cadastrado
                         </TableColumn>
                     </TableRow>
@@ -102,7 +108,7 @@ function ListClientesUsuario({ detalhe }: IProps) {
             </TableBody>
             <TableFoot>
                 <TableRow>
-                    <TableColumnHeader colSpan={11} textAlign="center">
+                    <TableColumnHeader colSpan={12} textAlign="center">
                         {detalhe?.clientes.length === 0 &&
                             "Nenhum Cliente Econtrado"}
                         {detalhe?.clientes.length === 1 &&

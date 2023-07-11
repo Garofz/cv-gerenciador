@@ -70,14 +70,9 @@ function DetalheUsuario({ usuario }: IProps) {
 
     const handleTabClicked = (name: string, tabIndex: number) => {
         setSelectedTab(tabIndex);
-        console.log("Aba clicada:", name);
-        console.log("Índice da aba:", tabIndex);
     };
 
-    const handleRedirectTo = (path: string) => {
-        console.log("Redirecionar para:", path);
-        // Adicione aqui a lógica de redirecionamento com base no caminho
-    };
+    const handleRedirectTo = (path: string) => {};
 
     // TODO: Criar modais de edição de inativação, tipo de acesso e status do usuario no cliente/produto (ativo ou inativo)
     return (

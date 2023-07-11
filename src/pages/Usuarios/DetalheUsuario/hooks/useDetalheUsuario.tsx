@@ -34,9 +34,6 @@ function useDetalheUsuario({ usuario }: IProps): IReturnProps {
         consultaProdutos();
         consultaClientes();
         consultaDetalhesUsuario();
-        console.log(produtos);
-        console.log(clientes);
-        console.log(detalheUsuario);
     }, []);
 
     const consultaProdutos = async () => {

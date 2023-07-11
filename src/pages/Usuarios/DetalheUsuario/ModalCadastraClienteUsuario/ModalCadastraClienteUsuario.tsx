@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Datepicker, Tooltip, Warning } from "ui-gds";
+import { Button, Datepicker, Toggle, Tooltip, Warning } from "ui-gds";
 import {
     Col,
     Divider,
@@ -37,15 +37,27 @@ function ModalCadastraClienteUsuario({
     });
     const [selectedCliente, setSelectedCliente] = useState<ICliente>();
     const [selectedTipoAcesso, setSelectedTipoAcesso] = useState<number>();
+    const [selectAcessoPrincipal, setSelectAcessoPrincipal] =
+        useState<boolean>(false);
     const [dataExpiracao, setDataExpiracao] = useState<Date | null>();
     const { clickSalvar } = useModalCadastraClienteUsuario();
 
     const handleClickSalvar = async (
+        idUsuario: number,
         cliente: ICliente,
+        acessoPrincipal: boolean,
         tipoAcesso: number,
         dataExpiracao?: Date | null
     ) => {
-        if (await clickSalvar(cliente, tipoAcesso, dataExpiracao)) {
+        if (
+            await clickSalvar(
+                idUsuario,
+                cliente,
+                acessoPrincipal,
+                tipoAcesso,
+                dataExpiracao
+            )
+        ) {
             setCloseModal();
             return;
         }
@@ -143,13 +155,37 @@ function ModalCadastraClienteUsuario({
                             </Select>
                         </SelectWrapper>
                         <Divider size={12} />
-                        <Datepicker
-                            onChange={(date) => setDataExpiracao(date)}
-                            onClear={() => setDataExpiracao(null)}
-                            selected={dataExpiracao}
-                            labelText="Data de Inativação do acesso"
-                            fromToday
-                        />
+                        <div
+                            className="col"
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                            }}
+                        >
+                            <div style={{ width: "50%" }}>
+                                <Datepicker
+                                    onChange={(date) => setDataExpiracao(date)}
+                                    onClear={() => setDataExpiracao(null)}
+                                    selected={dataExpiracao}
+                                    labelText="Data de Inativação do acesso"
+                                    fromToday
+                                />
+                            </div>
+                            <div style={{ width: "40%", padding: "12px" }}>
+                                <Toggle
+                                    checked={selectAcessoPrincipal}
+                                    labelText="Acesso Principal"
+                                    onChange={(e) =>
+                                        setSelectAcessoPrincipal(
+                                            e.target.checked
+                                        )
+                                    }
+                                />
+                            </div>
+                        </div>
+
                         <Divider size={20} />
                         <div
                             style={{
@@ -183,7 +219,9 @@ function ModalCadastraClienteUsuario({
                                     }
 
                                     handleClickSalvar(
+                                        detalhe.usuario.idUsuario,
                                         selectedCliente,
+                                        selectAcessoPrincipal,
                                         selectedTipoAcesso,
                                         dataExpiracao
                                     );

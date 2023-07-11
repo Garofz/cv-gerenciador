@@ -13,9 +13,9 @@ export interface IDetalheUsuario {
     produtos: Produto[];
 }
 export interface IUsuario {
-    IdUsuario: number;
-    NomeUsuario: string;
-    EmailUsaurio: string;
+    idUsuario: number;
+    nomeUsuario: string;
+    emailUsaurio: string;
 }
 export interface ICliente {
     cliente: ClienteDetalhe;

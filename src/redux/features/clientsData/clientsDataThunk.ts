@@ -167,3 +167,36 @@ export const getUserDetail = createAsyncThunk(
         }
     }
 );
+
+export const cadastrarClienteUsuario = createAsyncThunk(
+    "clientsData/cadastrarClienteUsuario",
+    async (args: {
+        idUsuario: number;
+        idCliente: number;
+        acessoPrincipal: boolean;
+        idTipoAcesso: number;
+        dataInativacaoAcesso: string | null;
+        token: string;
+    }): Promise<IUserListResponse | any> => {
+        try {
+            const response = await MiddlewareAPI.post(
+                `cardapioVirtual/usuario/cliente`,
+                {
+                    idUsuario: args.idUsuario,
+                    idCliente: args.idCliente,
+                    acessoPrincipal: args.acessoPrincipal,
+                    idTipoAcesso: args.idTipoAcesso,
+                    token: args.token,
+                    dataInativacaoAcesso: args.dataInativacaoAcesso
+                        ? new Date(args.dataInativacaoAcesso)
+                        : null,
+                }
+            );
+
+            if (response.data?.error !== undefined) return response.data;
+            return response.data;
+        } catch (err: any) {
+            return err.response;
+        }
+    }
+);
