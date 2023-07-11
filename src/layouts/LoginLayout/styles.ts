@@ -27,6 +27,8 @@ export const ContainerContent = styled.div`
     display: flex;
     flex-direction: row;
     width: 70%;
+    height: 70%;
+    min-height: 400px;
     justify-content: center;
     align-items: center;
     margin: auto;
@@ -36,6 +38,7 @@ export const ContainerContent = styled.div`
     box-shadow: ${({ theme }) => theme.boxShadow.medium};
     @media (min-width: 768px) and (max-width: 1023px) {
         /* Estilos para dispositivos tablet */
+        height: 60%;
     }
     @media (max-width: 767px) {
         flex-direction: column;
@@ -58,9 +61,11 @@ export const ContainerLogoDiv = styled.div`
     justify-content: center;
     align-items: center;
     width: 50%;
+    height: 100%;
 
     @media (min-width: 768px) and (max-width: 1023px) {
         /* Estilos para dispositivos tablet */
+        height: 100%;
     }
     @media (max-width: 767px) {
         width: 100%;
@@ -76,7 +81,8 @@ export const ContainerLogo = styled.div`
 `;
 
 export const ContainerOutletContent = styled.div`
-    height: 700px;
+    height: 100%;
+    min-height: 400px;
     background-color: ${({ theme }) => theme.colors.background};
     display: flex;
     flex-direction: column;
@@ -86,6 +92,7 @@ export const ContainerOutletContent = styled.div`
     border-radius: 0px 20px 20px 0px;
     @media (min-width: 768px) and (max-width: 1023px) {
         /* Estilos para dispositivos tablet */
+        height: 100%;
     }
     @media (max-width: 767px) {
         width: 100%;

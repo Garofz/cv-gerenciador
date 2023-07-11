@@ -29,14 +29,15 @@
         "ui-gds": "file:ui-gds-0.1.0.tgz",
         "web-vitals": "^2.1.4"
     },
-    "main": "src/electron-starter.js",
+    "main": "./electron-starter.js",
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "delete-node_modules": "rimraf node_modules",
-        "replace-node_modules": "npm run delete-node_modules && npm i"
+        "replace-node_modules": "npm run delete-node_modules && npm i",
+        "electron": "electron ."
     },
     "eslintConfig": {
         "extends": [
@@ -60,6 +61,7 @@
         "@types/styled-components": "^5.1.26",
         "@typescript-eslint/eslint-plugin": "^5.59.7",
         "@typescript-eslint/parser": "^5.59.7",
+        "electron": "^25.2.0",
         "eslint": "^8.41.0",
         "eslint-plugin-react": "^7.32.2",
         "prettier": "2.8.8",
