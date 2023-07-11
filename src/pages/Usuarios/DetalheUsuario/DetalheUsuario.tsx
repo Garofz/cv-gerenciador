@@ -52,6 +52,8 @@ import useDetalheUsuario from "./hooks/useDetalheUsuario";
 import ListProdutosUsuario from "./ListProdutosUsuario/ListProdutosUsuario";
 import ListClientesUsuario from "./ListClientesUsuario/ListClientesUsuario";
 import { Button, Datepicker, Tabs } from "ui-gds";
+import ModalCadastraClienteUsuario from "./ModalCadastraClienteUsuario/ModalCadastraClienteUsuario";
+import ModalCadastraProdutoUsuario from "./ModalCadastraProdutoUsuario/ModalCadastraProdutoUsuario";
 
 export interface IProps {
     usuario: IUserList;
@@ -77,133 +79,22 @@ function DetalheUsuario({ usuario }: IProps) {
         // Adicione aqui a lógica de redirecionamento com base no caminho
     };
 
-    // FIXME: Criar as modais em pastas separadas
     // TODO: Criar modais de edição de inativação, tipo de acesso e status do usuario no cliente/produto (ativo ou inativo)
-    // TODO: Retornar Usuario de inclusao/alteração na consulta de detalhes
     return (
         <FadeIn duration={400}>
-            {showModalCliente && (
-                <Modal
-                    title="Cadastrar acesso a cliente"
-                    closeModal={() => setShowModalCliente(false)}
-                >
-                    <div style={{ width: 600, padding: 12 }}>
-                        <Row>
-                            <Col>
-                                <SelectWrapper className="inputWrapper">
-                                    <Label>Cliente*</Label>
-                                    <Select style={{ padding: "4px" }}>
-                                        {clientes?.map((cliente, index) => (
-                                            <Option
-                                                style={{ padding: "12rem" }}
-                                                value={cliente.idCliente}
-                                                key={index}
-                                            >
-                                                {cliente.idCliente}# -{" "}
-                                                {cliente.nome} -{" "}
-                                                {cliente.inscricao}
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </SelectWrapper>
-                                <Divider size={12} />
-                                <SelectWrapper className="inputWrapper">
-                                    <Label>Tipo de Acesso*</Label>
-                                    <Select style={{ padding: "4px" }}>
-                                        <Option value={1}>Admin</Option>
-                                        <Option value={2}>Comun</Option>
-                                    </Select>
-                                </SelectWrapper>
-                                <Divider size={12} />
-                                <Datepicker
-                                    labelText="Data de Inativação do acesso"
-                                    onClear={() => console.log()}
-                                    onChange={() => console.log()}
-                                />
-                                <Divider size={20} />
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                    }}
-                                >
-                                    <Button
-                                        type="submit"
-                                        buttonType="primary"
-                                        text="Salvar"
-                                        size="medium"
-                                    />
-                                    <Button
-                                        type="button"
-                                        buttonType="secundary"
-                                        text="Voltar"
-                                        size="medium"
-                                        onClick={() =>
-                                            setShowModalCliente(false)
-                                        }
-                                    />
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-                </Modal>
+            {showModalCliente && clientes && detalheUsuario && (
+                <ModalCadastraClienteUsuario
+                    detalhe={detalheUsuario}
+                    clientes={clientes}
+                    setCloseModal={() => setShowModalCliente(false)}
+                />
             )}
-            {showModalProduto && (
-                <Modal
-                    title="Cadastrar acesso a produto"
-                    closeModal={() => setShowModalProduto(false)}
-                >
-                    <div style={{ width: 650 }}>
-                        <Row>
-                            <Col>
-                                <SelectWrapper className="inputWrapper">
-                                    <Label>Produto*</Label>
-                                    <Select style={{ padding: "4px" }}>
-                                        {produtos?.map((produto, index) => (
-                                            <Option
-                                                style={{ padding: "12rem" }}
-                                                value={produto.idProduto}
-                                                key={index}
-                                            >
-                                                {produto.idProduto}# -{" "}
-                                                {produto.nome} -{" "}
-                                                {produto.descricao}
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </SelectWrapper>
-
-                                <Divider size={20} />
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                    }}
-                                >
-                                    <Button
-                                        type="submit"
-                                        buttonType="primary"
-                                        text="Salvar"
-                                        size="medium"
-                                    />
-                                    <Button
-                                        type="button"
-                                        buttonType="secundary"
-                                        text="Voltar"
-                                        size="medium"
-                                        onClick={() =>
-                                            setShowModalProduto(false)
-                                        }
-                                    />
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-                </Modal>
+            {showModalProduto && produtos && detalheUsuario && (
+                <ModalCadastraProdutoUsuario
+                    detalhe={detalheUsuario}
+                    produtos={produtos}
+                    setCloseModal={() => setShowModalProduto(false)}
+                />
             )}
             <ContainerUsuarioTitle>
                 <UsuarioAvatarWrapper>
@@ -222,36 +113,6 @@ function DetalheUsuario({ usuario }: IProps) {
             </ContainerUsuarioTitle>
             <Divider size={12} />
             <ContainerUsuarioBodyDiv>
-                <Divider size={20} />
-                <UsuarioDetailLI>
-                    <UsuarioDetailSpan>
-                        <TextBold> Incluído em:</TextBold>
-                    </UsuarioDetailSpan>
-                    <TextNormal>{formatarData(undefined)}</TextNormal>
-                </UsuarioDetailLI>
-                <UsuarioDetailLI>
-                    <UsuarioDetailSpan>
-                        <TextBold> Por: </TextBold>
-                    </UsuarioDetailSpan>
-                    <TextNormal>N/I</TextNormal>
-                </UsuarioDetailLI>
-                {!undefined && (
-                    <>
-                        <Divider size={20} />
-                        <UsuarioDetailLI>
-                            <UsuarioDetailSpan>
-                                <TextBold> Alterado em:</TextBold>
-                            </UsuarioDetailSpan>
-                            <TextNormal>{formatarData(undefined)}</TextNormal>
-                        </UsuarioDetailLI>
-                        <UsuarioDetailLI>
-                            <UsuarioDetailSpan>
-                                <TextBold> Por: </TextBold>
-                            </UsuarioDetailSpan>
-                            <TextNormal>N/I</TextNormal>
-                        </UsuarioDetailLI>
-                    </>
-                )}
                 <Divider size={20} />
                 <Tabs
                     initialTabIndex={0}
