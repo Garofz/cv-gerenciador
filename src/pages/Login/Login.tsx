@@ -12,7 +12,11 @@ import Spinner from "../../components/Spinner/Spinner";
 import Toast from "../../components/Toast/Toast";
 import { Button, Input } from "ui-gds";
 
-function Login() {
+export interface IProps {
+    nextlayout: () => void;
+}
+
+function Login({ nextlayout }: IProps) {
     const {
         email,
         setEmail,
@@ -23,7 +27,7 @@ function Login() {
         toast,
         toastMessage,
         setToast,
-    } = UseLogin();
+    } = UseLogin({ nextlayout });
 
     const [validEmail, setValidEmail] = useState<boolean>(true);
     const [validSenha, setValidSenha] = useState<boolean>(true);

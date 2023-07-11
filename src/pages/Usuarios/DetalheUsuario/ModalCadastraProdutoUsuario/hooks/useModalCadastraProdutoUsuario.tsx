@@ -22,7 +22,7 @@ function useModalCadastraProdutoUsuario(detalhe: IDetalheUsuario): IProps {
             cadastrarAcessoUsuario({
                 userId: detalhe.usuario.idUsuario,
                 productId: produto.idProduto,
-                password: `${generateGuid()}`,
+                password: `@aakl!20sErFf`,
                 token: user.accessToken.token,
             })
         )

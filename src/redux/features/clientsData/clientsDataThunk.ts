@@ -227,3 +227,29 @@ export const cadastrarAcessoUsuario = createAsyncThunk(
         }
     }
 );
+export const atualizaSenhaUsuario = createAsyncThunk(
+    "clientsData/atualizaSenhaUsuario",
+    async (args: {
+        userId: number;
+        productId: number;
+        password: string;
+        token: string;
+    }): Promise<IUserListResponse | any> => {
+        try {
+            const response = await MiddlewareAPI.post(
+                `authschema/usuario/novaSenha`,
+                {
+                    userId: args.userId,
+                    productId: args.productId,
+                    newpassword: args.password,
+                    token: args.token,
+                }
+            );
+
+            if (response.data?.error !== undefined) return response.data;
+            return response.data;
+        } catch (err: any) {
+            return err.response;
+        }
+    }
+);

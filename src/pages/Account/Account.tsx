@@ -24,7 +24,10 @@ import useAccount from "./hooks/useAccount";
 import { mascararCelular, mascararEmail } from "../../util/mask";
 import { FaLightbulb, FaSignOutAlt } from "react-icons/fa";
 import { useAsyncDispatch } from "../../redux/store";
-import { logOut } from "../../redux/features/generalData/generalDataSlice";
+import {
+    logIn,
+    logOut,
+} from "../../redux/features/generalData/generalDataSlice";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import {
     BodyTextBold,
@@ -36,6 +39,7 @@ import {
 } from "ui-gds";
 import Modal from "../../components/Modal/Modal";
 import Toast from "../../components/Toast/Toast";
+import { atualizaSenhaUsuario } from "../../redux/features/clientsData/clientsDataThunk";
 
 function Account() {
     const { usuario } = useAccount();
@@ -49,7 +53,10 @@ function Account() {
     const [showMessageError, setShowMessageError] = useState<boolean>(false);
     if (!usuario) return <></>;
 
-    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    //TODO: TRATAR ERROS
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        if (!usuario) return;
+
         event.preventDefault();
 
         setMessageError("");
@@ -64,6 +71,26 @@ function Account() {
             setMessageError("As senhas precisam estar iguais");
             setShowMessageError(true);
         }
+
+        const response = await dispatch(
+            atualizaSenhaUsuario({
+                userId: usuario._Id,
+                productId: 1,
+                password: newPassword,
+                token: usuario.accessToken.token,
+            })
+        )
+            .unwrap()
+            .then((res) => res);
+
+        if (response?.usuario !== undefined) {
+            setShowResetPassword(false);
+            await dispatch(logOut());
+            return;
+        }
+
+        setMessageError("A senha informada está inválida");
+        setShowMessageError(true);
         // Impede o comportamento padrão do formulário de ser disparado
         // if (!email || email.trim() === "" || !email.includes("@")) {
         //     setValidEmail(false);

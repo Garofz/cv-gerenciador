@@ -24,16 +24,9 @@ const App: React.FunctionComponent = (): JSX.Element => {
                 <Routes>
                     <Route path="/" element={<Defaultlayout />}>
                         {auth === "LoggedOut" && (
-                            <Route path="/" element={<LoginLayout />}>
-                                <Route
-                                    index
-                                    element={<Navigate to="login" />}
-                                />
-                                <Route path="login" element={<Login />} />
-                                <Route
-                                    path="*"
-                                    element={<Navigate to="login" />}
-                                />
+                            <Route path="/" element={<Defaultlayout />}>
+                                <Route path="*" element={<Navigate to="/" />} />
+                                <Route path="/" element={<LoginLayout />} />
                             </Route>
                         )}
                         {auth === "LoggedIn" && (
