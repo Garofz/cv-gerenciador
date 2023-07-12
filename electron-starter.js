@@ -16,7 +16,7 @@ function createWindow () {
   let menuPrincipal = Menu.buildFromTemplate([]);
   Menu.setApplicationMenu(menuPrincipal);
   // and load the index.html of the app.
-  mainWindow.loadURL('http://localhost:3000');
+  mainWindow.loadURL('https://cv-gerenciador-ayqx2v4sx-lpasquarelli.vercel.app');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
