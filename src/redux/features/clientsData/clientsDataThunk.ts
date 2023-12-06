@@ -175,10 +175,11 @@ export const cadastrarClienteUsuario = createAsyncThunk(
         idCliente: number;
         acessoPrincipal: boolean;
         idTipoAcesso: number;
-        dataInativacaoAcesso: string | null;
+        dataInativacaoAcesso: Date | null;
         token: string;
     }): Promise<IUserListResponse | any> => {
         try {
+
             const response = await MiddlewareAPI.post(
                 `cardapioVirtual/usuario/cliente`,
                 {
@@ -188,8 +189,6 @@ export const cadastrarClienteUsuario = createAsyncThunk(
                     idTipoAcesso: args.idTipoAcesso,
                     token: args.token,
                     dataInativacaoAcesso: args.dataInativacaoAcesso
-                        ? new Date(args.dataInativacaoAcesso)
-                        : null,
                 }
             );
 
@@ -249,6 +248,10 @@ export const cadastrarAcessoUsuario = createAsyncThunk(
                     productId: args.productId,
                     password: args.password,
                     token: args.token,
+                }, {
+                    headers:{
+                        "Authorization":`bearer ${args.token}`
+                    } 
                 }
             );
 
@@ -278,6 +281,10 @@ export const editaAcessoUsuario = createAsyncThunk(
                     active: args.active,
                     blocked: args.blocked,
                     token: args.token,
+                }, {
+                    headers:{
+                        "Authorization":`bearer ${args.token}`
+                    } 
                 }
             );
 
@@ -304,6 +311,10 @@ export const atualizaSenhaUsuario = createAsyncThunk(
                     productId: args.productId,
                     newpassword: args.password,
                     token: args.token,
+                }, {
+                    headers:{
+                        "Authorization":`bearer ${args.token}`
+                    } 
                 }
             );
 

@@ -35,7 +35,7 @@ function ModalCadastraClienteUsuario({
     const [message, setMessage] = useState<IMessageProps>({
         show: false,
     });
-    const [selectedCliente, setSelectedCliente] = useState<ICliente>();
+    const [xzselectedCliente, setSelectedCliente] = useState<ICliente>();
     const [selectedTipoAcesso, setSelectedTipoAcesso] = useState<number>();
     const [selectAcessoPrincipal, setSelectAcessoPrincipal] =
         useState<boolean>(false);
@@ -81,7 +81,7 @@ function ModalCadastraClienteUsuario({
                 {message.show && (
                     <Row>
                         <Col>
-                            <div>
+                            <div>aw
                                 <Warning
                                     type="error"
                                     message={message.message || ""}
@@ -201,7 +201,7 @@ function ModalCadastraClienteUsuario({
                                 text="Salvar"
                                 size="medium"
                                 onClick={() => {
-                                    if (!selectedCliente) {
+                                    if (!xzselectedCliente) {
                                         setMessage({
                                             show: true,
                                             message:
@@ -220,7 +220,7 @@ function ModalCadastraClienteUsuario({
 
                                     handleClickSalvar(
                                         detalhe.usuario.idUsuario,
-                                        selectedCliente,
+                                        xzselectedCliente,
                                         selectAcessoPrincipal,
                                         selectedTipoAcesso,
                                         dataExpiracao

@@ -32,9 +32,7 @@ function useModalCadastraClienteUsuario(): IProps {
             cadastrarClienteUsuario({
                 idCliente: cliente.idCliente,
                 acessoPrincipal: acessoPrincipal,
-                dataInativacaoAcesso: dataExpiracao
-                    ? formatarData(dataExpiracao, true)
-                    : null,
+                dataInativacaoAcesso: dataExpiracao || new Date(),
                 idTipoAcesso: tipoAcesso,
                 idUsuario: idUsuario,
                 token: user.accessToken.token,
